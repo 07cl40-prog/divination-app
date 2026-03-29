@@ -1,0 +1,18 @@
+{
+  "name": "DivineHub - 赛博玄学点评系统",
+  "short_name": "DivineHub",
+  "description": "连接宇宙的智慧",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a0033",
+  "theme_color": "#6b21a8",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%231a0033' width='192' height='192'/><text x='96' y='120' font-size='100' text-anchor='middle' fill='%23a855f7'>🔮</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
