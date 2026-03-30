@@ -25,7 +25,7 @@ export default function DivinationApp() {
   const [loading, setLoading] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState('all');
-  const [activeSection, setActiveSection] = useState('human'); // 'human' | 'ai'
+  const [activeSection, setActiveSection] = useState('ai'); // 'human' | 'ai' - 默认显示AI板块
 
   useEffect(() => {
     fetchDiviners();
@@ -376,76 +376,258 @@ function HomePage({ diviners, sortBy, setSortBy, loading, onSelectDiviner, activ
   );
 }
 
-// AI排盘板块
+// AI排盘板块 - 主页展示版
 function AISection() {
+  const [selectedService, setSelectedService] = useState(null);
+  
   const aiServices = [
     {
+      id: 'bazi',
       name: 'AI八字排盘',
-      icon: <Crystal className="w-8 h-8" />,
+      icon: '📜',
+      emoji: '生辰八字',
       description: '输入出生时间，AI自动生成完整命盘分析报告',
-      features: ['命局分析', '大运流年', '神煞吉凶', '事业财运'],
+      features: ['命局分析', '大运流年', '神煞吉凶', '事业财运', '婚姻感情', '健康运势'],
       color: 'from-amber-500 to-orange-500',
-      price: '免费',
+      bgColor: 'from-amber-500/20 to-orange-500/10',
+      borderColor: 'border-amber-500/30',
+      popular: true,
     },
     {
+      id: 'ziwei',
       name: 'AI紫微斗数',
-      icon: <Star className="w-8 h-8" />,
+      icon: '⭐',
+      emoji: '紫微命盘',
       description: '精准计算十二宫位，深度解析人生各领域',
-      features: ['命宫身宫', '十四主星', '四化飞星', '十年大限'],
+      features: ['命宫身宫', '十四主星', '四化飞星', '十年大限', '流年运势', '人生指引'],
       color: 'from-purple-500 to-pink-500',
-      price: '免费',
+      bgColor: 'from-purple-500/20 to-pink-500/10',
+      borderColor: 'border-purple-500/30',
+      popular: true,
     },
     {
-      name: 'AI奇门遁甲',
-      icon: <Compass className="w-8 h-8" />,
-      description: '时空方位预测，把握人生关键时刻',
-      features: ['格局分析', '吉凶方位', '时机选择', '决策建议'],
-      color: 'from-cyan-500 to-blue-500',
-      price: '免费',
-    },
-    {
+      id: 'tarot',
       name: 'AI塔罗占卜',
-      icon: <Wand2 className="w-8 h-8" />,
+      icon: '🃏',
+      emoji: '塔罗牌阵',
       description: 'AI塔罗牌解读，探索内心深处的答案',
-      features: ['过去现在未来', '爱情事业财运', '灵性指引', '每周运势'],
+      features: ['过去现在未来', '爱情事业财运', '灵性指引', '每周运势', '决策建议', '心灵探索'],
       color: 'from-violet-500 to-purple-500',
-      price: '免费',
+      bgColor: 'from-violet-500/20 to-purple-500/10',
+      borderColor: 'border-violet-500/30',
+      popular: false,
     },
     {
+      id: 'qimen',
+      name: 'AI奇门遁甲',
+      icon: '☯️',
+      emoji: '奇门盘',
+      description: '时空方位预测，把握人生关键时刻',
+      features: ['格局分析', '吉凶方位', '时机选择', '决策建议', '趋吉避凶', '商业决策'],
+      color: 'from-cyan-500 to-blue-500',
+      bgColor: 'from-cyan-500/20 to-blue-500/10',
+      borderColor: 'border-cyan-500/30',
+      popular: false,
+    },
+    {
+      id: 'astrology',
       name: 'AI星座运势',
-      icon: <Sun className="w-8 h-8" />,
+      icon: '🌟',
+      emoji: '星座命盘',
       description: '每日星座运势预测，掌握人生方向',
-      features: ['今日运势', '本周运势', '本月运势', '年度运势'],
+      features: ['今日运势', '本周运势', '本月运势', '年度运势', '爱情运势', '事业运势'],
       color: 'from-yellow-500 to-orange-500',
-      price: '免费',
+      bgColor: 'from-yellow-500/20 to-orange-500/10',
+      borderColor: 'border-yellow-500/30',
+      popular: true,
     },
     {
+      id: 'dream',
       name: 'AI周公解梦',
-      icon: <Moon className="w-8 h-8" />,
+      icon: '🌙',
+      emoji: '梦境解析',
       description: '梦境深度解析，探索潜意识信息',
-      features: ['梦境解读', '心理分析', '预兆提示', '成长建议'],
+      features: ['梦境解读', '心理分析', '预兆提示', '成长建议', '潜意识探索', '灵性指引'],
       color: 'from-indigo-500 to-purple-500',
-      price: '免费',
+      bgColor: 'from-indigo-500/20 to-purple-500/10',
+      borderColor: 'border-indigo-500/30',
+      popular: false,
     },
   ];
 
+  // 热门服务
+  const popularServices = aiServices.filter(s => s.popular);
+
   return (
-    <div className="space-y-8">
-      {/* AI公告横幅 */}
-      <div className="glass rounded-2xl p-6 border border-cyan-500/30 bg-gradient-to-r from-cyan-500/10 to-blue-500/10">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center">
-            <Bot className="w-6 h-6 text-white" />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-lg font-bold text-white">AI智能排盘系统</h3>
-            <p className="text-sm text-gray-400">基于千万级玄学数据训练，结合传统易学智慧，为您提供专业的AI算命服务</p>
-          </div>
-          <div className="hidden md:block px-4 py-2 rounded-lg bg-cyan-500/20 text-cyan-300 text-sm font-medium">
-            🤖 全新上线
+    <div className="space-y-10">
+      {/* AI品牌展示区 */}
+      <div className="relative overflow-hidden rounded-3xl glass border border-cyan-500/20">
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-purple-500/10"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/20 rounded-full blur-[80px]"></div>
+        
+        <div className="relative p-8 md:p-12">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            {/* 左侧图标 */}
+            <div className="relative">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-gradient-to-br from-cyan-500 to-purple-500 flex items-center justify-center animate-float">
+                <span className="text-5xl md:text-6xl">🤖</span>
+              </div>
+              <div className="absolute -top-2 -right-2 px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/30">
+                AI驱动
+              </div>
+            </div>
+            
+            {/* 右侧内容 */}
+            <div className="flex-1 text-center md:text-left">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  专业AI排盘系统
+                </span>
+              </h2>
+              <p className="text-gray-400 mb-6 max-w-xl">
+                基于千万级玄学数据训练，结合传统易学智慧与现代AI技术，为您提供精准、专业、即时的命理分析服务
+              </p>
+              <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                <div className="flex items-center gap-2 text-sm text-gray-300">
+                  <span className="text-cyan-400">⚡</span> 3秒出结果
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-300">
+                  <span className="text-purple-400">📊</span> 深度解读
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-300">
+                  <span className="text-pink-400">🔒</span> 隐私保护
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-300">
+                  <span className="text-amber-400">💎</span> 完全免费
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* 热门服务快捷入口 */}
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold text-white flex items-center gap-2">
+            <span className="text-2xl">🔥</span> 热门服务
+          </h3>
+          <span className="text-sm text-gray-500">最受欢迎的AI排盘</span>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {popularServices.map((service) => (
+            <div
+              key={service.id}
+              className={`group relative overflow-hidden rounded-2xl glass ${service.borderColor} hover:border-opacity-60 transition-all duration-300 cursor-pointer`}
+              onClick={() => setSelectedService(service.id)}
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${service.bgColor} opacity-0 group-hover:opacity-100 transition-opacity`}></div>
+              
+              <div className="relative p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center text-3xl group-hover:scale-110 transition-transform`}>
+                    {service.icon}
+                  </div>
+                  <div className="px-2 py-1 rounded-full bg-red-500/20 text-red-400 text-xs font-medium">
+                    热门
+                  </div>
+                </div>
+                
+                <h4 className="text-lg font-bold text-white mb-2">{service.name}</h4>
+                <p className="text-sm text-gray-400 mb-4 line-clamp-2">{service.description}</p>
+                
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {service.features.slice(0, 3).map((feature, i) => (
+                    <span key={i} className="text-xs px-2 py-1 rounded-lg bg-gray-800/50 text-gray-300">
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+                
+                <button className={`w-full py-3 rounded-xl bg-gradient-to-r ${service.color} text-white font-semibold text-sm hover:opacity-90 transition flex items-center justify-center gap-2`}>
+                  <span>立即体验</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 全部AI服务 */}
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold text-white flex items-center gap-2">
+            <span className="text-2xl">✨</span> 全部AI服务
+          </h3>
+          <span className="text-sm text-gray-500">6项专业排盘服务</span>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {aiServices.map((service) => (
+            <div
+              key={service.id}
+              className={`group glass rounded-2xl p-5 ${service.borderColor} hover:border-opacity-60 transition-all duration-300 cursor-pointer`}
+              onClick={() => setSelectedService(service.id)}
+            >
+              <div className="flex items-center gap-4 mb-3">
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${service.color} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform`}>
+                  {service.icon}
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-base font-bold text-white">{service.name}</h4>
+                  <p className="text-xs text-gray-500">{service.emoji}</p>
+                </div>
+                {service.popular && (
+                  <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 text-[10px] font-medium">
+                    热门
+                  </span>
+                )}
+              </div>
+              
+              <p className="text-xs text-gray-400 mb-3 line-clamp-2">{service.description}</p>
+              
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {service.features.slice(0, 4).map((feature, i) => (
+                  <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-gray-800/50 text-gray-400">
+                    {feature}
+                  </span>
+                ))}
+              </div>
+              
+              <div className="flex items-center justify-between pt-3 border-t border-gray-800">
+                <span className="text-cyan-400 font-bold text-sm">免费</span>
+                <button className={`px-3 py-1.5 rounded-lg bg-gradient-to-r ${service.color} text-white text-xs font-medium hover:opacity-90 transition`}>
+                  开始排盘
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 底部优势说明 */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[
+          { icon: '⚡', title: '即时生成', desc: 'AI秒级响应', color: 'from-cyan-500 to-blue-500' },
+          { icon: '📊', title: '专业分析', desc: '深度解读报告', color: 'from-purple-500 to-pink-500' },
+          { icon: '🔒', title: '隐私保护', desc: '数据加密存储', color: 'from-amber-500 to-orange-500' },
+          { icon: '💎', title: '完全免费', desc: '无隐藏费用', color: 'from-violet-500 to-purple-500' },
+        ].map((item, i) => (
+          <div key={i} className="glass rounded-xl p-4 text-center group hover:scale-105 transition-transform">
+            <div className={`w-10 h-10 rounded-xl bg-gradient-to-r ${item.color} flex items-center justify-center text-xl mx-auto mb-2 group-hover:scale-110 transition-transform`}>
+              {item.icon}
+            </div>
+            <div className="text-sm font-semibold text-white">{item.title}</div>
+            <div className="text-xs text-gray-500">{item.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
       {/* AI服务网格 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
