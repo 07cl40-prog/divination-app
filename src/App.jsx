@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Star, Calendar, Zap, Eye, Heart, Send, Sparkles, Bot, Loader2, MessageCircle, TrendingUp, Compass } from 'lucide-react';
+import { Star, Calendar, Zap, Eye, Heart, Send, Sparkles, Bot, Loader2, TrendingUp, Compass, RefreshCw, Clock, Sun, Moon, Wallet, Briefcase, Users, Activity } from 'lucide-react';
 import axios from 'axios';
 
 // 香港文運亨通 - AI智能運勢 + 在線真人算命
@@ -107,10 +107,10 @@ export default function DivinationApp() {
   );
 }
 
-// AI運勢助手組件
+// AI運勢助手 - 完善版
 function AIFortuneAssistant() {
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: '你好！我是AI運勢助手🌟\n\n我可以幫你：\n• 📅 今日/本週/本月運勢分析\n• 💼 事業發展建議\n• 💕 感情姻緣指引\n• 💰 財運投資建議\n• 🎯 人生決策參考\n\n請告訴我你的出生年月日，或描述你想了解的問題～' }
+    { role: 'assistant', content: '你好！我是AI運勢助手🌟\n\n我可以幫你：\n• 📅 今日/本週/本月運勢分析\n• 💼 事業發展建議\n• 💕 感情姻緣指引\n• 💰 財運投資建議\n• 🎯 人生決策參考\n• 🔮 八字命盤分析\n\n請告訴我你的出生年月日，或描述你想了解的問題～' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -125,7 +125,13 @@ function AIFortuneAssistant() {
   }, [messages]);
 
   const fortuneTypes = [
-    '今日運勢', '本週運勢', '本月運勢', '事業運', '財運', '感情運', '健康運'
+    { key: 'daily', label: '今日運勢', icon: Sun, color: 'from-yellow-500 to-orange-500' },
+    { key: 'weekly', label: '本週運勢', icon: Calendar, color: 'from-blue-500 to-cyan-500' },
+    { key: 'monthly', label: '本月運勢', icon: Moon, color: 'from-purple-500 to-pink-500' },
+    { key: 'career', label: '事業運', icon: Briefcase, color: 'from-green-500 to-emerald-500' },
+    { key: 'wealth', label: '財運', icon: Wallet, color: 'from-amber-500 to-yellow-500' },
+    { key: 'love', label: '感情運', icon: Heart, color: 'from-pink-500 to-rose-500' },
+    { key: 'health', label: '健康運', icon: Activity, color: 'from-red-500 to-orange-500' },
   ];
 
   const handleSend = async (text) => {
@@ -136,7 +142,6 @@ function AIFortuneAssistant() {
     setInput('');
     setIsLoading(true);
 
-    // 模擬AI回應
     setTimeout(() => {
       const response = generateFortuneResponse(text);
       setMessages(prev => [...prev, { role: 'assistant', content: response }]);
@@ -151,91 +156,146 @@ function AIFortuneAssistant() {
     if (input.includes('本週') || input.includes('這週')) return generateWeeklyFortune();
     if (input.includes('本月') || input.includes('這個月')) return generateMonthlyFortune();
     if (input.includes('事業') || input.includes('工作')) return generateCareerFortune();
-    if (input.includes('財運') || input.includes('錢') || input.includes('投資')) return generateWealthFortune();
-    if (input.includes('感情') || input.includes('愛情') || input.includes('姻緣')) return generateLoveFortune();
-    if (input.includes('健康') || input.includes('身體')) return generateHealthFortune();
+    if (input.includes('財運') || input.includes('錢')) return generateWealthFortune();
+    if (input.includes('感情') || input.includes('愛情')) return generateLoveFortune();
+    if (input.includes('健康')) return generateHealthFortune();
+    if (input.includes('八字')) return generateBaziFortune();
     return generateGeneralFortune(userInput);
   };
 
   const generateDailyFortune = () => {
-    const fortunes = [
-      { stars: '⭐⭐⭐⭐⭐', color: '紫色', direction: '東南方', advice: '今日運勢極佳，適合做重要決定！' },
-      { stars: '⭐⭐⭐⭐', color: '金色', direction: '正南方', advice: '運勢平穩向上，把握機會。' },
-    ];
-    const f = fortunes[Math.floor(Math.random() * fortunes.length)];
-    return `📅 今日運勢分析
+    return `📅 ${new Date().toLocaleDateString('zh-TW')} 運勢分析
 
-綜合指數：${f.stars}
-幸運顏色：${f.color}
-吉利方位：${f.direction}
+🎯 綜合評分：⭐⭐⭐⭐⭐ (92/100)
+🎨 幸運顏色：紫色、金色
+🧭 吉利方位：東南方
+🔢 幸運數字：3、8、9
 
 💫 運勢解讀：
-${f.advice}
+今日運勢極佳，適合做重要決定！貴人運旺盛，人際關係和諧。
+
+⏰ 時辰吉凶：
+• 辰時 (7-9點)：⭐⭐⭐⭐⭐ 大吉，適合開會談判
+• 午時 (11-13點)：⭐⭐⭐⭐ 吉，利於社交應酬
+• 酉時 (17-19點)：⭐⭐⭐ 平，宜靜心休息
 
 🎯 建議行動：
-• 上午適合處理重要事務
-• 下午人際運佳，適合社交
-• 晚上宜靜心休息`;
+• ✅ 適合：簽約、面試、投資、表白
+• ❌ 避免：搬遷、訴訟
+
+🍀 開運小貼士：
+佩戴紫色系飾品，面向東南方深呼吸三次！`;
   };
 
   const generateWeeklyFortune = () => `📆 本週運勢預測
 
-週一～週三：⭐⭐⭐⭐ 事業運上升
-週四～週五：⭐⭐⭐⭐⭐ 財運亨通
-週末：⭐⭐⭐ 感情運佳
+📈 整體走勢：📈 上升趨勢
 
-💡 本週重點：把握週四週五的財運高峰`;
+週一～週三：⭐⭐⭐⭐ 事業運上升，適合推進項目
+週四～週五：⭐⭐⭐⭐⭐ 財運亨通，貴人運旺
+週末：⭐⭐⭐ 感情運佳，適合約會聚會
 
-  const generateMonthlyFortune = () => `📅 本月運勢總覽
+💎 本週開運指南：
+幸運數字：3、8、9 | 開運方位：東南方 | 開運顏色：紫色、金色`;
 
-🎯 整體運勢：⭐⭐⭐⭐
-💼 事業運：⭐⭐⭐⭐⭐
-💰 財運：⭐⭐⭐⭐
-💕 感情運：⭐⭐⭐
-🏃 健康運：⭐⭐⭐⭐
+  const generateMonthlyFortune = () => `📅 ${new Date().getMonth() + 1}月運勢總覽
 
-✨ 本月開運方位：東南方`;
+🎯 整體運勢：⭐⭐⭐⭐ (85/100)
 
-  const generateCareerFortune = () => `💼 事業運勢分析
+💼 事業運：⭐⭐⭐⭐⭐ 上旬有新機會，中旬貴人相助
+💰 財運：⭐⭐⭐⭐ 正財穩定，偏財可期
+💕 感情運：⭐⭐⭐ 單身者下旬桃花旺
+🏃 健康運：⭐⭐⭐⭐ 整體良好
 
-📊 當前狀態：事業正處於上升期
-🎯 近期機遇：新合作機會出現
-💡 建議：主動承擔更多責任
-🌟 開運：辦公桌擺放綠色植物`;
+✨ 本月開運：東南方 | 幸運數字：3、8、9`;
+
+  const generateCareerFortune = () => `💼 事業運勢深度分析
+
+📊 當前狀態：事業正處於上升期，潛力巨大
+
+🎯 近期機遇：
+• 新的合作機會出現
+• 上司對你印象深刻
+• 可能會有升職加薪機會
+
+⚠️ 注意事項：
+• 避免與同事衝突
+• 重要文件仔細核對
+
+💡 建議：主動承擔責任，展現領導力`;
 
   const generateWealthFortune = () => `💰 財運分析報告
 
-📈 財運指數：⭐⭐⭐⭐
-💵 收入：正財穩定增長
-🎯 建議：本月適合儲蓄
-⚠️ 提醒：注意電信詐騙
-🍀 開運：錢包內放置古錢幣`;
+📈 財運指數：⭐⭐⭐⭐ (82/100)
+
+💵 收入分析：
+• 正財：⭐⭐⭐⭐⭐ 穩定增長
+• 偏財：⭐⭐⭐ 下旬有意外之財
+
+🎯 理財建議：
+✅ 適合：定期定額投資、購買保險
+❌ 避免：高風險投機、借錢給他人
+
+⚠️ 提醒：注意電信詐騙，謹慎投資`;
 
   const generateLoveFortune = () => `💕 感情運勢分析
 
-💖 桃花指數：⭐⭐⭐⭐
+💖 桃花指數：⭐⭐⭐⭐ (80/100)
+
 💑 有伴者：關係穩定，適合談婚論嫁
 💃 單身者：下旬桃花運旺盛
-🎯 開運：佩戴粉晶飾品`;
+
+🎯 開運建議：
+• 佩戴粉晶飾品
+• 多穿粉色、紅色系服裝
+• 臥室擺放雙人枕
+
+✨ 姻緣方位：西南方`;
 
   const generateHealthFortune = () => `🏃 健康運勢提醒
 
-💪 整體狀況：⭐⭐⭐⭐
-⚠️ 注意：作息不規律，容易疲勞
-🥗 建議：多吃蔬菜水果
-🌿 開運食物：紅棗、枸杞、蜂蜜`;
+💪 整體狀況：⭐⭐⭐⭐ (78/100)
+
+⚠️ 需要注意：
+• 腸胃較弱，注意飲食
+• 眼睛疲勞，減少螢幕時間
+• 保持運動習慣
+
+🥗 養生建議：
+• 多吃蔬菜水果
+• 每天步行8000步
+• 晚上11點前入睡`;
+
+  const generateBaziFortune = () => `🔮 八字命盤分析
+
+請提供您的出生年月日時，我將為您：
+
+📋 分析內容：
+• 五行屬性分析
+• 命格特點解讀
+• 大運流年預測
+• 事業財運指引
+• 姻緣感情建議
+
+💡 請輸入格式：
+1990年5月15日 上午9點`;
 
   const generateGeneralFortune = (input) => `🔮 運勢解讀
 
 根據「${input}」分析：
 
 📊 整體運勢：⭐⭐⭐⭐
-💫 關鍵指引：保持積極樂觀的心態
-🎯 行動建議：制定明確的目標計劃
-✨ 開運：每天早起面向東方深呼吸三次`;
+💫 關鍵指引：保持積極樂觀，把握機會
+🎯 行動建議：制定目標、多交益友、持續學習
+
+✨ 開運小貼士：
+每天早起面向東方深呼吸三次！
+
+💬 還想了解：今日運勢、事業運、財運、感情運？`;
 
   return (
     <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-br from-cyan-900/10 via-purple-900/10 to-pink-900/10 overflow-hidden">
+      {/* 頭部 */}
       <div className="p-4 border-b border-cyan-500/20 bg-cyan-500/5">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 flex items-center justify-center animate-float">
@@ -245,10 +305,15 @@ ${f.advice}
             <h3 className="font-bold text-white">AI運勢助手</h3>
             <p className="text-xs text-cyan-400">在線 · 隨時為你解讀運勢</p>
           </div>
+          <div className="ml-auto flex gap-1">
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+            <span className="text-xs text-green-400">AI就緒</span>
+          </div>
         </div>
       </div>
 
-      <div className="h-[280px] overflow-y-auto p-4 space-y-3">
+      {/* 對話區 */}
+      <div className="h-[320px] overflow-y-auto p-4 space-y-3">
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[85%] rounded-lg p-3 text-sm ${
@@ -278,16 +343,19 @@ ${f.advice}
         <div ref={messagesEndRef} />
       </div>
 
+      {/* 快捷按鈕 */}
       <div className="px-4 py-2 border-t border-cyan-500/10">
         <div className="flex gap-2 overflow-x-auto pb-2">
-          {fortuneTypes.map((type, i) => (
-            <button key={i} onClick={() => handleSend(type)} className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 hover:bg-purple-500/30 transition">
-              {type}
+          {fortuneTypes.map((type) => (
+            <button key={type.key} onClick={() => handleSend(type.label)} className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 hover:bg-purple-500/30 transition flex items-center gap-1">
+              <type.icon className="w-3 h-3" />
+              {type.label}
             </button>
           ))}
         </div>
       </div>
 
+      {/* 輸入區 */}
       <div className="p-4 border-t border-cyan-500/20">
         <div className="flex gap-2">
           <input
@@ -310,6 +378,7 @@ ${f.advice}
 function HomePage({ diviners, sortBy, setSortBy, loading, onSelectDiviner }) {
   return (
     <div className="space-y-8">
+      {/* 英雄區 */}
       <div className="relative overflow-hidden rounded-xl border border-purple-500/50 bg-gradient-to-br from-purple-900/30 to-black p-8 text-center">
         <h2 className="text-3xl font-bold mb-3 bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
           連接宇宙的智慧
@@ -322,6 +391,7 @@ function HomePage({ diviners, sortBy, setSortBy, loading, onSelectDiviner }) {
         </div>
       </div>
 
+      {/* AI運勢助手 */}
       <div>
         <div className="flex items-center gap-2 mb-4">
           <Compass className="w-5 h-5 text-cyan-400" />
@@ -331,6 +401,7 @@ function HomePage({ diviners, sortBy, setSortBy, loading, onSelectDiviner }) {
         <AIFortuneAssistant />
       </div>
 
+      {/* 在線大師 */}
       <div>
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
@@ -361,7 +432,6 @@ function HomePage({ diviners, sortBy, setSortBy, loading, onSelectDiviner }) {
 }
 
 function DivinerCard({ diviner, onClick }) {
-  // 使用东方玄学风格头像 - notionists简约人物风格
   const avatarUrl = `https://api.dicebear.com/7.x/notionists/svg?seed=${diviner._id}&backgroundColor=1a1a2e,16213e,0f3460,e94560&radius=50`;
   
   return (
@@ -369,16 +439,10 @@ function DivinerCard({ diviner, onClick }) {
       <div className="relative z-10 space-y-3">
         <div className="flex items-start justify-between">
           <div className="relative">
-            <img 
-              src={avatarUrl} 
-              alt={diviner.name}
-              className="w-16 h-16 rounded-full border-2 border-purple-500/50 bg-gradient-to-br from-purple-900/40 to-black object-cover"
-            />
+            <img src={avatarUrl} alt={diviner.name} className="w-16 h-16 rounded-full border-2 border-purple-500/50 bg-gradient-to-br from-purple-900/40 to-black object-cover" />
             <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-black animate-pulse"></div>
           </div>
-          <div className="flex items-center gap-1">
-            <span className="text-xs text-green-400">在線</span>
-          </div>
+          <span className="text-xs text-green-400">在線</span>
         </div>
         <div>
           <h4 className="font-bold text-white">{diviner.name}</h4>
@@ -400,7 +464,6 @@ function DivinerCard({ diviner, onClick }) {
 }
 
 function DivinerDetailPage({ diviner, onBack, onBooking }) {
-  // 东方玄学风格头像
   const avatarUrl = `https://api.dicebear.com/7.x/notionists/svg?seed=${diviner._id}&backgroundColor=1a1a2e,16213e,0f3460,e94560&radius=50`;
   
   return (
@@ -410,16 +473,10 @@ function DivinerDetailPage({ diviner, onBack, onBooking }) {
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex flex-col items-center">
             <div className="relative mb-2">
-              <img 
-                src={avatarUrl} 
-                alt={diviner.name}
-                className="w-24 h-24 rounded-full border-3 border-purple-500/50 bg-gradient-to-br from-purple-900/40 to-black object-cover"
-              />
+              <img src={avatarUrl} alt={diviner.name} className="w-24 h-24 rounded-full border-3 border-purple-500/50 bg-gradient-to-br from-purple-900/40 to-black object-cover" />
               <div className="absolute bottom-1 right-1 w-5 h-5 bg-green-400 rounded-full border-3 border-black animate-pulse"></div>
             </div>
-            <div className="flex items-center gap-1">
-              <span className="text-green-400 text-sm">在線</span>
-            </div>
+            <span className="text-green-400 text-sm">在線</span>
           </div>
           <div className="flex-1 space-y-3">
             <div>
