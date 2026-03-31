@@ -361,13 +361,22 @@ function HomePage({ diviners, sortBy, setSortBy, loading, onSelectDiviner }) {
 }
 
 function DivinerCard({ diviner, onClick }) {
+  // 使用占位头像服务，基于大师ID生成一致的头像
+  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${diviner._id}&backgroundColor=b6e3f4,c0aede,d1d4f9`;
+  
   return (
     <div onClick={onClick} className="group relative overflow-hidden rounded-xl border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-black p-5 cursor-pointer transition hover:border-purple-400/60 hover:shadow-lg hover:shadow-purple-500/20">
       <div className="relative z-10 space-y-3">
         <div className="flex items-start justify-between">
-          <div className="text-4xl">{diviner.avatar || '✨'}</div>
+          <div className="relative">
+            <img 
+              src={avatarUrl} 
+              alt={diviner.name}
+              className="w-16 h-16 rounded-full border-2 border-purple-500/50 bg-gradient-to-br from-purple-500/20 to-pink-500/20 object-cover"
+            />
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-black animate-pulse"></div>
+          </div>
           <div className="flex items-center gap-1">
-            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
             <span className="text-xs text-green-400">在線</span>
           </div>
         </div>
@@ -391,15 +400,23 @@ function DivinerCard({ diviner, onClick }) {
 }
 
 function DivinerDetailPage({ diviner, onBack, onBooking }) {
+  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${diviner._id}&backgroundColor=b6e3f4,c0aede,d1d4f9`;
+  
   return (
     <div className="space-y-6">
       <button onClick={onBack} className="text-purple-400 hover:text-purple-300 transition flex items-center gap-2">← 返回</button>
       <div className="rounded-xl border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-black p-6">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex flex-col items-center">
-            <div className="text-7xl mb-2">{diviner.avatar || '✨'}</div>
+            <div className="relative mb-2">
+              <img 
+                src={avatarUrl} 
+                alt={diviner.name}
+                className="w-24 h-24 rounded-full border-3 border-purple-500/50 bg-gradient-to-br from-purple-500/20 to-pink-500/20 object-cover"
+              />
+              <div className="absolute bottom-1 right-1 w-5 h-5 bg-green-400 rounded-full border-3 border-black animate-pulse"></div>
+            </div>
             <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
               <span className="text-green-400 text-sm">在線</span>
             </div>
           </div>
