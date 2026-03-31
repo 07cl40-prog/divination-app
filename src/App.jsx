@@ -361,8 +361,8 @@ function HomePage({ diviners, sortBy, setSortBy, loading, onSelectDiviner }) {
 }
 
 function DivinerCard({ diviner, onClick }) {
-  // 使用占位头像服务，基于大师ID生成一致的头像
-  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${diviner._id}&backgroundColor=b6e3f4,c0aede,d1d4f9`;
+  // 使用东方玄学风格头像 - notionists简约人物风格
+  const avatarUrl = `https://api.dicebear.com/7.x/notionists/svg?seed=${diviner._id}&backgroundColor=1a1a2e,16213e,0f3460,e94560&radius=50`;
   
   return (
     <div onClick={onClick} className="group relative overflow-hidden rounded-xl border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-black p-5 cursor-pointer transition hover:border-purple-400/60 hover:shadow-lg hover:shadow-purple-500/20">
@@ -372,7 +372,7 @@ function DivinerCard({ diviner, onClick }) {
             <img 
               src={avatarUrl} 
               alt={diviner.name}
-              className="w-16 h-16 rounded-full border-2 border-purple-500/50 bg-gradient-to-br from-purple-500/20 to-pink-500/20 object-cover"
+              className="w-16 h-16 rounded-full border-2 border-purple-500/50 bg-gradient-to-br from-purple-900/40 to-black object-cover"
             />
             <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-black animate-pulse"></div>
           </div>
@@ -400,7 +400,8 @@ function DivinerCard({ diviner, onClick }) {
 }
 
 function DivinerDetailPage({ diviner, onBack, onBooking }) {
-  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${diviner._id}&backgroundColor=b6e3f4,c0aede,d1d4f9`;
+  // 东方玄学风格头像
+  const avatarUrl = `https://api.dicebear.com/7.x/notionists/svg?seed=${diviner._id}&backgroundColor=1a1a2e,16213e,0f3460,e94560&radius=50`;
   
   return (
     <div className="space-y-6">
@@ -412,7 +413,7 @@ function DivinerDetailPage({ diviner, onBack, onBooking }) {
               <img 
                 src={avatarUrl} 
                 alt={diviner.name}
-                className="w-24 h-24 rounded-full border-3 border-purple-500/50 bg-gradient-to-br from-purple-500/20 to-pink-500/20 object-cover"
+                className="w-24 h-24 rounded-full border-3 border-purple-500/50 bg-gradient-to-br from-purple-900/40 to-black object-cover"
               />
               <div className="absolute bottom-1 right-1 w-5 h-5 bg-green-400 rounded-full border-3 border-black animate-pulse"></div>
             </div>
