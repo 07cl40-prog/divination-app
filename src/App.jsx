@@ -134,7 +134,7 @@ function AIFortuneAssistant() {
     { key: 'health', label: '健康運', icon: Activity, color: 'from-red-500 to-orange-500' },
   ];
 
-  const handleSend = async (text) => {
+  const handleSend = async (text, fortuneType = null) => {
     if (!text.trim()) return;
     
     const userMessage = { role: 'user', content: text };
@@ -142,11 +142,24 @@ function AIFortuneAssistant() {
     setInput('');
     setIsLoading(true);
 
-    setTimeout(() => {
-      const response = generateFortuneResponse(text);
-      setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+    try {
+      // 調用後端 AI API
+      const response = await axios.post(`${API_BASE_URL}/ai-fortune`, {
+        message: text,
+        fortuneType: fortuneType,
+        timestamp: new Date().toISOString()
+      });
+
+      const aiResponse = response.data.response;
+      setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
+    } catch (error) {
+      console.error('AI API Error:', error);
+      // 如果 API 調用失敗，使用本地生成
+      const fallbackResponse = generateFortuneResponse(text);
+      setMessages(prev => [...prev, { role: 'assistant', content: fallbackResponse }]);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const generateFortuneResponse = (userInput) => {
@@ -347,7 +360,7 @@ function AIFortuneAssistant() {
       <div className="px-4 py-2 border-t border-cyan-500/10">
         <div className="flex gap-2 overflow-x-auto pb-2">
           {fortuneTypes.map((type) => (
-            <button key={type.key} onClick={() => handleSend(type.label)} className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 hover:bg-purple-500/30 transition flex items-center gap-1">
+            <button key={type.key} onClick={() => handleSend(type.label, type.key)} className="whitespace-nowrap px-3 py-1.5 rounded-full text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 hover:bg-purple-500/30 transition flex items-center gap-1">
               <type.icon className="w-3 h-3" />
               {type.label}
             </button>
