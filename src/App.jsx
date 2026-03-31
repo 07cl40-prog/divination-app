@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Calendar, Zap, Eye, Heart, Sparkles, Clock, ChevronRight, Menu, Users, Bot, Crystal, Wand2, Compass, Sun, Moon } from 'lucide-react';
+import { Star, MessageCircle, Calendar, Zap, Eye, TrendingUp, Award, Heart } from 'lucide-react';
 import axios from 'axios';
 
-// 香港文運亨通 - 雙板塊設計：在線真人算命 + 專業AI排盤
+// 香港文運亨通 完整前端应用 - 包含所有后台功能
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://divination-app-backend-production.up.railway.app/api';
-
-// 大師分類配置
-const DIVINER_CATEGORIES = [
-  { key: 'bazi', name: '八字命理', icon: '📜', color: 'from-amber-500 to-orange-500' },
-  { key: 'ziwei', name: '紫微斗數', icon: '⭐', color: 'from-purple-500 to-pink-500' },
-  { key: 'fengshui', name: '風水堪輿', icon: '🏔️', color: 'from-green-500 to-emerald-500' },
-  { key: 'tarot', name: '塔羅占卜', icon: '🃏', color: 'from-blue-500 to-indigo-500' },
-  { key: 'astrology', name: '星座運勢', icon: '🌟', color: 'from-violet-500 to-purple-500' },
-  { key: 'qimen', name: '奇門遁甲', icon: '☯️', color: 'from-cyan-500 to-blue-500' },
-];
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 export default function DivinationApp() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -23,10 +13,8 @@ export default function DivinationApp() {
   const [diviners, setDiviners] = useState([]);
   const [sortBy, setSortBy] = useState('rating');
   const [loading, setLoading] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [activeSection, setActiveSection] = useState('ai');
 
+  // 获取先生列表
   useEffect(() => {
     fetchDiviners();
   }, [sortBy]);
@@ -39,95 +27,69 @@ export default function DivinationApp() {
       });
       setDiviners(response.data.diviners);
     } catch (error) {
-      console.error('獲取先生列表失敗:', error);
+      console.error('获取先生列表失败:', error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
-      {/* 動態背景 */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e] via-[#0a0a0f] to-[#0a1a2e]"></div>
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: `linear-gradient(rgba(139, 92, 246, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.5) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px',
+    <div className="min-h-screen bg-black text-white overflow-hidden">
+      {/* 赛博背景效果 */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-black to-black"></div>
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 136, 0.03) 2px, rgba(0, 255, 136, 0.03) 4px)',
+          animation: 'scan 8s linear infinite'
         }}></div>
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] animate-pulse-slow"></div>
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-pink-600/15 rounded-full blur-[100px] animate-pulse-slow-delay"></div>
-        <div className="absolute top-1/2 left-1/2 w-[300px] h-[300px] bg-cyan-600/10 rounded-full blur-[80px] animate-float"></div>
       </div>
 
-      {/* 導航欄 */}
-      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-[#0a0a0f]/80 border-b border-purple-500/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <div className="text-3xl animate-float">🔮</div>
-                <div className="absolute inset-0 bg-purple-500/50 blur-xl rounded-full"></div>
-              </div>
-              <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-                  香港文運亨通
-                </h1>
-                <p className="text-[10px] text-purple-400/60 tracking-widest">連接宇宙的智慧</p>
-              </div>
-            </div>
-            
-            <div className="hidden md:flex items-center gap-2">
-              {['home', 'profile'].map((page) => (
-                <button
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    currentPage === page
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/25'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  {page === 'home' ? '首頁' : '我的'}
-                </button>
-              ))}
-            </div>
-
-            <button className="md:hidden p-2 rounded-lg hover:bg-white/5" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              <Menu className="w-6 h-6" />
+      {/* 导航栏 */}
+      <nav className="border-b border-purple-500/30 bg-black/50 backdrop-blur-md sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="text-2xl">🔮</div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              香港文運亨通
+            </h1>
+          </div>
+          <div className="flex gap-4">
+            <button
+              onClick={() => setCurrentPage('home')}
+              className={`px-4 py-2 rounded transition ${
+                currentPage === 'home'
+                  ? 'bg-purple-600 text-white'
+                  : 'text-gray-400 hover:text-purple-400'
+              }`}
+            >
+              首页
+            </button>
+            <button
+              onClick={() => setCurrentPage('profile')}
+              className={`px-4 py-2 rounded transition ${
+                currentPage === 'profile'
+                  ? 'bg-purple-600 text-white'
+                  : 'text-gray-400 hover:text-purple-400'
+              }`}
+            >
+              我的
             </button>
           </div>
         </div>
-        
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-purple-500/10 bg-[#0a0a0f]/95 backdrop-blur-xl">
-            <div className="px-4 py-3 space-y-2">
-              {['home', 'profile'].map((page) => (
-                <button
-                  key={page}
-                  onClick={() => { setCurrentPage(page); setMobileMenuOpen(false); }}
-                  className={`w-full px-4 py-2 rounded-lg text-left ${currentPage === page ? 'bg-purple-600/20 text-purple-400' : 'text-gray-400'}`}
-                >
-                  {page === 'home' ? '首頁' : '我的'}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </nav>
 
-      {/* 主內容 */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* 主内容 */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8">
         {currentPage === 'home' && (
           <HomePage
             diviners={diviners}
             sortBy={sortBy}
             setSortBy={setSortBy}
             loading={loading}
-            onSelectDiviner={(diviner) => { setSelectedDiviner(diviner); setCurrentPage('diviner-detail'); }}
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-            activeSection={activeSection}
-            setActiveSection={setActiveSection}
+            onSelectDiviner={(diviner) => {
+              setSelectedDiviner(diviner);
+              setCurrentPage('diviner-detail');
+            }}
           />
         )}
 
@@ -141,11 +103,17 @@ export default function DivinationApp() {
         )}
 
         {currentPage === 'booking' && selectedDiviner && (
-          <BookingPage diviner={selectedDiviner} onBack={() => setCurrentPage('diviner-detail')} />
+          <BookingPage
+            diviner={selectedDiviner}
+            onBack={() => setCurrentPage('diviner-detail')}
+          />
         )}
 
         {currentPage === 'review' && selectedDiviner && (
-          <ReviewPage diviner={selectedDiviner} onBack={() => setCurrentPage('diviner-detail')} />
+          <ReviewPage
+            diviner={selectedDiviner}
+            onBack={() => setCurrentPage('diviner-detail')}
+          />
         )}
 
         {currentPage === 'profile' && (
@@ -153,323 +121,766 @@ export default function DivinationApp() {
         )}
       </div>
 
-      <style>{`
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-        @keyframes pulse-slow { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.3; transform: scale(1.1); } }
-        @keyframes pulse-slow-delay { 0%, 100% { opacity: 0.15; transform: scale(1.1); } 50% { opacity: 0.25; transform: scale(1); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-float { animation: float 3s ease-in-out infinite; }
-        .animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
-        .animate-pulse-slow-delay { animation: pulse-slow-delay 8s ease-in-out infinite; }
-        .animate-slide-up { animation: slideUp 0.5s ease-out; }
-        .glass { background: rgba(10, 10, 15, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(139, 92, 246, 0.1); }
-        .neon-border { position: relative; }
-        .neon-border::before { content: ''; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(236, 72, 153, 0.5), rgba(6, 182, 212, 0.5)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+      <style jsx>{`
+        @keyframes scan {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(10px); }
+        }
       `}</style>
     </div>
   );
 }
 
-// 首頁 - 雙板塊設計
-function HomePage({ diviners, sortBy, setSortBy, loading, onSelectDiviner, activeCategory, setActiveCategory, activeSection, setActiveSection }) {
+// 首页
+function HomePage({ diviners, sortBy, setSortBy, loading, onSelectDiviner }) {
   return (
-    <div className="space-y-12 animate-slide-up">
-      {/* 英雄區 */}
-      <section className="relative">
-        <div className="relative overflow-hidden rounded-3xl neon-border">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-[#0a0a0f] to-pink-900/20"></div>
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-10 left-10 text-6xl opacity-20 animate-float">✨</div>
-            <div className="absolute top-20 right-20 text-4xl opacity-20 animate-float" style={{ animationDelay: '1s' }}>🌟</div>
-            <div className="absolute bottom-10 left-1/3 text-5xl opacity-15 animate-float" style={{ animationDelay: '2s' }}>💫</div>
-          </div>
-          
-          <div className="relative px-8 py-16 md:py-20 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-sm mb-6">
-              <Sparkles className="w-4 h-4" />
-              <span>香港頂尖玄學平台</span>
+    <div className="space-y-12">
+      {/* 英雄区 */}
+      <div className="relative overflow-hidden rounded-lg border border-purple-500/50 bg-gradient-to-br from-purple-900/30 to-black p-12 text-center">
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.3) 0%, transparent 50%)',
+        }}></div>
+        <div className="relative z-10">
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+            连接宇宙的智慧
+          </h2>
+          <p className="text-gray-400 text-lg mb-8">
+            在赛博空间中，与东方玄学大师对话
+          </p>
+          <div className="flex justify-center gap-4">
+            <div className="px-6 py-2 rounded border border-purple-500/50 text-purple-400 text-sm">
+              ✨ 透明评分
             </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-                連接宇宙的智慧
-              </span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-8">
-              在線真人算命 · 專業AI排盤 · 視頻咨詢
-            </p>
+            <div className="px-6 py-2 rounded border border-pink-500/50 text-pink-400 text-sm">
+              💎 信用指数
+            </div>
+            <div className="px-6 py-2 rounded border border-cyan-500/50 text-cyan-400 text-sm">
+              🔮 视频算命
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* 雙板塊切換 */}
-      <section>
-        <div className="flex justify-center mb-8">
-          <div className="inline-flex rounded-2xl bg-gray-900/50 p-1.5 gap-1">
-            <button
-              onClick={() => setActiveSection('human')}
-              className={`px-8 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-                activeSection === 'human' ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/25' : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <Users className="w-5 h-5" />
-              在線真人算命
-            </button>
-            <button
-              onClick={() => setActiveSection('ai')}
-              className={`px-8 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-                activeSection === 'ai' ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/25' : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <Bot className="w-5 h-5" />
-              專業AI排盤
-            </button>
-          </div>
-        </div>
+      {/* 排序选项 */}
+      <div className="flex gap-4">
+        <button
+          onClick={() => setSortBy('rating')}
+          className={`px-4 py-2 rounded transition ${
+            sortBy === 'rating'
+              ? 'bg-purple-600 text-white'
+              : 'border border-purple-500/30 text-gray-400 hover:text-purple-400'
+          }`}
+        >
+          按评分排序
+        </button>
+        <button
+          onClick={() => setSortBy('credit')}
+          className={`px-4 py-2 rounded transition ${
+            sortBy === 'credit'
+              ? 'bg-purple-600 text-white'
+              : 'border border-purple-500/30 text-gray-400 hover:text-purple-400'
+          }`}
+        >
+          按信用指数排序
+        </button>
+        <button
+          onClick={() => setSortBy('new')}
+          className={`px-4 py-2 rounded transition ${
+            sortBy === 'new'
+              ? 'bg-purple-600 text-white'
+              : 'border border-purple-500/30 text-gray-400 hover:text-purple-400'
+          }`}
+        >
+          最新加入
+        </button>
+      </div>
 
-        {/* 在線真人算命板塊 */}
-        {activeSection === 'human' && (
-          <div className="space-y-8">
-            <div className="flex flex-wrap gap-3 justify-center">
-              <button onClick={() => setActiveCategory('all')} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${activeCategory === 'all' ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white' : 'glass text-gray-400 hover:text-white'}`}>
-                全部大師
-              </button>
-              {DIVINER_CATEGORIES.map((cat) => (
-                <button key={cat.key} onClick={() => setActiveCategory(cat.key)} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${activeCategory === cat.key ? `bg-gradient-to-r ${cat.color} text-white` : 'glass text-gray-400 hover:text-white'}`}>
-                  <span>{cat.icon}</span>
-                  {cat.name}
-                </button>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-3 justify-center">
-              {[
-                { key: 'rating', label: '按評分', icon: '⭐' },
-                { key: 'credit', label: '按信用', icon: '💎' },
-                { key: 'new', label: '最新加入', icon: '🆕' },
-              ].map((option) => (
-                <button key={option.key} onClick={() => setSortBy(option.key)} className={`px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${sortBy === option.key ? 'bg-purple-600/30 border border-purple-500/50 text-purple-300' : 'glass text-gray-400 hover:text-white'}`}>
-                  <span>{option.icon}</span>
-                  {option.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {loading ? (
-                [...Array(4)].map((_, i) => (
-                  <div key={i} className="glass rounded-2xl p-6 animate-pulse">
-                    <div className="w-16 h-16 bg-gray-700 rounded-2xl mx-auto mb-4"></div>
-                    <div className="h-4 bg-gray-700 rounded w-3/4 mx-auto mb-2"></div>
-                    <div className="h-3 bg-gray-700 rounded w-1/2 mx-auto"></div>
-                  </div>
-                ))
-              ) : (
-                diviners.map((diviner, index) => (
-                  <DivinerCard key={diviner._id} diviner={diviner} onClick={() => onSelectDiviner(diviner)} index={index} />
-                ))
-              )}
-            </div>
+      {/* 先生网格 */}
+      <div>
+        <h3 className="text-2xl font-bold mb-8 text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text">
+          ⚡ 在线大师
+        </h3>
+        {loading ? (
+          <div className="text-center text-gray-400">加载中...</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {diviners.map((diviner) => (
+              <DivinerCard
+                key={diviner._id}
+                diviner={diviner}
+                onClick={() => onSelectDiviner(diviner)}
+              />
+            ))}
           </div>
         )}
-
-        {/* 專業AI排盤板塊 */}
-        {activeSection === 'ai' && <AISection />}
-      </section>
-    </div>
-  );
-}
-
-// AI排盤板塊
-function AISection() {
-  const aiServices = [
-    { id: 'bazi', name: 'AI八字排盤', icon: '📜', emoji: '生辰八字', description: '輸入出生時間，AI自動生成完整命盤分析報告', features: ['命局分析', '大運流年', '神煞吉兇', '事業財運', '婚姻感情', '健康運勢'], color: 'from-amber-500 to-orange-500', bgColor: 'from-amber-500/20 to-orange-500/10', borderColor: 'border-amber-500/30', popular: true },
-    { id: 'ziwei', name: 'AI紫微斗數', icon: '⭐', emoji: '紫微命盤', description: '精準計算十二宮位，深度解析人生各領域', features: ['命宮身宮', '十四主星', '四化飛星', '十年大限', '流年運勢', '人生指引'], color: 'from-purple-500 to-pink-500', bgColor: 'from-purple-500/20 to-pink-500/10', borderColor: 'border-purple-500/30', popular: true },
-    { id: 'tarot', name: 'AI塔羅占卜', icon: '🃏', emoji: '塔羅牌陣', description: 'AI塔羅牌解讀，探索內心深處的答案', features: ['過去現在未來', '愛情事業財運', '靈性指引', '每週運勢', '決策建議', '心靈探索'], color: 'from-violet-500 to-purple-500', bgColor: 'from-violet-500/20 to-purple-500/10', borderColor: 'border-violet-500/30', popular: false },
-    { id: 'qimen', name: 'AI奇門遁甲', icon: '☯️', emoji: '奇門盤', description: '時空方位預測，把握人生關鍵時刻', features: ['格局分析', '吉兇方位', '時機選擇', '決策建議', '趨吉避兇', '商業決策'], color: 'from-cyan-500 to-blue-500', bgColor: 'from-cyan-500/20 to-blue-500/10', borderColor: 'border-cyan-500/30', popular: false },
-    { id: 'astrology', name: 'AI星座運勢', icon: '🌟', emoji: '星座命盤', description: '每日星座運勢預測，掌握人生方向', features: ['今日運勢', '本週運勢', '本月運勢', '年度運勢', '愛情運勢', '事業運勢'], color: 'from-yellow-500 to-orange-500', bgColor: 'from-yellow-500/20 to-orange-500/10', borderColor: 'border-yellow-500/30', popular: true },
-    { id: 'dream', name: 'AI周公解夢', icon: '🌙', emoji: '夢境解析', description: '夢境深度解析，探索潛意識信息', features: ['夢境解讀', '心理分析', '預兆提示', '成長建議', '潛意識探索', '靈性指引'], color: 'from-indigo-500 to-purple-500', bgColor: 'from-indigo-500/20 to-purple-500/10', borderColor: 'border-indigo-500/30', popular: false },
-  ];
-
-  const popularServices = aiServices.filter(s => s.popular);
-
-  return (
-    <div className="space-y-10">
-      {/* AI品牌展示區 */}
-      <div className="relative overflow-hidden rounded-3xl glass border border-cyan-500/20">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-purple-500/10"></div>
-        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px]"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/20 rounded-full blur-[80px]"></div>
-        
-        <div className="relative p-8 md:p-12">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="relative">
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl bg-gradient-to-br from-cyan-500 to-purple-500 flex items-center justify-center animate-float">
-                <span className="text-5xl md:text-6xl">🤖</span>
-              </div>
-              <div className="absolute -top-2 -right-2 px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/30">
-                AI驅動
-              </div>
-            </div>
-            
-            <div className="flex-1 text-center md:text-left">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">專業AI排盤系統</span>
-              </h2>
-              <p className="text-gray-400 mb-6 max-w-xl">基於千萬級玄學數據訓練，結合傳統易學智慧與現代AI技術，為您提供精準、專業、即時的命理分析服務</p>
-              <div className="flex flex-wrap justify-center md:justify-start gap-4">
-                <div className="flex items-center gap-2 text-sm text-gray-300"><span className="text-cyan-400">⚡</span> 3秒出結果</div>
-                <div className="flex items-center gap-2 text-sm text-gray-300"><span className="text-purple-400">📊</span> 深度解讀</div>
-                <div className="flex items-center gap-2 text-sm text-gray-300"><span className="text-pink-400">🔒</span> 隱私保護</div>
-                <div className="flex items-center gap-2 text-sm text-gray-300"><span className="text-amber-400">💎</span> 完全免費</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 熱門服務 */}
-      <div>
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-white flex items-center gap-2"><span className="text-2xl">🔥</span> 熱門服務</h3>
-          <span className="text-sm text-gray-500">最受歡迎的AI排盤</span>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {popularServices.map((service) => (
-            <div key={service.id} className={`group relative overflow-hidden rounded-2xl glass ${service.borderColor} hover:border-opacity-60 transition-all duration-300 cursor-pointer`}>
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.bgColor} opacity-0 group-hover:opacity-100 transition-opacity`}></div>
-              <div className="relative p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center text-3xl group-hover:scale-110 transition-transform`}>
-                    {service.icon}
-                  </div>
-                  <div className="px-2 py-1 rounded-full bg-red-500/20 text-red-400 text-xs font-medium">熱門</div>
-                </div>
-                <h4 className="text-lg font-bold text-white mb-2">{service.name}</h4>
-                <p className="text-sm text-gray-400 mb-4 line-clamp-2">{service.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {service.features.slice(0, 3).map((feature, i) => (<span key={i} className="text-xs px-2 py-1 rounded-lg bg-gray-800/50 text-gray-300">{feature}</span>))}
-                </div>
-                <button className={`w-full py-3 rounded-xl bg-gradient-to-r ${service.color} text-white font-semibold text-sm hover:opacity-90 transition flex items-center justify-center gap-2`}>
-                  <span>立即體驗</span>
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 全部AI服務 */}
-      <div>
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-white flex items-center gap-2"><span className="text-2xl">✨</span> 全部AI服務</h3>
-          <span className="text-sm text-gray-500">6項專業排盤服務</span>
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {aiServices.map((service) => (
-            <div key={service.id} className={`group glass rounded-2xl p-5 ${service.borderColor} hover:border-opacity-60 transition-all duration-300 cursor-pointer`}>
-              <div className="flex items-center gap-4 mb-3">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${service.color} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform`}>{service.icon}</div>
-                <div className="flex-1">
-                  <h4 className="text-base font-bold text-white">{service.name}</h4>
-                  <p className="text-xs text-gray-500">{service.emoji}</p>
-                </div>
-                {service.popular && <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 text-[10px] font-medium">熱門</span>}
-              </div>
-              <p className="text-xs text-gray-400 mb-3 line-clamp-2">{service.description}</p>
-              <div className="flex flex-wrap gap-1.5 mb-4">
-                {service.features.slice(0, 4).map((feature, i) => (<span key={i} className="text-[10px] px-2 py-0.5 rounded bg-gray-800/50 text-gray-400">{feature}</span>))}
-              </div>
-              <div className="flex items-center justify-between pt-3 border-t border-gray-800">
-                <span className="text-cyan-400 font-bold text-sm">免費</span>
-                <button className={`px-3 py-1.5 rounded-lg bg-gradient-to-r ${service.color} text-white text-xs font-medium hover:opacity-90 transition`}>開始排盤</button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 底部優勢說明 */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { icon: '⚡', title: '即時生成', desc: 'AI秒級回應', color: 'from-cyan-500 to-blue-500' },
-          { icon: '📊', title: '專業分析', desc: '深度解讀報告', color: 'from-purple-500 to-pink-500' },
-          { icon: '🔒', title: '隱私保護', desc: '數據加密存儲', color: 'from-amber-500 to-orange-500' },
-          { icon: '💎', title: '完全免費', desc: '無隱藏費用', color: 'from-violet-500 to-purple-500' },
-        ].map((item, i) => (
-          <div key={i} className="glass rounded-xl p-4 text-center group hover:scale-105 transition-transform">
-            <div className={`w-10 h-10 rounded-xl bg-gradient-to-r ${item.color} flex items-center justify-center text-xl mx-auto mb-2 group-hover:scale-110 transition-transform`}>{item.icon}</div>
-            <div className="text-sm font-semibold text-white">{item.title}</div>
-            <div className="text-xs text-gray-500">{item.desc}</div>
-          </div>
-        ))}
       </div>
     </div>
   );
 }
 
-// 大師卡片
-function DivinerCard({ diviner, onClick, index }) {
+// 先生卡片
+function DivinerCard({ diviner, onClick }) {
+  // 计算信用等级
   const getCreditLevel = (score) => {
-    if (score >= 90) return { level: '鑽石', emoji: '💎', color: 'from-cyan-400 via-purple-400 to-pink-400', bg: 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20' };
-    if (score >= 75) return { level: '金牌', emoji: '🥇', color: 'from-yellow-400 to-orange-400', bg: 'bg-gradient-to-r from-yellow-500/20 to-orange-500/20' };
-    if (score >= 60) return { level: '銀牌', emoji: '🥈', color: 'from-gray-300 to-gray-400', bg: 'bg-gradient-to-r from-gray-500/20 to-slate-500/20' };
-    return { level: '普通', emoji: '⭐', color: 'from-blue-400 to-indigo-400', bg: 'bg-gradient-to-r from-blue-500/20 to-indigo-500/20' };
-  };
-
-  const getSpecialtyCategory = (specialty) => {
-    const categoryMap = {
-      '八字命理': { key: 'bazi', color: 'from-amber-500 to-orange-500' }, '紫微斗數': { key: 'ziwei', color: 'from-purple-500 to-pink-500' },
-      '風水布局': { key: 'fengshui', color: 'from-green-500 to-emerald-500' }, '塔羅占卜': { key: 'tarot', color: 'from-blue-500 to-indigo-500' },
-      '星座運勢': { key: 'astrology', color: 'from-violet-500 to-purple-500' }, '奇門遁甲': { key: 'qimen', color: 'from-cyan-500 to-blue-500' },
-      '易經占卜': { key: 'qimen', color: 'from-cyan-500 to-blue-500' }, '姓名分析': { key: 'bazi', color: 'from-amber-500 to-orange-500' },
-      '手相分析': { key: 'bazi', color: 'from-amber-500 to-orange-500' }, '夢境解析': { key: 'tarot', color: 'from-blue-500 to-indigo-500' },
-      '財運分析': { key: 'bazi', color: 'from-amber-500 to-orange-500' }, '生命靈數': { key: 'astrology', color: 'from-violet-500 to-purple-500' },
-      '姻緣測算': { key: 'ziwei', color: 'from-purple-500 to-pink-500' }, '生肖運勢': { key: 'bazi', color: 'from-amber-500 to-orange-500' },
-    };
-    return categoryMap[specialty?.[0]] || { key: 'bazi', color: 'from-purple-500 to-pink-500' };
+    if (score >= 90) return { level: '钻石', emoji: '🥇', color: 'from-yellow-400 to-yellow-600' };
+    if (score >= 75) return { level: '金牌', emoji: '🥈', color: 'from-gray-300 to-gray-500' };
+    if (score >= 60) return { level: '银牌', emoji: '🥉', color: 'from-orange-300 to-orange-500' };
+    return { level: '普通', emoji: '⭐', color: 'from-blue-400 to-blue-600' };
   };
 
   const creditInfo = getCreditLevel(diviner.creditScore);
-  const categoryInfo = getSpecialtyCategory(diviner.specialty);
 
   return (
-    <div onClick={onClick} className="group relative rounded-2xl cursor-pointer transition-all duration-500 hover:scale-[1.02]" style={{ animationDelay: `${index * 100}ms` }}>
-      <div className="absolute inset-0 glass rounded-2xl group-hover:border-purple-500/30 transition-colors"></div>
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-purple-600/10 via-transparent to-pink-600/10"></div>
-      
-      <div className="relative p-5 space-y-3">
+    <div
+      onClick={onClick}
+      className="group relative overflow-hidden rounded-lg border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-black p-6 cursor-pointer transition hover:border-purple-400/60 hover:shadow-lg hover:shadow-purple-500/20"
+    >
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition" style={{
+        background: `linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, transparent 100%)`,
+      }}></div>
+
+      <div className="relative z-10 space-y-4">
+        {/* 头像和在线状态 */}
         <div className="flex items-start justify-between">
-          <div className="relative">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
-              {diviner.avatar || '✨'}
-            </div>
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-[#0a0a0f] flex items-center justify-center">
-              <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
-            </div>
-          </div>
-          <div className={`px-2 py-1 rounded-lg ${creditInfo.bg} text-xs font-medium`}>
-            <span className={`bg-gradient-to-r ${creditInfo.color} bg-clip-text text-transparent`}>{creditInfo.emoji} {creditInfo.level}</span>
+          <div className="text-5xl">{diviner.avatar || '✨'}</div>
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+            <span className="text-xs text-green-400">在线</span>
           </div>
         </div>
 
+        {/* 名字和职位 */}
         <div>
-          <h3 className="text-base font-bold text-white group-hover:text-purple-300 transition-colors">{diviner.name}</h3>
-          <p className="text-xs text-purple-400/80">{diviner.title}</p>
+          <h4 className="text-lg font-bold text-white">{diviner.name}</h4>
+          <p className="text-sm text-purple-400">{diviner.title}</p>
         </div>
 
-        <div className="flex flex-wrap gap-1.5">
-          {diviner.specialty?.slice(0, 3).map((spec, i) => (
-            <span key={i} className={`text-[10px] px-2 py-0.5 rounded-full bg-gradient-to-r ${categoryInfo.color} text-white font-medium`}>{spec}</span>
+        {/* 评分 */}
+        <div className="flex items-center justify-between">
+          <div className="flex gap-1">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                size={14}
+                className={i < Math.floor(diviner.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}
+              />
+            ))}
+          </div>
+          <span className="text-xs text-gray-400">{diviner.rating?.toFixed(1) || 0}</span>
+        </div>
+
+        {/* 信用指数 */}
+        <div className="flex items-center gap-2">
+          <span className="text-sm">{creditInfo.emoji}</span>
+          <div className="flex-1 bg-gray-700 rounded-full h-2">
+            <div
+              className={`bg-gradient-to-r ${creditInfo.color} h-2 rounded-full`}
+              style={{ width: `${(diviner.creditScore / 100) * 100}%` }}
+            ></div>
+          </div>
+          <span className="text-xs text-gray-400">{diviner.creditScore}/100</span>
+        </div>
+
+        {/* 统计信息 */}
+        <div className="text-xs text-gray-400 space-y-1">
+          <div>📊 订单: {diviner.totalOrders}</div>
+          <div>⏱️ 平均: {diviner.responseTime}</div>
+        </div>
+
+        {/* 价格 */}
+        <div className="pt-4 border-t border-purple-500/20">
+          <div className="text-center">
+            <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text">
+              HK${diviner.price}
+            </span>
+            <p className="text-xs text-gray-500">起价</p>
+          </div>
+        </div>
+
+        {/* 按钮 */}
+        <button className="w-full mt-4 py-2 rounded bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-sm hover:from-purple-500 hover:to-pink-500 transition">
+          查看详情
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// 先生详情页
+function DivinerDetailPage({ diviner, onBack, onBooking, onReview }) {
+  const [reviews, setReviews] = useState([]);
+  const [activeTab, setActiveTab] = useState('info');
+
+  useEffect(() => {
+    fetchReviews();
+  }, [diviner._id]);
+
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/diviners/${diviner._id}/reviews`);
+      setReviews(response.data);
+    } catch (error) {
+      console.error('获取评价失败:', error);
+    }
+  };
+
+  // 计算评分维度平均值
+  const calculateDimensionAverages = () => {
+    if (reviews.length === 0) return {};
+    
+    const dimensions = ['accuracy', 'communication', 'professionalism', 'punctuality', 'valueForMoney'];
+    const averages = {};
+    
+    dimensions.forEach(dim => {
+      const sum = reviews.reduce((acc, review) => acc + (review.dimensions?.[dim] || 0), 0);
+      averages[dim] = (sum / reviews.length).toFixed(1);
+    });
+    
+    return averages;
+  };
+
+  const dimensionAverages = calculateDimensionAverages();
+
+  return (
+    <div className="space-y-8">
+      <button
+        onClick={onBack}
+        className="text-purple-400 hover:text-purple-300 transition flex items-center gap-2"
+      >
+        ← 返回
+      </button>
+
+      {/* 头部信息 */}
+      <div className="rounded-lg border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-black p-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* 左侧：头像 */}
+          <div className="flex flex-col items-center">
+            <div className="text-8xl mb-4">{diviner.avatar || '✨'}</div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
+              <span className="text-green-400 font-semibold">在线</span>
+            </div>
+          </div>
+
+          {/* 中间：基本信息 */}
+          <div className="space-y-4">
+            <div>
+              <h2 className="text-3xl font-bold text-white">{diviner.name}</h2>
+              <p className="text-xl text-purple-400">{diviner.title}</p>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Star size={18} className="text-yellow-400 fill-yellow-400" />
+                <span className="text-lg font-semibold">{diviner.rating?.toFixed(1) || 0}</span>
+                <span className="text-gray-500">({reviews.length} 条评价)</span>
+              </div>
+            </div>
+
+            <p className="text-gray-300">{diviner.bio}</p>
+
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-2 text-gray-400">
+                <Eye size={16} />
+                <span>完成率: {diviner.completedOrders}/{diviner.totalOrders}</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-400">
+                <Zap size={16} />
+                <span>平均回复: {diviner.responseTime}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 右侧：信用指数和按钮 */}
+          <div className="space-y-4">
+            {/* 信用指数卡片 */}
+            <div className="p-4 rounded-lg bg-gradient-to-br from-purple-900/30 to-black border border-purple-500/30">
+              <div className="text-center mb-3">
+                <div className="text-3xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text">
+                  {diviner.creditScore}
+                </div>
+                <p className="text-xs text-gray-400">信用指数</p>
+              </div>
+              <div className="bg-gray-700 rounded-full h-2 mb-3">
+                <div
+                  className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full"
+                  style={{ width: `${diviner.creditScore}%` }}
+                ></div>
+              </div>
+              <p className="text-xs text-center text-purple-400 font-semibold">
+                {diviner.creditScore >= 90 ? '🥇 钻石' : diviner.creditScore >= 75 ? '🥈 金牌' : diviner.creditScore >= 60 ? '🥉 银牌' : '⭐ 普通'}
+              </p>
+            </div>
+
+            {/* 按钮 */}
+            <button
+              onClick={onBooking}
+              className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:from-purple-500 hover:to-pink-500 transition flex items-center justify-center gap-2"
+            >
+              <Calendar size={20} />
+              付费预约 HK${diviner.price}
+            </button>
+            <button
+              onClick={onReview}
+              className="w-full py-3 rounded-lg border border-purple-500/50 text-purple-400 font-semibold hover:bg-purple-500/10 transition flex items-center justify-center gap-2"
+            >
+              <Heart size={20} />
+              给先生评分
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* 标签页 */}
+      <div className="border-b border-purple-500/30">
+        <div className="flex gap-8">
+          {['info', 'dimensions', 'reviews'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`py-4 px-2 border-b-2 transition ${
+                activeTab === tab
+                  ? 'border-purple-500 text-purple-400'
+                  : 'border-transparent text-gray-500 hover:text-gray-400'
+              }`}
+            >
+              {tab === 'info' ? '专长领域' : tab === 'dimensions' ? '评分维度' : '用户评价'}
+            </button>
           ))}
         </div>
+      </div>
 
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center gap-1">
-            <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-            <span className="text-white font-medium">{diviner.rating?.toFixed(1) || 0}</span>
-            <span
+      {/* 内容 */}
+      {activeTab === 'info' && (
+        <div className="space-y-4">
+          <h3 className="text-xl font-bold text-purple-400">专长领域</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {diviner.specialty?.map((spec, i) => (
+              <div
+                key={i}
+                className="p-4 rounded-lg border border-purple-500/30 bg-purple-900/10 text-center text-purple-300 hover:border-purple-400/60 transition"
+              >
+                {spec}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'dimensions' && (
+        <div className="space-y-4">
+          <h3 className="text-xl font-bold text-purple-400">评分维度</h3>
+          <div className="space-y-4">
+            {[
+              { name: '准确度', key: 'accuracy', weight: '30%' },
+              { name: '沟通能力', key: 'communication', weight: '20%' },
+              { name: '专业性', key: 'professionalism', weight: '25%' },
+              { name: '准时性', key: 'punctuality', weight: '10%' },
+              { name: '性价比', key: 'valueForMoney', weight: '15%' },
+            ].map((dim) => (
+              <div key={dim.key} className="p-4 rounded-lg border border-purple-500/20 bg-purple-900/5">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-white font-semibold">{dim.name}</span>
+                  <span className="text-xs text-gray-400">权重: {dim.weight}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        size={16}
+                        className={i < Math.floor(dimensionAverages[dim.key] || 0) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-400">{dimensionAverages[dim.key] || 0}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'reviews' && (
+        <div className="space-y-4">
+          <h3 className="text-xl font-bold text-purple-400">用户评价</h3>
+          {reviews.length > 0 ? (
+            reviews.slice(0, 5).map((review, i) => (
+              <div key={i} className="p-4 rounded-lg border border-purple-500/20 bg-purple-900/5">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} size={14} className="fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-500">{review.title}</span>
+                </div>
+                <p className="text-gray-300 text-sm">{review.content}</p>
+                {review.tags?.length > 0 && (
+                  <div className="flex gap-2 mt-2 flex-wrap">
+                    {review.tags.map((tag, j) => (
+                      <span key={j} className="text-xs px-2 py-1 rounded bg-purple-500/20 text-purple-300">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-400">暂无评价</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// 预约页
+function BookingPage({ diviner, onBack }) {
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [service, setService] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const services = [
+    { name: '基础咨询', price: diviner.price },
+    { name: '深度分析', price: Math.round(diviner.price * 1.5) },
+    { name: '完整方案', price: diviner.price * 2 },
+  ];
+
+  const handleSubmit = async () => {
+    if (date && time && service) {
+      try {
+        const selectedService = services.find(s => s.name === service);
+        await axios.post(`${API_BASE_URL}/appointments`, {
+          divinerId: diviner._id,
+          serviceType: service,
+          scheduledTime: new Date(`${date}T${time}`),
+          duration: 60,
+          price: selectedService.price,
+        });
+        setSubmitted(true);
+        setTimeout(() => onBack(), 2000);
+      } catch (error) {
+        console.error('预约失败:', error);
+      }
+    }
+  };
+
+  if (submitted) {
+    return (
+      <div className="flex items-center justify-center min-h-96">
+        <div className="text-center space-y-4">
+          <div className="text-6xl animate-bounce">💎</div>
+          <h3 className="text-2xl font-bold text-purple-400">预约成功！</h3>
+          <p className="text-gray-400">请等待 {diviner.name} 的确认</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6 max-w-2xl mx-auto">
+      <button
+        onClick={onBack}
+        className="text-purple-400 hover:text-purple-300 transition flex items-center gap-2"
+      >
+        ← 返回
+      </button>
+
+      <div className="rounded-lg border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-black p-8">
+        <h2 className="text-2xl font-bold mb-2 text-white">预约 {diviner.name}</h2>
+        <p className="text-gray-400 mb-6">选择服务类型和时间</p>
+
+        <div className="space-y-6">
+          {/* 服务选择 */}
+          <div>
+            <label className="block text-sm font-semibold text-purple-400 mb-3">
+              选择服务
+            </label>
+            <div className="space-y-2">
+              {services.map((svc) => (
+                <label key={svc.name} className="flex items-center gap-3 p-3 rounded-lg border border-purple-500/30 cursor-pointer hover:bg-purple-900/10 transition">
+                  <input
+                    type="radio"
+                    name="service"
+                    value={svc.name}
+                    checked={service === svc.name}
+                    onChange={(e) => setService(e.target.value)}
+                    className="w-4 h-4"
+                  />
+                  <span className="flex-1 text-white">{svc.name}</span>
+                  <span className="text-purple-400 font-semibold">HK${svc.price}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* 日期选择 */}
+          <div>
+            <label className="block text-sm font-semibold text-purple-400 mb-2">
+              选择日期
+            </label>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="w-full p-3 rounded-lg bg-black border border-purple-500/30 text-white focus:border-purple-400 focus:outline-none transition"
+            />
+          </div>
+
+          {/* 时间选择 */}
+          <div>
+            <label className="block text-sm font-semibold text-purple-400 mb-2">
+              选择时间
+            </label>
+            <select
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="w-full p-3 rounded-lg bg-black border border-purple-500/30 text-white focus:border-purple-400 focus:outline-none transition"
+            >
+              <option value="">选择时间段</option>
+              <option value="09:00">09:00 - 10:00</option>
+              <option value="10:00">10:00 - 11:00</option>
+              <option value="14:00">14:00 - 15:00</option>
+              <option value="15:00">15:00 - 16:00</option>
+              <option value="19:00">19:00 - 20:00</option>
+              <option value="20:00">20:00 - 21:00</option>
+            </select>
+          </div>
+
+          {/* 总价 */}
+          {service && (
+            <div className="p-4 rounded-lg bg-purple-900/20 border border-purple-500/30">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-400">总价</span>
+                <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text">
+                  HK${services.find(s => s.name === service)?.price}
+                </span>
+              </div>
+            </div>
+          )}
+
+          <button
+            onClick={handleSubmit}
+            disabled={!date || !time || !service}
+            className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:from-purple-500 hover:to-pink-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            确认预约
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 评价页
+function ReviewPage({ diviner, onBack }) {
+  const [ratings, setRatings] = useState({
+    accuracy: 5,
+    communication: 5,
+    professionalism: 5,
+    punctuality: 5,
+    valueForMoney: 5,
+  });
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [tags, setTags] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
+
+  const availableTags = ['准确', '专业', '有耐心', '回复快', '值得推荐', '很有帮助'];
+
+  const handleSubmit = async () => {
+    if (title && content) {
+      try {
+        const overallRating = Math.round(
+          (ratings.accuracy * 0.3 + ratings.communication * 0.2 + ratings.professionalism * 0.25 + ratings.punctuality * 0.1 + ratings.valueForMoney * 0.15)
+        );
+
+        await axios.post(`${API_BASE_URL}/reviews`, {
+          divinerId: diviner._id,
+          overallRating,
+          dimensions: ratings,
+          title,
+          content,
+          tags,
+        });
+        setSubmitted(true);
+        setTimeout(() => onBack(), 2000);
+      } catch (error) {
+        console.error('评价失败:', error);
+      }
+    }
+  };
+
+  if (submitted) {
+    return (
+      <div className="flex items-center justify-center min-h-96">
+        <div className="text-center space-y-4">
+          <div className="text-6xl animate-bounce">⭐</div>
+          <h3 className="text-2xl font-bold text-purple-400">评价已提交！</h3>
+          <p className="text-gray-400">感谢你的评价</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6 max-w-2xl mx-auto">
+      <button
+        onClick={onBack}
+        className="text-purple-400 hover:text-purple-300 transition flex items-center gap-2"
+      >
+        ← 返回
+      </button>
+
+      <div className="rounded-lg border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-black p-8">
+        <h2 className="text-2xl font-bold mb-2 text-white">给 {diviner.name} 评分</h2>
+        <p className="text-gray-400 mb-6">你的评价将帮助其他用户了解先生的服务质量</p>
+
+        <div className="space-y-6">
+          {/* 评分维度 */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-purple-400">评分维度</h3>
+            {[
+              { key: 'accuracy', name: '准确度', weight: '30%' },
+              { key: 'communication', name: '沟通能力', weight: '20%' },
+              { key: 'professionalism', name: '专业性', weight: '25%' },
+              { key: 'punctuality', name: '准时性', weight: '10%' },
+              { key: 'valueForMoney', name: '性价比', weight: '15%' },
+            ].map((dim) => (
+              <div key={dim.key} className="p-4 rounded-lg border border-purple-500/20 bg-purple-900/5">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-white font-semibold">{dim.name}</span>
+                  <span className="text-xs text-gray-400">权重: {dim.weight}</span>
+                </div>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      onClick={() => setRatings({ ...ratings, [dim.key]: star })}
+                      className="transition"
+                    >
+                      <Star
+                        size={24}
+                        className={ratings[dim.key] >= star ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 评价标题 */}
+          <div>
+            <label className="block text-sm font-semibold text-purple-400 mb-2">
+              评价标题
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="用一句话总结你的体验"
+              className="w-full p-3 rounded-lg bg-black border border-purple-500/30 text-white placeholder-gray-600 focus:border-purple-400 focus:outline-none transition"
+            />
+          </div>
+
+          {/* 评价内容 */}
+          <div>
+            <label className="block text-sm font-semibold text-purple-400 mb-2">
+              评价内容
+            </label>
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="详细描述你的体验..."
+              className="w-full h-32 p-3 rounded-lg bg-black border border-purple-500/30 text-white placeholder-gray-600 focus:border-purple-400 focus:outline-none transition"
+            />
+          </div>
+
+          {/* 标签选择 */}
+          <div>
+            <label className="block text-sm font-semibold text-purple-400 mb-2">
+              选择标签
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {availableTags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => {
+                    if (tags.includes(tag)) {
+                      setTags(tags.filter(t => t !== tag));
+                    } else {
+                      setTags([...tags, tag]);
+                    }
+                  }}
+                  className={`px-3 py-1 rounded-full text-sm transition ${
+                    tags.includes(tag)
+                      ? 'bg-purple-600 text-white'
+                      : 'border border-purple-500/30 text-gray-400 hover:text-purple-400'
+                  }`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={handleSubmit}
+            disabled={!title || !content}
+            className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:from-purple-500 hover:to-pink-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            提交评价
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 个人资料页
+function ProfilePage({ onBack }) {
+  return (
+    <div className="space-y-6 max-w-2xl mx-auto">
+      <button
+        onClick={onBack}
+        className="text-purple-400 hover:text-purple-300 transition flex items-center gap-2"
+      >
+        ← 返回
+      </button>
+
+      <div className="rounded-lg border border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-black p-8">
+        <h2 className="text-2xl font-bold mb-6 text-white">我的账户</h2>
+
+        <div className="space-y-4">
+          <div className="p-4 rounded-lg bg-purple-900/10 border border-purple-500/20">
+            <p className="text-gray-500 text-sm">用户名</p>
+            <p className="text-white font-semibold">用户 #12345</p>
+          </div>
+
+          <div className="p-4 rounded-lg bg-purple-900/10 border border-purple-500/20">
+            <p className="text-gray-500 text-sm">我的订单</p>
+            <p className="text-white font-semibold">5 条</p>
+          </div>
+
+          <div className="p-4 rounded-lg bg-purple-900/10 border border-purple-500/20">
+            <p className="text-gray-500 text-sm">我的评价</p>
+            <p className="text-white font-semibold">3 条</p>
+          </div>
+
+          <div className="p-4 rounded-lg bg-purple-900/10 border border-purple-500/20">
+            <p className="text-gray-500 text-sm">账户余额</p>
+            <p className="text-white font-semibold">HK$0</p>
+          </div>
+        </div>
+
+        <button className="w-full mt-6 py-3 rounded-lg border border-red-500/50 text-red-400 font-semibold hover:bg-red-500/10 transition">
+          退出登录
+        </button>
+      </div>
+    </div>
+  );
+}
