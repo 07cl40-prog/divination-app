@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   CaiShen Font System — 香港 & 欧美双市场优化
+   ============================================================
+   英文标题: Playfair Display (衬线·奢雅品牌感)
+   英文正文: Inter (无衬线·高可读性)
+   中文正文: Noto Sans SC (简体) + Noto Sans HK (繁体) CDN加载
+   中文系统: PingFang SC/HK, Microsoft YaHei 本地fallback
+   ============================================================ */
+
+@layer base {
+  /* CSS 变量：方便全局统一管理字体 */
+  :root {
+    --font-display: 'Playfair Display', 'Noto Serif SC', 'Georgia', serif;
+    --font-body: 'Inter', 'Noto Sans SC', 'Noto Sans HK', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'PingFang HK', 'Microsoft YaHei', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    --font-cn: 'Noto Sans SC', 'Noto Sans HK', 'PingFang SC', 'PingFang HK', 'Microsoft YaHei', 'STHeiti', sans-serif;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,11 +31,23 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-family: var(--font-body);
   background: #000;
   color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* CJK 文字优化：控制行间距避免拥挤 */
+  line-height: 1.6;
+}
+
+/* 品牌标题字体 */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* 中文专用 */
+.font-cn {
+  font-family: var(--font-cn);
 }
 
 /* Hide scrollbar but allow scrolling */
@@ -43,4 +73,44 @@ body {
 
 .animate-pulse-gold {
   animation: pulse-gold 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   字体渲染微调
+   ============================================================ */
+
+/* 英文大标题：Playfair Display 增强视觉冲击 */
+h1, .hero-title {
+  font-family: var(--font-display);
+}
+
+/* 产品名称等中文标题 */
+h2, h3 {
+  font-family: var(--font-cn);
+}
+
+/* 按钮和导航保持 Inter */
+button, nav, .nav-link {
+  font-family: var(--font-body);
+}
+
+/* 价格数字用 Inter 确保等宽对齐 */
+.price, .font-price {
+  font-family: 'Inter', 'Roboto Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 繁体中文优化：lang="zh-HK" 自动使用 Noto Sans HK */
+:lang(zh-HK) {
+  font-family: 'Noto Sans HK', 'PingFang HK', var(--font-body);
+}
+
+:lang(zh-TW) {
+  font-family: 'Noto Sans HK', 'PingFang HK', var(--font-body);
+}
+
+/* 文字选中颜色 */
+::selection {
+  background: rgba(234, 179, 8, 0.3);
+  color: #fff;
 }

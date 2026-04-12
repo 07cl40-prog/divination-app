@@ -15,7 +15,7 @@ const InstagramIcon = ({ size = 16 }) => (
 const PRODUCTS = [
   {
     id: 1,
-    name: 'AI财神 · 毛绒挂件款',
+    name: 'AI財神 · 毛絨掛件款',
     nameEn: 'CaiShen AI Plush Keychain',
     price: 59,
     originalPrice: 89,
@@ -23,15 +23,15 @@ const PRODUCTS = [
     tagColor: 'bg-red-700',
     image: '/products/product1.jpg',
     images: ['/products/product1.jpg', '/products/product2.jpg', '/products/product3.jpg'],
-    description: '掌心大小的精致毛绒挂件，AI生成东方美学纹样，搭配流苏，可悬挂于手机、钥匙、背包。新年送礼首选。',
-    features: ['AI生成东方纹样', '优质毛绒面料', '附赠流苏挂绳', '精美礼盒包装'],
+    description: '掌心大小的精緻毛絨掛件，AI生成東方美學紋樣，搭配流蘇，可懸掛於手機、鑰匙、背包。新年送禮首選。',
+    features: ['AI生成東方紋樣', '優質毛絨面料', '附赠流蘇掛繩', '精美禮盒包裝'],
     rating: 4.9,
     reviews: 284,
     badge: 'BESTSELLER'
   },
   {
     id: 2,
-    name: 'AI财神 · 树脂摆件款',
+    name: 'AI財神 · 樹脂擺件款',
     nameEn: 'CaiShen AI Resin Ornament',
     price: 79,
     originalPrice: 119,
@@ -39,15 +39,15 @@ const PRODUCTS = [
     tagColor: 'bg-yellow-600',
     image: '/products/product2.jpg',
     images: ['/products/product2.jpg', '/products/product3.jpg', '/products/product1.jpg'],
-    description: '高品质树脂财神摆件，AI融合传统金漆工艺与现代极简美学，居家/办公室招财镇店之宝。',
-    features: ['手工树脂铸造', '金漆AI纹样', '防潮耐用', '附底座支架'],
+    description: '高品質樹脂財神擺件，AI融合傳統金漆工藝與現代極簡美學，居家/辦公室招財鎮店之寶。',
+    features: ['手工樹脂鑄造', '金漆AI紋樣', '防潮耐用', '附底座支架'],
     rating: 4.8,
     reviews: 156,
     badge: 'NEW'
   },
   {
     id: 3,
-    name: 'AI财神 · 文曲星礼盒',
+    name: 'AI財神 · 文曲星禮盒',
     nameEn: 'CaiShen AI Scholar Set',
     price: 99,
     originalPrice: 149,
@@ -55,8 +55,8 @@ const PRODUCTS = [
     tagColor: 'bg-purple-800',
     image: '/products/product3.jpg',
     images: ['/products/product3.jpg', '/products/product4.jpg', '/products/product5.jpg'],
-    description: '文曲星与财神双神合一，AI智能设计学业财富双加持。内含摆件×1 + 毛绒挂件×1，超值礼盒装。',
-    features: ['双神合一设计', 'AI智能寓意', '礼盒套装含2件', '限量编号证书'],
+    description: '文曲星與財神雙神合一，AI智能設計學業財富雙加持。內含擺件×1 + 毛絨掛件×1，超值禮盒裝。',
+    features: ['雙神合一設計', 'AI智能寓意', '禮盒套裝含2件', '限量編號證書'],
     rating: 5.0,
     reviews: 87,
     badge: 'LIMITED'
@@ -71,8 +71,8 @@ const PRODUCTS = [
     tagColor: 'bg-amber-700',
     image: '/products/product4.jpg',
     images: ['/products/product4.jpg', '/products/product5.jpg', '/products/product1.jpg'],
-    description: '收藏级精品礼盒，内含全套4款AI财神系列。适合高端送礼，附真皮包装箱与鉴定证书。',
-    features: ['全套4件套', '真皮包装箱', '收藏编号证书', '高端礼盒送礼'],
+    description: '收藏級精品禮盒，內含全套4款AI財神系列。適合高端送禮，附真皮包裝箱與鑑定證書。',
+    features: ['全套4件套', '真皮包裝箱', '收藏編號證書', '高端禮盒送禮'],
     rating: 5.0,
     reviews: 42,
     badge: 'EXCLUSIVE'
@@ -80,10 +80,10 @@ const PRODUCTS = [
 ];
 
 const REVIEWS = [
-  { name: 'Linda W.', location: 'Los Angeles, USA', text: 'Absolutely stunning! The AI-generated patterns are unlike anything I\'ve seen. My office colleagues all asked where I got it.', rating: 5, product: '毛绒挂件款' },
-  { name: 'Michael C.', location: 'London, UK', text: 'Fast shipping to UK and the packaging was luxurious. The resin ornament sits proudly on my desk. Highly recommend!', rating: 5, product: '树脂摆件款' },
-  { name: 'Sophie L.', location: 'Toronto, Canada', text: 'Bought as a Chinese New Year gift for my parents. They absolutely loved it. The quality exceeded expectations.', rating: 5, product: '文曲星礼盒' },
-  { name: 'James K.', location: 'Sydney, Australia', text: 'The AI aesthetic is fascinating — traditional Chinese culture meets futuristic design. Will buy more!', rating: 5, product: '毛绒挂件款' },
+  { name: 'Linda W.', location: 'Los Angeles, USA', text: 'Absolutely stunning! The AI-generated patterns are unlike anything I\'ve seen. My office colleagues all asked where I got it.', rating: 5, product: '毛絨掛件款' },
+  { name: 'Michael C.', location: 'London, UK', text: 'Fast shipping to UK and the packaging was luxurious. The resin ornament sits proudly on my desk. Highly recommend!', rating: 5, product: '樹脂擺件款' },
+  { name: 'Sophie L.', location: 'Toronto, Canada', text: 'Bought as a Chinese New Year gift for my parents. They absolutely loved it. The quality exceeded expectations.', rating: 5, product: '文曲星禮盒' },
+  { name: 'James K.', location: 'Sydney, Australia', text: 'The AI aesthetic is fascinating — traditional Chinese culture meets futuristic design. Will buy more!', rating: 5, product: '毛絨掛件款' },
 ];
 
 function StarRating({ rating }) {
@@ -124,16 +124,16 @@ function ProductCard({ product, onView, onQuickAdd }) {
           <span className="text-xs text-gray-500">({product.reviews})</span>
         </div>
         <div className="flex items-center gap-3 mb-4">
-          <span className="text-2xl font-black text-yellow-400">${product.price}</span>
+          <span className="price text-2xl font-black text-yellow-400">${product.price}</span>
           <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
           <span className="text-xs text-red-400 font-semibold bg-red-950/50 px-2 py-0.5 rounded">-{Math.round((1-product.price/product.originalPrice)*100)}%</span>
         </div>
         <button onClick={() => onView(product)} className="w-full py-2.5 bg-gradient-to-r from-red-800 to-red-700 hover:from-red-700 hover:to-red-600 text-white text-sm font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
-          <ShoppingBag size={15} /> 查看详情
+          <ShoppingBag size={15} /> View Details
         </button>
         {onQuickAdd && (
           <button onClick={() => onQuickAdd(product)} className="w-full py-2 mt-2 bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 hover:to-amber-500 text-black text-sm font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
-            <Plus size={14} /> 快速加入
+            <Plus size={14} /> Quick Add
           </button>
         )}
       </div>
@@ -152,10 +152,10 @@ function Navbar({ currentPage, setCurrentPage, cartCount, setShowCart }) {
   }, []);
 
   const navItems = [
-    { key: 'home', label: '首页', labelEn: 'Home' },
-    { key: 'shop', label: '全部商品', labelEn: 'Shop' },
-    { key: 'story', label: '品牌故事', labelEn: 'Story' },
-    { key: 'contact', label: '联系我们', labelEn: 'Contact' },
+    { key: 'home', label: '首頁 Home', labelEn: 'Home' },
+    { key: 'shop', label: '全部商品 Shop', labelEn: 'Shop' },
+    { key: 'story', label: '品牌故事 Story', labelEn: 'Story' },
+    { key: 'contact', label: '聯絡我們 Contact', labelEn: 'Contact' },
   ];
 
   return (
@@ -165,7 +165,7 @@ function Navbar({ currentPage, setCurrentPage, cartCount, setShowCart }) {
           <button onClick={() => setCurrentPage('home')} className="flex items-center gap-2 group">
             <div className="w-9 h-9 bg-gradient-to-br from-red-700 to-yellow-600 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition-transform">🧧</div>
             <div>
-              <div className="text-white font-black text-lg tracking-tight leading-none">CaiShen</div>
+              <div className="font-display text-white font-black text-lg tracking-tight leading-none">CaiShen</div>
               <div className="text-yellow-600/80 text-[9px] tracking-[0.2em] uppercase">AI Fortune Art</div>
             </div>
           </button>
@@ -215,33 +215,33 @@ function Hero({ setCurrentPage }) {
             <div className="inline-flex items-center gap-2 bg-yellow-950/60 border border-yellow-800/40 text-yellow-400 text-xs font-bold px-4 py-1.5 rounded-full mb-6">
               <Sparkles size={12} /> AI Meets Ancient Fortune
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-4">
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-4">
               <span className="bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent">CaiShen</span>
               <br />
-              <span className="text-white">财神文创</span>
+              <span className="font-cn text-white">财神文创</span>
             </h1>
             <p className="text-lg text-gray-400 mb-3 max-w-lg leading-relaxed">
-              全球首款 AI 融合东方传统美学的文创品牌。<br />
-              每一件作品，皆由人工智能学习千年财神文化后创作。
+              World's First AI-Powered Traditional Fortune Art Brand.<br />
+              Every piece, crafted by AI trained on millennia of CaiShen culture.
             </p>
             <p className="text-sm text-yellow-600/80 mb-8 max-w-lg">
-              World's First AI-Powered Traditional Fortune Art Brand. Authentic Eastern aesthetics, reimagined by artificial intelligence.
+              全球首款 AI 融合东方传统美学的文创品牌。
             </p>
             <div className="flex flex-wrap gap-4">
               <button onClick={() => setCurrentPage('shop')} className="group bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white font-bold px-8 py-4 rounded-2xl transition-all duration-200 flex items-center gap-3 shadow-xl shadow-red-900/40 hover:shadow-red-800/60">
                 <ShoppingBag size={18} />
-                探索全部商品
+                Shop All Products
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <button onClick={() => setCurrentPage('story')} className="border border-yellow-800/60 text-yellow-400 hover:bg-yellow-950/50 font-bold px-8 py-4 rounded-2xl transition-all duration-200">
-                品牌故事
+                Our Story
               </button>
             </div>
             <div className="flex items-center gap-8 mt-12 pt-8 border-t border-white/10">
-              <div><div className="text-2xl font-black text-white">50K+</div><div className="text-xs text-gray-500">全球用户</div></div>
-              <div><div className="text-2xl font-black text-white">4.9</div><div className="text-xs text-gray-500">平均评分</div></div>
-              <div><div className="text-2xl font-black text-white">36</div><div className="text-xs text-gray-500">国家地区</div></div>
-              <div><div className="text-2xl font-black text-white">7-14</div><div className="text-xs text-gray-500">天达全球</div></div>
+              <div><div className="text-2xl font-black text-white">50K+</div><div className="text-xs text-gray-500">Global Users</div></div>
+              <div><div className="text-2xl font-black text-white">4.9★</div><div className="text-xs text-gray-500">Avg Rating</div></div>
+              <div><div className="text-2xl font-black text-white">36</div><div className="text-xs text-gray-500">Countries</div></div>
+              <div><div className="text-2xl font-black text-white">7-14</div><div className="text-xs text-gray-500">Days Worldwide</div></div>
             </div>
           </div>
           <div className="relative hidden lg:flex justify-center">
@@ -266,11 +266,11 @@ function ProductShowcase({ setCurrentPage }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-12">
           <div>
-            <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2">Featured Collection</div>
-            <h2 className="text-4xl font-black text-white">热门精选</h2>
+            <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2 font-display">Featured Collection</div>
+            <h2 className="text-4xl font-black text-white">Popular Picks</h2>
           </div>
           <button onClick={() => setCurrentPage('shop')} className="hidden sm:flex items-center gap-2 text-yellow-400 hover:text-yellow-300 text-sm font-semibold transition-colors">
-            查看全部 <ChevronRight size={16} />
+            View All <ChevronRight size={16} />
           </button>
         </div>
         <div className="grid sm:grid-cols-2 gap-6">
@@ -288,11 +288,11 @@ function ProductShowcase({ setCurrentPage }) {
                 <p className="text-gray-400 text-sm mb-4 leading-relaxed">{p.description.slice(0,80)}...</p>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl font-black text-yellow-400">${p.price}</span>
+                    <span className="price text-2xl font-black text-yellow-400">${p.price}</span>
                     <span className="text-sm text-gray-500 line-through">${p.originalPrice}</span>
                   </div>
                   <button onClick={() => setCurrentPage('shop')} className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold text-sm px-5 py-2 rounded-xl transition-colors flex items-center gap-2">
-                    立即选购 <ArrowRight size={14} />
+                    Shop Now <ArrowRight size={14} />
                   </button>
                 </div>
               </div>
@@ -306,10 +306,10 @@ function ProductShowcase({ setCurrentPage }) {
 
 function Features() {
   const features = [
-    { icon: <Truck size={24} />, title: '全球包邮', titleEn: 'Free Worldwide Shipping', desc: '订单满 $39 自动包邮，7-14 个工作日送达全球' },
-    { icon: <ShieldCheck size={24} />, title: '正品保障', titleEn: 'Authenticity Guaranteed', desc: '每件产品均附收藏证书与防伪追溯码' },
-    { icon: <RefreshCw size={24} />, title: '30天退换', titleEn: '30-Day Returns', desc: '不满意？30天内无理由退换，运费我们承担' },
-    { icon: <Globe size={24} />, title: '多语言支持', titleEn: 'Multi-Language', desc: '支持中、英、法、西四国语言界面自由切换' },
+    { icon: <Truck size={24} />, title: 'Free Shipping', titleEn: '全球包邮', desc: 'On orders over $39 · Delivered worldwide in 7-14 days' },
+    { icon: <ShieldCheck size={24} />, title: 'Authenticity Guaranteed', titleEn: '正品保障', desc: 'Every piece comes with a certificate & anti-counterfeit code' },
+    { icon: <RefreshCw size={24} />, title: '30-Day Returns', titleEn: '30天退换', desc: 'Not satisfied? Free returns within 30 days, we cover shipping' },
+    { icon: <Globe size={24} />, title: 'Multi-Language', titleEn: '多语言支持', desc: 'Supports English, Traditional Chinese, French & Spanish' },
   ];
   return (
     <section className="py-16 bg-gradient-to-r from-red-950/50 via-black to-yellow-950/30 border-y border-yellow-900/20">
@@ -331,15 +331,15 @@ function Features() {
 
 function ShopPage({ setCurrentPage, onViewProduct, onQuickAdd }) {
   const [filter, setFilter] = useState('all');
-  const filters = ['all', '挂件', '摆件', '礼盒'];
+  const filters = ['all', '挂件 Keychain', '摆件 Ornament', '礼盒 Set'];
   const filtered = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.name.includes(filter));
   return (
     <div className="pt-24 pb-20 bg-black min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2">Full Collection</div>
-          <h2 className="text-4xl font-black text-white mb-3">全部商品</h2>
-          <p className="text-gray-500 text-sm">All 4 Products — AI财神全系列</p>
+          <h2 className="text-4xl font-black text-white mb-3">Shop All Products</h2>
+          <p className="text-gray-500 text-sm">AI財神全系列 · All 4 Products</p>
         </div>
         <div className="flex justify-center gap-2 mb-10 flex-wrap">
           {filters.map(f => (
@@ -387,14 +387,14 @@ function ProductModal({ product, onClose, onAddToCart }) {
           </div>
           <div className="p-6 lg:p-8">
             <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:text-white float-right"><X size={16} /></button>
-            <div className="text-xs text-yellow-600/80 font-medium tracking-widest uppercase mb-2">{product.nameEn}</div>
-            <h2 className="text-2xl font-black text-white mb-1">{product.name}</h2>
+            <div className="text-xs text-yellow-600/80 font-medium tracking-widest uppercase mb-2 font-display">{product.nameEn}</div>
+            <h2 className="font-cn text-2xl font-black text-white mb-1">{product.name}</h2>
             <div className="flex items-center gap-2 mb-4">
               <StarRating rating={product.rating} />
               <span className="text-xs text-gray-500">{product.reviews} reviews</span>
             </div>
             <div className="flex items-end gap-4 mb-6">
-              <span className="text-4xl font-black text-yellow-400">${product.price}</span>
+              <span className="price text-4xl font-black text-yellow-400">${product.price}</span>
               <span className="text-lg text-gray-500 line-through">${product.originalPrice}</span>
               <span className="bg-red-950/60 text-red-400 text-sm font-bold px-3 py-1 rounded-full">-{Math.round((1-product.price/product.originalPrice)*100)}%</span>
             </div>
@@ -411,13 +411,13 @@ function ProductModal({ product, onClose, onAddToCart }) {
                 <button onClick={() => setQty(qty+1)} className="w-10 h-10 flex items-center justify-center text-white font-bold text-lg hover:bg-white/10 rounded-r-xl transition-colors">+</button>
               </div>
               <button onClick={handleAdd} className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all ${added ? 'bg-green-600 text-white' : 'bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white'}`}>
-                {added ? <><CheckCircle size={16} className="inline mr-2" />已加入购物车</> : <><ShoppingBag size={16} className="inline mr-2" />加入购物车</>}
+                {added ? <><CheckCircle size={16} className="inline mr-2" />Added to Cart</> : <><ShoppingBag size={16} className="inline mr-2" />Add to Cart</>}
               </button>
             </div>
             <div className="border-t border-white/10 pt-4 space-y-2 text-xs text-gray-500">
-              <div className="flex items-center gap-2"><Truck size={12} /> 全球免费配送 · 满 $39 包邮</div>
-              <div className="flex items-center gap-2"><RefreshCw size={12} /> 30天无理由退换</div>
-              <div className="flex items-center gap-2"><ShieldCheck size={12} /> 正品保障 · 防伪证书</div>
+              <div className="flex items-center gap-2"><Truck size={12} /> Free shipping worldwide · Orders over $39</div>
+              <div className="flex items-center gap-2"><RefreshCw size={12} /> 30-day hassle-free returns</div>
+              <div className="flex items-center gap-2"><ShieldCheck size={12} /> Authenticity guaranteed · Certificate included</div>
             </div>
           </div>
         </div>
@@ -432,28 +432,28 @@ function StoryPage({ setCurrentPage }) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2">Our Story</div>
-          <h2 className="text-4xl font-black text-white mb-3">关于财神</h2>
+          <h2 className="text-4xl font-black text-white mb-3">About CaiShen</h2>
         </div>
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <div className="bg-gradient-to-br from-red-950/40 to-black border border-red-900/30 rounded-3xl p-8">
             <div className="text-4xl mb-4">🏮</div>
-            <h3 className="text-xl font-black text-white mb-3">千年传承</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">财神信仰在中国已有超过1500年历史，是全球华人最重视的文化符号之一。CaiShen 致力于将这一传统文化瑰宝，以 AI 科技重新演绎，赋予其全新的生命力。</p>
+            <h3 className="text-xl font-black text-white mb-3">1,500 Years of Heritage</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">The CaiShen faith has over 1,500 years of history in China, and is one of the most cherished cultural symbols for Chinese communities worldwide. CaiShen is dedicated to reimagining this cultural treasure through AI technology.</p>
           </div>
           <div className="bg-gradient-to-br from-yellow-950/40 to-black border border-yellow-900/30 rounded-3xl p-8">
             <div className="text-4xl mb-4">⚡</div>
-            <h3 className="text-xl font-black text-white mb-3">AI 赋能</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">我们训练专有 AI 系统学习敦煌壁画、宋代瓷器、明清漆器等数千件文物纹样，生成独一无二的财神美学图腾，让传统文化在数字时代焕发新生。</p>
+            <h3 className="text-xl font-black text-white mb-3">Powered by AI</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">We trained a proprietary AI system on thousands of artifacts — Dunhuang murals, Song dynasty porcelain, Ming-Qing lacquerware — to generate unique CaiShen aesthetic totems for the digital age.</p>
           </div>
         </div>
         <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-3xl p-8 lg:p-12 mb-16 text-center">
-          <h3 className="text-2xl font-black text-white mb-4">品牌故事</h3>
-          <p className="text-gray-400 text-sm leading-8 max-w-2xl mx-auto">CaiShen 诞生于一位海外华人的客厅。创始人厌倦了西方世界对东方文化的刻板印象，决定用最前沿的 AI 技术，重新解读财神这一神圣意象。从第一张草图到第一件成品，耗时 8 个月。<br /><br />如今，CaiShen 已走进全球 36 个国家数万个家庭。我们相信：财富是能量，信仰是媒介，而科技是桥梁。<br /><br /><span className="text-yellow-400 font-bold">"让每一位海外华人，都能在指尖感受家的温度。"</span></p>
+          <h3 className="text-2xl font-black text-white mb-4">The Brand Story</h3>
+          <p className="text-gray-400 text-sm leading-8 max-w-2xl mx-auto">CaiShen was born in a living room overseas. Our founder grew tired of Western stereotypes about Eastern culture and decided to use cutting-edge AI to reinterpret the sacred image of CaiShen. From the first sketch to the first finished product took 8 months.<br /><br />Today, CaiShen has reached tens of thousands of families across 36 countries. We believe: wealth is energy, faith is the medium, and technology is the bridge.<br /><br /><span className="text-yellow-400 font-bold">"Let every overseas Chinese feel the warmth of home at their fingertips."</span></p>
         </div>
         <div className="grid grid-cols-3 gap-6 text-center">
-          {[['36+', '国家地区'], ['50K+', '全球用户'], ['4.9★', '平均评分']].map(([num, label]) => (
+          {[['36+', 'Countries'], ['50K+', 'Global Users'], ['4.9★', 'Avg Rating']].map(([num, label]) => (
             <div key={label} className="bg-white/5 border border-white/10 rounded-2xl p-6">
-              <div className="text-2xl font-black text-yellow-400 mb-1">{num}</div>
+              <div className="price text-2xl font-black text-yellow-400 mb-1">{num}</div>
               <div className="text-xs text-gray-500">{label}</div>
             </div>
           ))}
@@ -469,7 +469,7 @@ function ReviewsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2">Customer Reviews</div>
-          <h2 className="text-3xl font-black text-white">全球用户评价</h2>
+          <h2 className="text-3xl font-black text-white">What Our Customers Say</h2>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {REVIEWS.map((r, i) => (
@@ -495,14 +495,14 @@ function Newsletter() {
     <section className="py-20 bg-gradient-to-r from-red-950/60 via-red-900/40 to-yellow-950/40 border-y border-yellow-900/30">
       <div className="max-w-2xl mx-auto px-4 text-center">
         <div className="text-4xl mb-4">📬</div>
-        <h2 className="text-3xl font-black text-white mb-2">订阅获取专属优惠</h2>
-        <p className="text-gray-400 text-sm mb-6">Subscribe for exclusive offers & new product launches</p>
+        <h2 className="text-3xl font-black text-white mb-2">Subscribe for Exclusive Offers</h2>
+        <p className="text-gray-400 text-sm mb-6">Be the first to know about new arrivals & special discounts</p>
         {submitted ? (
-          <div className="bg-green-900/40 border border-green-700/50 text-green-400 rounded-2xl py-4 px-6 text-sm font-bold">✓ 订阅成功！期待与您相遇</div>
+          <div className="bg-green-900/40 border border-green-700/50 text-green-400 rounded-2xl py-4 px-6 text-sm font-bold">✓ Subscribed! We'll be in touch soon.</div>
         ) : (
           <div className="flex gap-3 max-w-md mx-auto">
-            <input value={email} onChange={e => setEmail(e.target.value)} placeholder="输入您的邮箱" className="flex-1 bg-black/60 border border-yellow-900/50 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600 transition-colors" />
-            <button onClick={() => { if(email) setSubmitted(true); }} className="bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 hover:to-amber-500 text-black font-bold px-6 py-3 rounded-xl transition-all whitespace-nowrap">订阅</button>
+            <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email address" className="flex-1 bg-black/60 border border-yellow-900/50 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600 transition-colors" />
+            <button onClick={() => { if(email) setSubmitted(true); }} className="bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 hover:to-amber-500 text-black font-bold px-6 py-3 rounded-xl transition-all whitespace-nowrap">Subscribe</button>
           </div>
         )}
       </div>
@@ -519,7 +519,7 @@ function ContactPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2">Contact Us</div>
-          <h2 className="text-4xl font-black text-white">联系我们</h2>
+          <h2 className="text-4xl font-black text-white">Get in Touch</h2>
         </div>
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-6">
@@ -532,27 +532,27 @@ function ContactPage() {
             <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-2xl p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 bg-yellow-950/60 rounded-xl flex items-center justify-center text-yellow-400 shrink-0"><MapPin size={18} /></div>
-                <div><div className="text-white font-bold text-sm mb-1">公司地址</div><div className="text-gray-400 text-sm">香港文運亨通有限公司<br />Hong Kong</div></div>
+                <div><div className="text-white font-bold text-sm mb-1">Company Address</div><div className="text-gray-400 text-sm">香港文運亨通有限公司<br />Hong Kong SAR</div></div>
               </div>
             </div>
             <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-2xl p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 bg-yellow-950/60 rounded-xl flex items-center justify-center text-yellow-400 shrink-0"><Clock size={18} /></div>
-                <div><div className="text-white font-bold text-sm mb-1">服务时间</div><div className="text-gray-400 text-sm">周一至周五 9:00-18:00 (HKT)<br />通常 24 小时内回复</div></div>
+                <div><div className="text-white font-bold text-sm mb-1">Business Hours</div><div className="text-gray-400 text-sm">Mon–Fri 9:00–18:00 (HKT)<br />We reply within 24 hours</div></div>
               </div>
             </div>
           </div>
           <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-2xl p-6 lg:p-8">
-            <h3 className="text-lg font-black text-white mb-5">发送消息</h3>
+            <h3 className="text-lg font-black text-white mb-5">Send a Message</h3>
             {sent ? (
-              <div className="text-center py-8"><div className="text-4xl mb-3">✅</div><div className="text-white font-bold">消息已发送！</div><div className="text-gray-400 text-sm mt-1">我们会尽快回复您</div></div>
+              <div className="text-center py-8"><div className="text-4xl mb-3">✅</div><div className="text-white font-bold">Message Sent!</div><div className="text-gray-400 text-sm mt-1">We'll get back to you shortly</div></div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder="您的姓名 Name" className="w-full bg-black/60 border border-yellow-900/40 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600" />
-                <input required type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="邮箱地址 Email" className="w-full bg-black/60 border border-yellow-900/40 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600" />
-                <textarea required value={form.message} onChange={e => setForm({...form, message: e.target.value})} placeholder="您的留言 Message" rows={4} className="w-full bg-black/60 border border-yellow-900/40 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600 resize-none" />
+                <input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder="Your Name" className="w-full bg-black/60 border border-yellow-900/40 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600" />
+                <input required type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="Email Address" className="w-full bg-black/60 border border-yellow-900/40 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600" />
+                <textarea required value={form.message} onChange={e => setForm({...form, message: e.target.value})} placeholder="Your Message" rows={4} className="w-full bg-black/60 border border-yellow-900/40 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600 resize-none" />
                 <button type="submit" className="w-full bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2">
-                  <Send size={16} /> 发送消息
+                  <Send size={16} /> Send Message
                 </button>
               </form>
             )}
@@ -571,35 +571,35 @@ function Footer() {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-gradient-to-br from-red-700 to-yellow-600 rounded-lg flex items-center justify-center text-sm">🧧</div>
-              <div><div className="text-white font-black text-base">CaiShen</div><div className="text-yellow-600/60 text-[8px] tracking-widest uppercase">AI Fortune Art</div></div>
+              <div><div className="font-display text-white font-black text-base">CaiShen</div><div className="text-yellow-600/60 text-[8px] tracking-widest uppercase">AI Fortune Art</div></div>
             </div>
-            <p className="text-gray-500 text-xs leading-relaxed">全球首款 AI 融合东方传统美学的文创品牌。让财富与文化，在数字时代永续传承。</p>
+            <p className="text-gray-500 text-xs leading-relaxed">World's First AI-Powered Traditional Fortune Art Brand. Bringing wealth and culture into the digital age.</p>
           </div>
           <div>
-            <h4 className="text-white font-bold text-sm mb-4">商店 Shop</h4>
+            <h4 className="text-white font-bold text-sm mb-4">Shop</h4>
             <ul className="space-y-2 text-xs text-gray-500">
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">全部商品</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">毛绒挂件</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">树脂摆件</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">礼盒套装</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">All Products</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Plush Keychains</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Resin Ornaments</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Gift Sets</li>
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-bold text-sm mb-4">支持 Support</h4>
+            <h4 className="text-white font-bold text-sm mb-4">Support</h4>
             <ul className="space-y-2 text-xs text-gray-500">
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">配送说明</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">退换政策</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">常见问题</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">联系我们</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Shipping Info</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Return Policy</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">FAQ</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Contact Us</li>
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-bold text-sm mb-4">公司 Company</h4>
+            <h4 className="text-white font-bold text-sm mb-4">Company</h4>
             <ul className="space-y-2 text-xs text-gray-500">
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">关于我们</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">品牌故事</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">隐私政策</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">使用条款</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">About Us</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Our Story</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Privacy Policy</li>
+              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Terms of Use</li>
             </ul>
           </div>
         </div>
@@ -693,7 +693,7 @@ function CartSidebar({ cart, onClose }) {
       <div className="relative w-full max-w-md bg-gradient-to-b from-zinc-900 to-black border-l border-yellow-900/30 flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between p-6 border-b border-white/10">
           <h2 className="text-lg font-black text-white flex items-center gap-2">
-            <ShoppingBag size={18} /> 购物车 <span className="text-yellow-400 text-sm">({totalItems})</span>
+            <ShoppingBag size={18} /> Your Cart <span className="text-yellow-400 text-sm">({totalItems})</span>
           </h2>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:text-white"><X size={16} /></button>
         </div>
@@ -701,8 +701,8 @@ function CartSidebar({ cart, onClose }) {
           {items.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-4xl mb-3">🧧</div>
-              <div className="text-gray-500 text-sm">购物车是空的</div>
-              <div className="text-gray-600 text-xs mt-1">Your cart is empty</div>
+              <div className="text-gray-500 text-sm">Your cart is empty</div>
+              <div className="text-gray-600 text-xs mt-1">Let's find something special!</div>
             </div>
           ) : items.map(item => (
             <div key={item.id} className="flex gap-4 bg-white/5 rounded-xl p-3">
@@ -711,12 +711,12 @@ function CartSidebar({ cart, onClose }) {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-white font-bold text-sm truncate">{item.name}</div>
-                <div className="text-yellow-400 font-bold text-sm mt-1">${item.price}</div>
+                <div className="price text-yellow-400 font-bold text-sm mt-1">${item.price}</div>
                 <div className="flex items-center gap-2 mt-2">
                   <button onClick={() => updateQty(item.id, item.qty - 1)} className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white hover:bg-white/20"><Minus size={12} /></button>
                   <span className="text-white text-sm font-bold w-6 text-center">{item.qty}</span>
                   <button onClick={() => updateQty(item.id, item.qty + 1)} className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white hover:bg-white/20"><Plus size={12} /></button>
-                  <button onClick={() => removeItem(item.id)} className="ml-auto text-red-400 hover:text-red-300 text-xs">删除</button>
+                  <button onClick={() => removeItem(item.id)} className="ml-auto text-red-400 hover:text-red-300 text-xs">Remove</button>
                 </div>
               </div>
             </div>
@@ -732,7 +732,7 @@ function CartSidebar({ cart, onClose }) {
             )}
             <div className="flex items-center justify-between">
               <span className="text-gray-400 text-sm">合计 Total</span>
-              <span className="text-2xl font-black text-yellow-400">${totalPrice}</span>
+              <span className="price text-2xl font-black text-yellow-400">${totalPrice}</span>
             </div>
             <button
               onClick={checkout}
