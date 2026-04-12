@@ -211,24 +211,67 @@ function Hero({ setCurrentPage }) {
             </div>
           </div>
 
-          {/* Right: Visual element */}
+          {/* Right: 360° Rotating CaiShen */}
           <div className="relative hidden lg:flex justify-center items-center">
-            <div className="relative">
-              {/* Decorative rings */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-[420px] h-[420px] rounded-full border border-amber-900/20 animate-spin" style={{animationDuration: '40s'}}></div>
+            {/* Outer glow rings */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-[500px] h-[500px] rounded-full border border-amber-900/10"></div>
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-[420px] h-[420px] rounded-full border border-amber-800/20"></div>
+            </div>
+
+            {/* Main rotating sphere */}
+            <div className="relative" style={{perspective: '1000px'}}>
+              {/* Floating shadow */}
+              <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-64 h-6 rounded-full bg-black/30 blur-xl"></div>
+
+              {/* Rotating image container */}
+              <div className="relative w-80 h-80" style={{transformStyle: 'preserve-3d'}}>
+                {/* Spinning inner */}
+                <div className="w-full h-full rounded-full animate-[spin_18s_linear_infinite]"
+                  style={{
+                    background: 'radial-gradient(ellipse at 30% 30%, rgba(120,53,15,0.4) 0%, transparent 60%), radial-gradient(ellipse at 70% 70%, rgba(180,50,50,0.2) 0%, transparent 60%), linear-gradient(135deg, #0a0a0a, #1a1a1a)',
+                    boxShadow: '0 0 60px rgba(180,80,20,0.15), 0 0 120px rgba(180,80,20,0.08), inset 0 0 40px rgba(0,0,0,0.8)',
+                    border: '1px solid rgba(180,120,20,0.3)',
+                  }}
+                >
+                  {/* 3D CaiShen image centered and scaled */}
+                  <img
+                    src="/images/caishen-3d.png"
+                    alt="CaiShen"
+                    className="w-full h-full object-contain"
+                    style={{filter: 'drop-shadow(0 0 20px rgba(200,150,30,0.3))'}}
+                    onError={e => {
+                      e.target.style.opacity = '0';
+                    }}
+                  />
+                  {/* Fallback emoji */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none" id="caishen-fallback">
+                    <div className="text-center">
+                      <div className="text-8xl animate-pulse">🧧</div>
+                      <div className="text-amber-400 font-black text-sm mt-3">CaiShen</div>
+                      <div className="text-amber-600/50 text-xs mt-1">AI Fortune Art</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Slow wobble overlay */}
+                <div className="absolute inset-0 rounded-full animate-[spin_25s_linear_infinite_reverse]"
+                  style={{background: 'conic-gradient(from 0deg, transparent 0deg, rgba(200,160,30,0.06) 60deg, transparent 120deg, rgba(200,160,30,0.04) 180deg, transparent 240deg, rgba(200,160,30,0.06) 300deg, transparent 360deg)', borderRadius: '50%'}}
+                ></div>
               </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-[340px] h-[340px] rounded-full border border-red-900/30 animate-spin" style={{animationDuration: '25s', animationDirection: 'reverse'}}></div>
+
+              {/* Particle dots orbiting */}
+              <div className="absolute inset-0 animate-[spin_12s_linear_infinite]" style={{borderRadius: '50%'}}>
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-amber-400 rounded-full shadow-[0_0_8px_rgba(251,191,36,0.8)]"></div>
               </div>
-              {/* Center image */}
-              <div className="relative w-80 h-80 rounded-full overflow-hidden bg-gradient-to-br from-red-900/60 via-stone-900 to-amber-900/40 flex items-center justify-center shadow-2xl shadow-red-950/40 border border-amber-900/30">
-                <img src="/images/caishen-cutout.png" alt="CaiShen AI" className="w-full h-full object-contain" onError={e => { e.target.parentElement.innerHTML='<div class="text-center"><div class="text-7xl">🧧</div><div class="text-amber-400 text-sm font-bold mt-3">CaiShen</div><div class="text-amber-600/60 text-xs mt-1">AI Fortune Art</div></div>'; }} />
+              <div className="absolute inset-0 animate-[spin_20s_linear_infinite_reverse]" style={{borderRadius: '50%'}}>
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-red-400 rounded-full shadow-[0_0_6px_rgba(248,113,113,0.8)]"></div>
               </div>
-              {/* Floating badges */}
-              <div className="absolute -top-2 right-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[10px] font-black px-4 py-1.5 rounded-xl rotate-6 shadow-lg">AI 創作</div>
-              <div className="absolute -bottom-2 left-4 bg-stone-900/90 backdrop-blur border border-amber-800/50 text-amber-400 text-[10px] font-semibold px-4 py-1.5 rounded-xl -rotate-3">限量編號</div>
-              <div className="absolute top-1/2 -right-6 bg-red-950/80 backdrop-blur border border-red-800/50 text-red-300 text-[10px] font-medium px-3 py-1.5 rounded-xl rotate-12">收藏級</div>
+              <div className="absolute inset-0 animate-[spin_15s_linear_infinite]" style={{borderRadius: '50%'}}>
+                <div className="absolute top-1/2 right-1 -translate-y-1/2 w-1.5 h-1.5 bg-amber-300 rounded-full shadow-[0_0_6px_rgba(252,211,77,0.8)]"></div>
+              </div>
             </div>
           </div>
         </div>
