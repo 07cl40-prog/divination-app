@@ -211,7 +211,7 @@ function Hero({ setCurrentPage }) {
             </div>
           </div>
 
-          {/* Right: Horizontal 360° Rotating CaiShen */}
+          {/* Right: CaiShen Video */}
           <div className="relative hidden lg:flex justify-center items-center">
             {/* Outer atmosphere rings */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -221,49 +221,36 @@ function Hero({ setCurrentPage }) {
               <div className="w-[400px] h-[400px] rounded-full border border-amber-800/15 animate-pulse" style={{animationDuration: '6s', animationDelay: '1s'}}></div>
             </div>
 
-            {/* 3D turntable container */}
-            <div className="relative" style={{perspective: '800px', perspectiveOrigin: 'center center'}}>
-              {/* Platform shadow */}
-              <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-72 h-5 rounded-full bg-black/40 blur-xl"></div>
+            {/* Platform shadow */}
+            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-72 h-5 rounded-full bg-black/40 blur-xl"></div>
 
-              {/* Spinning disc */}
-              <div className="relative w-80 h-80">
-                {/* Glow base disc */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-b from-amber-950/60 via-red-950/40 to-black/80 border border-amber-800/30 shadow-[0_0_80px_rgba(180,60,10,0.2)]"></div>
+            {/* Video disc */}
+            <div className="relative w-80 h-80">
+              {/* Glow base disc */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-b from-amber-950/60 via-red-950/40 to-black/80 border border-amber-800/30 shadow-[0_0_80px_rgba(180,60,10,0.2)]"></div>
 
-                {/* Image that rotates left-right (Y-axis sim) */}
-                <div className="absolute inset-0 flex items-center justify-center rounded-full overflow-hidden">
-                  <img
-                    src="/images/caishen-cutout.png"
-                    alt="CaiShen"
-                    className="h-full object-contain"
-                    style={{
-                      filter: 'drop-shadow(0 0 24px rgba(200,150,30,0.4))',
-                      animation: 'spinY 12s linear infinite',
-                    }}
-                    onError={e => {
-                      e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
-                    }}
-                  />
-                  {/* Fallback */}
-                  <div className="absolute inset-0 items-center justify-center hidden">
-                    <div className="text-center">
-                      <div className="text-8xl animate-pulse">🧧</div>
-                      <div className="text-amber-400 font-black text-sm mt-3">CaiShen</div>
-                      <div className="text-amber-600/50 text-xs mt-1">AI Fortune Art</div>
-                    </div>
-                  </div>
-                </div>
+              {/* Video — circular mask, autoplay, loop, muted */}
+              <div className="absolute inset-0 rounded-full overflow-hidden flex items-center justify-center">
+                <video
+                  src="/videos/caishen-entering.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                  style={{ filter: 'brightness(0.9) contrast(1.05)' }}
+                />
+                {/* Gradient overlay so disc edge looks integrated */}
+                <div className="absolute inset-0 rounded-full" style={{background: 'radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.5) 100%)'}}></div>
+              </div>
 
-                {/* Gold orbit ring around the spinning image */}
-                <div className="absolute inset-0 rounded-full border border-amber-700/20 animate-spin" style={{animationDuration: '8s'}}></div>
-                <div className="absolute inset-0 rounded-full border border-red-800/15 animate-spin" style={{animationDuration: '14s', animationDirection: 'reverse'}}></div>
+              {/* Gold orbit rings */}
+              <div className="absolute inset-0 rounded-full border border-amber-700/20 animate-spin" style={{animationDuration: '8s'}}></div>
+              <div className="absolute inset-0 rounded-full border border-red-800/15 animate-spin" style={{animationDuration: '14s', animationDirection: 'reverse'}}></div>
 
-                {/* Gold sparkle dot */}
-                <div className="absolute inset-0 animate-spin" style={{animationDuration: '6s', borderRadius: '50%'}}>
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_10px_2px_rgba(251,191,36,0.9)]"></div>
-                </div>
+              {/* Gold sparkle dot */}
+              <div className="absolute inset-0 animate-spin" style={{animationDuration: '6s', borderRadius: '50%'}}>
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_10px_2px_rgba(251,191,36,0.9)]"></div>
               </div>
             </div>
           </div>
