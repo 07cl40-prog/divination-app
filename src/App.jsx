@@ -500,7 +500,7 @@ function ContactPage() {
   );
 }
 
-function Footer() {
+function Footer({ setCurrentPage }) {
   return (
     <footer className="bg-black border-t border-yellow-900/30 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -542,6 +542,12 @@ function Footer() {
         </div>
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-xs text-gray-600">© 2024 CaiShen. 香港文運亨通有限公司. All rights reserved.</div>
+          {/* Hidden admin shortcut */}
+          <button
+            onClick={() => { window.location.hash = '#/admin'; setCurrentPage('admin'); }}
+            className="text-[9px] text-gray-700 hover:text-gray-500 cursor-pointer transition-colors tracking-widest uppercase"
+            title="Admin"
+          >mgr</button>
           <div className="flex gap-3">
             <div className="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center text-gray-500 hover:text-yellow-400 cursor-pointer transition-colors"><InstagramIcon size={16} /></div>
           </div>
@@ -701,6 +707,18 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);
 
+  // Hash router: support #/admin (Vercel SPA-friendly)
+  useEffect(() => {
+    const checkHash = () => {
+      if (window.location.hash === '#/admin') {
+        setCurrentPage('admin');
+      }
+    };
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+    return () => window.removeEventListener('hashchange', checkHash);
+  }, []);
+
   const handleAddToCart = (product, qty = 1) => {
     cart.addItem(product, qty);
     setShowCart(true);
@@ -731,7 +749,7 @@ export default function App() {
         <>
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} cartCount={cart.totalItems} setShowCart={setShowCart} />
       {renderPage()}
-      <Footer />
+      <Footer setCurrentPage={setCurrentPage} />
       {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} onAddToCart={handleAddToCart} />}
       {showCart && <CartSidebar cart={{ ...cart }} onClose={() => setShowCart(false)} />}
         </>
