@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { ShoppingBag, Menu, X, ChevronRight, Star, Heart, Truck, ShieldCheck, RefreshCw, Globe, ArrowRight, CheckCircle, Mail, MapPin, Clock, Sparkles, Send, Minus, Plus, CreditCard, Loader } from 'lucide-react';
+import { ShoppingBag, Menu, X, ChevronRight, Star, Heart, Truck, ShieldCheck, RefreshCw, Globe, ArrowRight, CheckCircle, Mail, MapPin, Clock, Sparkles, Send, Minus, Plus, CreditCard, Loader, Award, Users, Globe2, BookOpen } from 'lucide-react';
 import AdminPanel from './admin/AdminPanel';
 
 const InstagramIcon = ({ size = 16 }) => (
@@ -18,7 +18,7 @@ const PRODUCTS = productsData;
 
 const REVIEWS = [
   { name: 'Linda W.', location: 'Los Angeles, USA', text: 'Absolutely stunning! The AI-generated patterns are unlike anything I\'ve seen. My office colleagues all asked where I got it.', rating: 5, product: '毛絨掛件款' },
-  { name: 'Michael C.', location: 'London, UK', text: 'Fast shipping to UK and the packaging was luxurious. The resin ornament sits proudly on my desk. Highly recommend!', rating: 5, product: '樹脂擺件款' },
+  { name: 'Michael C.', location: 'London, UK', text: 'Fast shipping to UK and the packaging was luxurious. The resin ornament sits proudly on my desk. Highly recommend!', rating: 5, product: '樹膠擺件款' },
   { name: 'Sophie L.', location: 'Toronto, Canada', text: 'Bought as a Chinese New Year gift for my parents. They absolutely loved it. The quality exceeded expectations.', rating: 5, product: '文曲星禮盒' },
   { name: 'James K.', location: 'Sydney, Australia', text: 'The AI aesthetic is fascinating — traditional Chinese culture meets futuristic design. Will buy more!', rating: 5, product: '毛絨掛件款' },
 ];
@@ -27,7 +27,7 @@ function StarRating({ rating }) {
   return (
     <div className="flex gap-0.5">
       {[1,2,3,4,5].map(i => (
-        <Star key={i} size={14} className={i <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'} />
+        <Star key={i} size={14} className={i <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-700'} />
       ))}
     </div>
   );
@@ -36,43 +36,44 @@ function StarRating({ rating }) {
 function ProductCard({ product, onView, onQuickAdd }) {
   const [liked, setLiked] = useState(false);
   return (
-    <div className="group bg-gradient-to-b from-zinc-900 to-black border border-yellow-900/30 rounded-2xl overflow-hidden hover:border-yellow-600/50 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-900/20 hover:-translate-y-1">
-      <div className="relative overflow-hidden bg-zinc-950 aspect-square">
-        <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
-        <div className="hidden w-full h-full items-center justify-center bg-gradient-to-br from-red-950 to-black">
+    <div className="group bg-gradient-to-b from-stone-900 to-stone-950 border border-stone-800 rounded-2xl overflow-hidden hover:border-amber-700/50 transition-all duration-500 hover:shadow-2xl hover:shadow-amber-900/10 hover:-translate-y-0.5">
+      <div className="relative overflow-hidden bg-stone-950 aspect-square">
+        <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
+        <div className="hidden w-full h-full items-center justify-center bg-gradient-to-br from-amber-950 to-stone-950">
           <div className="text-center">
             <div className="text-5xl mb-2">🧧</div>
-            <div className="text-yellow-500 font-bold">{product.name}</div>
+            <div className="text-amber-400 font-bold">{product.name}</div>
           </div>
         </div>
         <div className="absolute top-3 left-3 flex flex-col gap-2">
-          <span className={`${product.tagColor} text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide`}>{product.tag}</span>
-          {product.badge && <span className="bg-gradient-to-r from-yellow-500 to-amber-600 text-black text-xs font-black px-2 py-1 rounded-full">{product.badge}</span>}
+          {product.tag && <span className={`${product.tagColor} text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide`}>{product.tag}</span>}
+          {product.badge && <span className="bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[10px] font-black px-2 py-1 rounded-full">{product.badge}</span>}
         </div>
         <button onClick={() => setLiked(!liked)} className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/60 backdrop-blur flex items-center justify-center hover:bg-black/80 transition-colors">
-          <Heart size={16} className={liked ? 'fill-red-500 text-red-500' : 'text-white/70'} />
+          <Heart size={16} className={liked ? 'fill-red-500 text-red-500' : 'text-white/60'} />
         </button>
       </div>
       <div className="p-5">
-        <div className="text-xs text-yellow-600/80 font-medium tracking-widest uppercase mb-1">{product.nameEn}</div>
-        <h3 className="text-white font-bold text-base mb-2 leading-tight">{product.name}</h3>
+        <div className="text-[11px] text-amber-600/80 font-medium tracking-[0.15em] uppercase mb-1">{product.nameEn}</div>
+        <h3 className="text-white font-bold text-sm mb-2 leading-snug">{product.name}</h3>
         <div className="flex items-center gap-2 mb-3">
           <StarRating rating={product.rating} />
-          <span className="text-xs text-gray-500">({product.reviews})</span>
+          <span className="text-[11px] text-stone-500">({product.reviews})</span>
         </div>
-        <div className="flex items-center gap-3 mb-4">
-          <span className="price text-2xl font-black text-yellow-400">${product.price}</span>
-          <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
-          <span className="text-xs text-red-400 font-semibold bg-red-950/50 px-2 py-0.5 rounded">-{Math.round((1-product.price/product.originalPrice)*100)}%</span>
+        <div className="flex items-end gap-3 mb-4">
+          <span className="text-xl font-black text-amber-400">${product.price}</span>
+          <span className="text-sm text-stone-600 line-through">${product.originalPrice}</span>
         </div>
-        <button onClick={() => onView(product)} className="w-full py-2.5 bg-gradient-to-r from-red-800 to-red-700 hover:from-red-700 hover:to-red-600 text-white text-sm font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
-          <ShoppingBag size={15} /> View Details
-        </button>
-        {onQuickAdd && (
-          <button onClick={() => onQuickAdd(product)} className="w-full py-2 mt-2 bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 hover:to-amber-500 text-black text-sm font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
-            <Plus size={14} /> Quick Add
+        <div className="flex gap-2">
+          <button onClick={() => onView(product)} className="flex-1 py-2.5 bg-stone-800 hover:bg-stone-700 text-white text-xs font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
+            <ShoppingBag size={13} /> View Details
           </button>
-        )}
+          {onQuickAdd && (
+            <button onClick={() => onQuickAdd(product)} className="w-10 h-10 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white rounded-xl transition-all flex items-center justify-center">
+              <Plus size={14} />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -89,49 +90,49 @@ function Navbar({ currentPage, setCurrentPage, cartCount, setShowCart }) {
   }, []);
 
   const navItems = [
-    { key: 'home', label: '首頁 Home', labelEn: 'Home' },
-    { key: 'shop', label: '全部商品 Shop', labelEn: 'Shop' },
-    { key: 'story', label: '品牌故事 Story', labelEn: 'Story' },
-    { key: 'contact', label: '聯絡我們 Contact', labelEn: 'Contact' },
+    { key: 'home', label: '首頁', labelEn: 'Home' },
+    { key: 'shop', label: '全部商品', labelEn: 'Shop' },
+    { key: 'story', label: '品牌故事', labelEn: 'Story' },
+    { key: 'contact', label: '聯絡我們', labelEn: 'Contact' },
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/95 backdrop-blur-xl border-b border-yellow-900/30' : 'bg-transparent'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          <button onClick={() => setCurrentPage('home')} className="flex items-center gap-2 group">
-            <div className="w-9 h-9 bg-gradient-to-br from-red-700 to-yellow-600 rounded-xl flex items-center justify-center text-lg group-hover:scale-110 transition-transform">🧧</div>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-stone-950/95 backdrop-blur-xl border-b border-stone-800/60' : 'bg-transparent'}`}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="flex items-center justify-between h-16 lg:h-[70px]">
+          <button onClick={() => setCurrentPage('home')} className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 bg-gradient-to-br from-red-800 to-amber-700 rounded-xl flex items-center justify-center text-lg group-hover:scale-105 transition-transform shadow-lg shadow-amber-900/30">🧧</div>
             <div>
               <div className="font-display text-white font-black text-lg tracking-tight leading-none">CaiShen</div>
-              <div className="text-yellow-600/80 text-[9px] tracking-[0.2em] uppercase">AI Fortune Art</div>
+              <div className="text-amber-600/70 text-[9px] tracking-[0.25em] uppercase">AI Fortune Art</div>
             </div>
           </button>
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map(item => (
               <button key={item.key} onClick={() => setCurrentPage(item.key)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage === item.key ? 'text-yellow-400 bg-yellow-950/50' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
-                <span className="block text-xs opacity-60">{item.labelEn}</span>
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${currentPage === item.key ? 'text-amber-400 bg-amber-950/40' : 'text-stone-400 hover:text-white hover:bg-white/5'}`}>
+                <span className="block text-[10px] opacity-50 tracking-wider uppercase">{item.labelEn}</span>
                 {item.label}
               </button>
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <button onClick={() => setShowCart(true)} className="relative w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all">
-              <ShoppingBag size={18} />
-              {cartCount > 0 && <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-600 text-white text-[10px] font-black rounded-full flex items-center justify-center">{cartCount}</span>}
+            <button onClick={() => setShowCart(true)} className="relative w-10 h-10 rounded-xl bg-stone-900/80 hover:bg-stone-800 border border-stone-700/50 flex items-center justify-center text-stone-300 hover:text-white transition-all">
+              <ShoppingBag size={17} />
+              {cartCount > 0 && <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-700 text-white text-[10px] font-black rounded-full flex items-center justify-center">{cartCount}</span>}
             </button>
-            <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white">
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden w-10 h-10 rounded-xl bg-stone-900/80 border border-stone-700/50 flex items-center justify-center text-stone-300">
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
       </div>
       {mobileOpen && (
-        <div className="lg:hidden bg-black/98 border-t border-yellow-900/30 px-4 py-4 space-y-1">
+        <div className="lg:hidden bg-stone-950/98 border-t border-stone-800/60 px-6 py-4 space-y-1">
           {navItems.map(item => (
             <button key={item.key} onClick={() => { setCurrentPage(item.key); setMobileOpen(false); }}
-              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${currentPage === item.key ? 'text-yellow-400 bg-yellow-950/50' : 'text-gray-400'}`}>
-              <span className="block text-xs opacity-60">{item.labelEn}</span>{item.label}
+              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${currentPage === item.key ? 'text-amber-400 bg-amber-950/30' : 'text-stone-400'}`}>
+              <span className="block text-[10px] opacity-50 uppercase tracking-wider">{item.labelEn}</span>{item.label}
             </button>
           ))}
         </div>
@@ -142,52 +143,178 @@ function Navbar({ currentPage, setCurrentPage, cartCount, setShowCart }) {
 
 function Hero({ setCurrentPage }) {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-black">
-      <div className="absolute inset-0 bg-gradient-to-br from-red-950/60 via-black to-yellow-950/40"></div>
-      <div className="absolute inset-0 opacity-20" style={{backgroundImage: 'radial-gradient(circle at 20% 50%, #dc2626 0%, transparent 50%), radial-gradient(circle at 80% 20%, #ca8a04 0%, transparent 40%), radial-gradient(circle at 60% 80%, #7f1d1d 0%, transparent 50%)'}}></div>
-      <div className="absolute inset-0" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(217,119,6,0.03) 80px, rgba(217,119,6,0.03) 81px), repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(217,119,6,0.03) 80px, rgba(217,119,6,0.03) 81px)'}}></div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-0">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-stone-950">
+      {/* Atmospheric background layers */}
+      <div className="absolute inset-0 bg-gradient-to-br from-stone-950 via-red-950/20 to-stone-950"></div>
+      <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(120,53,15,0.15) 0%, transparent 70%)'}}></div>
+      <div className="absolute inset-0 opacity-[0.04]" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(217,119,6,0.4) 60px, rgba(217,119,6,0.4) 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(217,119,6,0.4) 60px, rgba(217,119,6,0.4) 61px)'}}></div>
+
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-32 lg:py-0 w-full">
+        <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl">
+          {/* Left: Brand narrative */}
           <div>
-            <div className="inline-flex items-center gap-2 bg-yellow-950/60 border border-yellow-800/40 text-yellow-400 text-xs font-bold px-4 py-1.5 rounded-full mb-6">
-              <Sparkles size={12} /> AI Meets Ancient Fortune
+            {/* Heritage badge */}
+            <div className="inline-flex items-center gap-2 border border-amber-800/50 bg-amber-950/30 text-amber-400 text-[11px] font-medium tracking-[0.2em] uppercase px-4 py-2 rounded-full mb-8">
+              <Award size={11} />
+              AI Fusion · Eastern Heritage · Since 2024
             </div>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.05] mb-4">
-              <span className="bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent">CaiShen</span>
-              <br />
-              <span className="font-cn text-white">财神文创</span>
+
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-[72px] font-black text-white leading-[1.02] mb-6 tracking-tight">
+              <span className="block text-amber-400 text-4xl sm:text-5xl lg:text-[56px] mb-2 font-black">CaiShen</span>
+              <span className="block text-stone-300 font-light tracking-wide">财神文創</span>
             </h1>
-            <p className="text-lg text-gray-400 mb-3 max-w-lg leading-relaxed">
-              World's First AI-Powered Traditional Fortune Art Brand.<br />
-              Every piece, crafted by AI trained on millennia of CaiShen culture.
+
+            {/* Brand statement — ichtea style heritage copy */}
+            <p className="text-stone-400 text-base leading-7 mb-3 max-w-md font-light">
+              Every piece we craft: an unrepeatable moment.<br />
+              A testament to millennia of Eastern fortune culture — reborn through AI.
             </p>
-            <p className="text-sm text-yellow-600/80 mb-8 max-w-lg">
-              全球首款 AI 融合东方传统美学的文创品牌。
+            <p className="text-amber-600/70 text-sm leading-relaxed mb-10 max-w-md">
+              全球首創 AI 融合傳統美學的文創品牌。以千年財神文化為基底，AI 為橋樑，創造專屬當代的 Fortune Art。
             </p>
-            <div className="flex flex-wrap gap-4">
-              <button onClick={() => setCurrentPage('shop')} className="group bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white font-bold px-8 py-4 rounded-2xl transition-all duration-200 flex items-center gap-3 shadow-xl shadow-red-900/40 hover:shadow-red-800/60">
-                <ShoppingBag size={18} />
-                Shop All Products
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button onClick={() => setCurrentPage('story')} className="border border-yellow-800/60 text-yellow-400 hover:bg-yellow-950/50 font-bold px-8 py-4 rounded-2xl transition-all duration-200">
-                Our Story
-              </button>
+
+            {/* Heritage credentials */}
+            <div className="space-y-3 mb-10 pl-4 border-l-2 border-amber-800/40">
+              <div className="flex items-start gap-3">
+                <Sparkles size={14} className="text-amber-500 mt-0.5 shrink-0" />
+                <div>
+                  <div className="text-white text-sm font-semibold">AI-Trained on Ancient Artifacts</div>
+                  <div className="text-stone-500 text-xs">敦煌壁畫 · 宋瓷 · 明清漆器 · 歷代財神畫像</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Award size={14} className="text-amber-500 mt-0.5 shrink-0" />
+                <div>
+                  <div className="text-white text-sm font-semibold">Unique Generation, Every Time</div>
+                  <div className="text-stone-500 text-xs">每一次生成皆為原創 AI 紋樣，無法複製，永不重複</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Globe2 size={14} className="text-amber-500 mt-0.5 shrink-0" />
+                <div>
+                  <div className="text-white text-sm font-semibold">36 Countries · 50,000+ Families</div>
+                  <div className="text-stone-500 text-xs">世界各地華人與文化愛好者的選擇</div>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-8 mt-12 pt-8 border-t border-white/10">
-              <div><div className="text-2xl font-black text-white">50K+</div><div className="text-xs text-gray-500">Global Users</div></div>
-              <div><div className="text-2xl font-black text-white">4.9★</div><div className="text-xs text-gray-500">Avg Rating</div></div>
-              <div><div className="text-2xl font-black text-white">36</div><div className="text-xs text-gray-500">Countries</div></div>
-              <div><div className="text-2xl font-black text-white">7-14</div><div className="text-xs text-gray-500">Days Worldwide</div></div>
+
+            {/* CTA buttons */}
+            <div className="flex flex-wrap gap-4">
+              <button onClick={() => setCurrentPage('shop')} className="group bg-gradient-to-r from-red-800 via-red-700 to-amber-700 hover:from-red-700 hover:to-amber-600 text-white font-semibold px-8 py-4 rounded-2xl transition-all duration-300 flex items-center gap-3 shadow-xl shadow-red-950/60 text-sm">
+                <ShoppingBag size={16} />
+                探索全部商品
+                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button onClick={() => setCurrentPage('story')} className="border border-stone-700 text-stone-300 hover:text-amber-400 hover:border-amber-800 font-semibold px-8 py-4 rounded-2xl transition-all duration-300 text-sm">
+                品牌故事
+              </button>
             </div>
           </div>
-          <div className="relative hidden lg:flex justify-center">
+
+          {/* Right: Visual element */}
+          <div className="relative hidden lg:flex justify-center items-center">
             <div className="relative">
-              <div className="w-96 h-96 rounded-full bg-gradient-to-br from-red-900/60 to-yellow-900/40 flex items-center justify-center animate-pulse">
-                <img src="/images/caishen-cutout.png" alt="CaiShen AI" className="w-80 h-80 object-contain" onError={e => { e.target.parentElement.innerHTML='<div class=\'text-8xl\'>🧧</div>'; }} />
+              {/* Decorative rings */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-[420px] h-[420px] rounded-full border border-amber-900/20 animate-spin" style={{animationDuration: '40s'}}></div>
               </div>
-              <div className="absolute -top-4 -right-4 bg-gradient-to-br from-yellow-500 to-amber-600 text-black font-black text-sm px-4 py-2 rounded-2xl rotate-12 shadow-lg shadow-yellow-900/40">AI 創作</div>
-              <div className="absolute -bottom-4 -left-4 bg-black/80 backdrop-blur border border-yellow-800/50 text-yellow-400 font-bold text-xs px-4 py-2 rounded-xl -rotate-6">限量發售</div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-[340px] h-[340px] rounded-full border border-red-900/30 animate-spin" style={{animationDuration: '25s', animationDirection: 'reverse'}}></div>
+              </div>
+              {/* Center image */}
+              <div className="relative w-80 h-80 rounded-full overflow-hidden bg-gradient-to-br from-red-900/60 via-stone-900 to-amber-900/40 flex items-center justify-center shadow-2xl shadow-red-950/40 border border-amber-900/30">
+                <img src="/images/caishen-cutout.png" alt="CaiShen AI" className="w-full h-full object-contain" onError={e => { e.target.parentElement.innerHTML='<div class="text-center"><div class="text-7xl">🧧</div><div class="text-amber-400 text-sm font-bold mt-3">CaiShen</div><div class="text-amber-600/60 text-xs mt-1">AI Fortune Art</div></div>'; }} />
+              </div>
+              {/* Floating badges */}
+              <div className="absolute -top-2 right-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[10px] font-black px-4 py-1.5 rounded-xl rotate-6 shadow-lg">AI 創作</div>
+              <div className="absolute -bottom-2 left-4 bg-stone-900/90 backdrop-blur border border-amber-800/50 text-amber-400 text-[10px] font-semibold px-4 py-1.5 rounded-xl -rotate-3">限量編號</div>
+              <div className="absolute top-1/2 -right-6 bg-red-950/80 backdrop-blur border border-red-800/50 text-red-300 text-[10px] font-medium px-3 py-1.5 rounded-xl rotate-12">收藏級</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats bar */}
+        <div className="flex items-center gap-12 mt-20 pt-10 border-t border-stone-800/60">
+          {[['50,000+', '全球用戶'], ['36', '國家地區'], ['4.9★', '平均評分'], ['7-14', '全球到貨日']].map(([num, label]) => (
+            <div key={label}>
+              <div className="text-2xl font-black text-white">{num}</div>
+              <div className="text-stone-600 text-[11px] tracking-wider uppercase">{label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HeritageSection({ setCurrentPage }) {
+  return (
+    <section className="py-28 bg-gradient-to-b from-stone-950 to-stone-950 border-y border-stone-800/50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        {/* Section label */}
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-8 h-px bg-amber-700/60"></div>
+          <span className="text-amber-600/80 text-[11px] tracking-[0.25em] uppercase font-medium">Heritage & Craftsmanship</span>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left: Text content */}
+          <div>
+            <h2 className="font-display text-4xl lg:text-5xl font-black text-white leading-tight mb-6">
+              The Origin Story<br />
+              <span className="text-amber-400">of CaiShen</span>
+            </h2>
+            <div className="space-y-5 text-stone-400 text-sm leading-7">
+              <p>
+                The CaiShen faith spans over 1,500 years — one of the most revered cultural symbols for Chinese communities worldwide. From Tang dynasty palace halls to overseas living rooms, the desire for fortune transcends borders.
+              </p>
+              <p>
+                We asked ourselves: <em className="text-stone-300">what if ancient wisdom could meet modern technology?</em> So we trained a proprietary AI on thousands of cultural artifacts — Dunhuang murals, Song dynasty porcelain, Ming-Qing lacquerware, generations of CaiShen depictions — to create something never seen before.
+              </p>
+              <p>
+                Each piece generated by CaiShen AI is a <span className="text-amber-400 font-medium">unique, irreplaceable work of art</span>. No two patterns are the same. Every product carries the imprint of an ancient culture reborn in the digital age.
+              </p>
+            </div>
+
+            {/* Story CTA */}
+            <div className="mt-8 flex items-center gap-4">
+              <button onClick={() => setCurrentPage('story')} className="group text-amber-400 hover:text-amber-300 text-sm font-semibold flex items-center gap-2 transition-colors">
+                Read Full Brand Story
+                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+              <div className="h-px flex-1 bg-stone-800/60 max-w-[80px]"></div>
+            </div>
+          </div>
+
+          {/* Right: Visual grid */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-gradient-to-br from-red-950/60 to-stone-900 border border-red-900/40 rounded-2xl p-6 flex flex-col justify-between min-h-[180px]">
+              <div className="text-3xl mb-3">🏮</div>
+              <div>
+                <div className="text-white font-bold text-sm mb-1">1,500 Years</div>
+                <div className="text-stone-500 text-xs leading-relaxed">of continuous CaiShen cultural heritage and devotion</div>
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-amber-950/50 to-stone-900 border border-amber-900/40 rounded-2xl p-6 flex flex-col justify-between min-h-[180px]">
+              <div className="text-3xl mb-3">⚡</div>
+              <div>
+                <div className="text-white font-bold text-sm mb-1">AI Original</div>
+                <div className="text-stone-500 text-xs leading-relaxed">Proprietary AI trained on thousands of ancient artifacts</div>
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-stone-900 to-stone-950 border border-stone-800 rounded-2xl p-6 flex flex-col justify-between min-h-[180px]">
+              <div className="text-3xl mb-3">🌍</div>
+              <div>
+                <div className="text-white font-bold text-sm mb-1">36 Countries</div>
+                <div className="text-stone-500 text-xs leading-relaxed">Trusted by families and collectors worldwide</div>
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-red-900/40 to-amber-950/30 border border-amber-800/30 rounded-2xl p-6 flex flex-col justify-between min-h-[180px]">
+              <div className="text-3xl mb-3">📜</div>
+              <div>
+                <div className="text-white font-bold text-sm mb-1">Certificate</div>
+                <div className="text-stone-500 text-xs leading-relaxed">Every piece comes with authenticity documentation</div>
+              </div>
             </div>
           </div>
         </div>
@@ -197,44 +324,38 @@ function Hero({ setCurrentPage }) {
 }
 
 function ProductShowcase({ setCurrentPage }) {
-  const featured = PRODUCTS.slice(0, 2);
+  const featured = PRODUCTS.slice(0, 4);
   return (
-    <section className="py-24 bg-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-12">
+    <section className="py-24 bg-stone-950">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        {/* Section header */}
+        <div className="flex items-end justify-between mb-14">
           <div>
-            <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2 font-display">Featured Collection</div>
-            <h2 className="text-4xl font-black text-white">Popular Picks</h2>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-px bg-amber-700/60"></div>
+              <span className="text-amber-600/80 text-[11px] tracking-[0.25em] uppercase font-medium">Featured Collection</span>
+            </div>
+            <h2 className="font-display text-4xl lg:text-5xl font-black text-white">The Collection</h2>
+            <p className="text-stone-500 text-sm mt-2">AI 融合傳統美學 · 每一件皆為限量創作</p>
           </div>
-          <button onClick={() => setCurrentPage('shop')} className="hidden sm:flex items-center gap-2 text-yellow-400 hover:text-yellow-300 text-sm font-semibold transition-colors">
-            View All <ChevronRight size={16} />
+          <button onClick={() => setCurrentPage('shop')} className="hidden sm:flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm font-semibold transition-colors group">
+            全部 {PRODUCTS.length} 件商品
+            <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
-        <div className="grid sm:grid-cols-2 gap-6">
+
+        {/* Products grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {featured.map(p => (
-            <div key={p.id} className="group relative bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/30 rounded-3xl overflow-hidden hover:border-yellow-600/40 transition-all duration-300">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={e => { e.target.style.display='none'; }} />
-              </div>
-              <div className="p-8">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className={`${p.tagColor} text-white text-xs font-bold px-3 py-1 rounded-full`}>{p.tag}</span>
-                  <span className="text-xs text-gray-500">{p.nameEn}</span>
-                </div>
-                <h3 className="text-xl font-black text-white mb-2">{p.name}</h3>
-                <p className="text-gray-400 text-sm mb-4 leading-relaxed">{p.description.slice(0,80)}...</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="price text-2xl font-black text-yellow-400">${p.price}</span>
-                    <span className="text-sm text-gray-500 line-through">${p.originalPrice}</span>
-                  </div>
-                  <button onClick={() => setCurrentPage('shop')} className="bg-yellow-600 hover:bg-yellow-500 text-black font-bold text-sm px-5 py-2 rounded-xl transition-colors flex items-center gap-2">
-                    Shop Now <ArrowRight size={14} />
-                  </button>
-                </div>
-              </div>
-            </div>
+            <ProductCard key={p.id} product={p} onView={() => {}} onQuickAdd={null} />
           ))}
+        </div>
+
+        {/* View all CTA */}
+        <div className="text-center mt-12">
+          <button onClick={() => setCurrentPage('shop')} className="border border-stone-700 hover:border-amber-700 text-stone-400 hover:text-amber-400 font-semibold px-10 py-4 rounded-2xl transition-all duration-300 text-sm">
+            View All Products
+          </button>
         </div>
       </div>
     </section>
@@ -243,21 +364,21 @@ function ProductShowcase({ setCurrentPage }) {
 
 function Features() {
   const features = [
-    { icon: <Truck size={24} />, title: 'Free Shipping', titleEn: '全球免運', desc: 'On orders over $39 · Delivered worldwide in 7-14 days' },
-    { icon: <ShieldCheck size={24} />, title: 'Authenticity Guaranteed', titleEn: '正品保障', desc: 'Every piece comes with a certificate & anti-counterfeit code' },
-    { icon: <RefreshCw size={24} />, title: '30-Day Returns', titleEn: '30天退换', desc: 'Not satisfied? Free returns within 30 days, we cover shipping' },
-    { icon: <Globe size={24} />, title: 'Multi-Language', titleEn: '多语言支持', desc: 'Supports English, Traditional Chinese, French & Spanish' },
+    { icon: <Truck size={22} />, title: '全球免運', titleEn: 'Worldwide Shipping', desc: '訂單滿 $39 全球免運，7-14個工作日送達' },
+    { icon: <ShieldCheck size={22} />, title: '正品保障', titleEn: 'Authenticity Guaranteed', desc: '每件商品附珍藏編號證書，防偽驗證' },
+    { icon: <RefreshCw size={22} />, title: '30天退換', titleEn: '30-Day Returns', desc: '滿意保證，30天內無條件退換' },
+    { icon: <Award size={22} />, title: '限量創作', titleEn: 'Limited Edition', desc: 'AI原創紋樣，每件皆為獨一無二' },
   ];
   return (
-    <section className="py-16 bg-gradient-to-r from-red-950/50 via-black to-yellow-950/30 border-y border-yellow-900/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+    <section className="py-16 bg-stone-900/50 border-y border-stone-800/50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((f, i) => (
             <div key={i} className="text-center group">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-900/60 to-yellow-900/40 border border-yellow-900/40 flex items-center justify-center mx-auto mb-3 text-yellow-400 group-hover:scale-110 transition-transform">{f.icon}</div>
-              <div className="text-yellow-400 font-bold text-sm mb-0.5">{f.title}</div>
-              <div className="text-yellow-600/60 text-[10px] font-medium tracking-wider uppercase">{f.titleEn}</div>
-              <div className="text-gray-500 text-xs mt-1">{f.desc}</div>
+              <div className="w-14 h-14 rounded-2xl bg-stone-800/80 border border-stone-700/60 flex items-center justify-center mx-auto mb-4 text-amber-400 group-hover:bg-amber-900/30 group-hover:border-amber-700/50 transition-all duration-300">{f.icon}</div>
+              <div className="text-amber-400 font-bold text-sm mb-0.5">{f.title}</div>
+              <div className="text-stone-600 text-[10px] font-medium tracking-wider uppercase mb-2">{f.titleEn}</div>
+              <div className="text-stone-500 text-xs leading-relaxed">{f.desc}</div>
             </div>
           ))}
         </div>
@@ -268,24 +389,28 @@ function Features() {
 
 function ShopPage({ setCurrentPage, onViewProduct, onQuickAdd }) {
   const [filter, setFilter] = useState('all');
-  const filters = ['all', '挂件 Keychain', '摆件 Ornament', '礼盒 Set'];
+  const filters = ['all', '掛件', '擺件', '禮盒'];
   const filtered = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.name.includes(filter));
   return (
-    <div className="pt-24 pb-20 bg-black min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2">Full Collection</div>
-          <h2 className="text-4xl font-black text-white mb-3">Shop All Products</h2>
-          <p className="text-gray-500 text-sm">AI財神全系列 · All 4 Products</p>
+    <div className="pt-28 pb-24 bg-stone-950 min-h-screen">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-14">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="w-8 h-px bg-amber-700/60"></div>
+            <span className="text-amber-600/80 text-[11px] tracking-[0.25em] uppercase font-medium">Full Collection</span>
+            <div className="w-8 h-px bg-amber-700/60"></div>
+          </div>
+          <h2 className="font-display text-4xl lg:text-5xl font-black text-white mb-3">全部商品</h2>
+          <p className="text-stone-500 text-sm">AI 財神全系列 · {PRODUCTS.length} Products</p>
         </div>
-        <div className="flex justify-center gap-2 mb-10 flex-wrap">
+        <div className="flex justify-center gap-2 mb-12 flex-wrap">
           {filters.map(f => (
-            <button key={f} onClick={() => setFilter(f)} className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${filter === f ? 'bg-yellow-600 text-black' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}>
+            <button key={f} onClick={() => setFilter(f)} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${filter === f ? 'bg-amber-600 text-white' : 'bg-stone-800/80 text-stone-400 hover:bg-stone-700'}`}>
               {f === 'all' ? '全部 All' : f}
             </button>
           ))}
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {filtered.map(p => <ProductCard key={p.id} product={p} onView={onViewProduct} onQuickAdd={onQuickAdd} />)}
         </div>
       </div>
@@ -297,64 +422,57 @@ function ProductModal({ product, onClose, onAddToCart }) {
   const [activeImg, setActiveImg] = useState(0);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
-
   if (!product) return null;
-
-  const handleAdd = () => {
-    onAddToCart(product, qty);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
-  };
-
+  const handleAdd = () => { onAddToCart(product, qty); setAdded(true); setTimeout(() => setAdded(false), 2000); };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-gradient-to-b from-zinc-900 to-black border border-yellow-900/40 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+      <div className="bg-gradient-to-b from-stone-900 to-stone-950 border border-stone-700/60 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
         <div className="grid md:grid-cols-2 gap-0">
-          <div className="bg-black/50 p-6">
-            <div className="aspect-square bg-zinc-950 rounded-2xl overflow-hidden mb-4 flex items-center justify-center">
+          <div className="bg-stone-950 p-6">
+            <div className="aspect-square bg-stone-900 rounded-2xl overflow-hidden mb-4 flex items-center justify-center border border-stone-800/60">
               <img src={product.images[activeImg]} alt={product.name} className="w-full h-full object-cover" onError={e => { e.target.style.display='none'; }} />
             </div>
             <div className="flex gap-2">
               {product.images.map((img, i) => (
-                <button key={i} onClick={() => setActiveImg(i)} className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${activeImg === i ? 'border-yellow-500' : 'border-transparent opacity-60 hover:opacity-100'}`}>
+                <button key={i} onClick={() => setActiveImg(i)} className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${activeImg === i ? 'border-amber-500' : 'border-transparent opacity-50 hover:opacity-100'}`}>
                   <img src={img} alt="" className="w-full h-full object-cover" onError={e => e.target.style.display='none'} />
                 </button>
               ))}
             </div>
           </div>
           <div className="p-6 lg:p-8">
-            <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:text-white float-right"><X size={16} /></button>
-            <div className="text-xs text-yellow-600/80 font-medium tracking-widest uppercase mb-2 font-display">{product.nameEn}</div>
+            <button onClick={onClose} className="w-8 h-8 rounded-full bg-stone-800 flex items-center justify-center text-stone-400 hover:text-white float-right"><X size={15} /></button>
+            <div className="text-xs text-amber-600/80 font-medium tracking-widest uppercase mb-2">{product.nameEn}</div>
             <h2 className="font-cn text-2xl font-black text-white mb-1">{product.name}</h2>
             <div className="flex items-center gap-2 mb-4">
               <StarRating rating={product.rating} />
-              <span className="text-xs text-gray-500">{product.reviews} reviews</span>
+              <span className="text-xs text-stone-500">{product.reviews} reviews</span>
             </div>
             <div className="flex items-end gap-4 mb-6">
-              <span className="price text-4xl font-black text-yellow-400">${product.price}</span>
-              <span className="text-lg text-gray-500 line-through">${product.originalPrice}</span>
+              <span className="text-4xl font-black text-amber-400">${product.price}</span>
+              <span className="text-lg text-stone-600 line-through">${product.originalPrice}</span>
               <span className="bg-red-950/60 text-red-400 text-sm font-bold px-3 py-1 rounded-full">-{Math.round((1-product.price/product.originalPrice)*100)}%</span>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">{product.description}</p>
+            <p className="text-stone-400 text-sm leading-relaxed mb-6">{product.description}</p>
             <ul className="space-y-2 mb-6">
               {product.features.map((f, i) => (
-                <li key={i} className="flex items-center gap-2 text-sm text-gray-300"><CheckCircle size={14} className="text-yellow-500 shrink-0" />{f}</li>
+                <li key={i} className="flex items-center gap-2 text-sm text-stone-300"><CheckCircle size={13} className="text-amber-500 shrink-0" />{f}</li>
               ))}
             </ul>
             <div className="flex items-center gap-3 mb-6">
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl">
-                <button onClick={() => setQty(Math.max(1, qty-1))} className="w-10 h-10 flex items-center justify-center text-white font-bold text-lg hover:bg-white/10 rounded-l-xl transition-colors">-</button>
+              <div className="flex items-center gap-2 bg-stone-800/80 border border-stone-700/60 rounded-xl">
+                <button onClick={() => setQty(Math.max(1, qty-1))} className="w-10 h-10 flex items-center justify-center text-white font-bold text-lg hover:bg-stone-700 rounded-l-xl transition-colors">-</button>
                 <span className="w-10 text-center text-white font-bold">{qty}</span>
-                <button onClick={() => setQty(qty+1)} className="w-10 h-10 flex items-center justify-center text-white font-bold text-lg hover:bg-white/10 rounded-r-xl transition-colors">+</button>
+                <button onClick={() => setQty(qty+1)} className="w-10 h-10 flex items-center justify-center text-white font-bold text-lg hover:bg-stone-700 rounded-r-xl transition-colors">+</button>
               </div>
-              <button onClick={handleAdd} className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all ${added ? 'bg-green-600 text-white' : 'bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white'}`}>
-                {added ? <><CheckCircle size={16} className="inline mr-2" />Added to Cart</> : <><ShoppingBag size={16} className="inline mr-2" />Add to Cart</>}
+              <button onClick={handleAdd} className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all ${added ? 'bg-green-700 text-white' : 'bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white'}`}>
+                {added ? <><CheckCircle size={15} className="inline mr-2" />Added to Cart</> : <><ShoppingBag size={15} className="inline mr-2" />Add to Cart</>}
               </button>
             </div>
-            <div className="border-t border-white/10 pt-4 space-y-2 text-xs text-gray-500">
-              <div className="flex items-center gap-2"><Truck size={12} /> Free shipping worldwide · Orders over $39</div>
-              <div className="flex items-center gap-2"><RefreshCw size={12} /> 30-day hassle-free returns</div>
-              <div className="flex items-center gap-2"><ShieldCheck size={12} /> Authenticity guaranteed · Certificate included</div>
+            <div className="border-t border-stone-800 pt-4 space-y-2 text-xs text-stone-600">
+              <div className="flex items-center gap-2"><Truck size={12} /> 全球免運 · Orders over $39</div>
+              <div className="flex items-center gap-2"><RefreshCw size={12} /> 30天退換保障</div>
+              <div className="flex items-center gap-2"><Award size={12} /> 正品保證 · 珍藏證書</div>
             </div>
           </div>
         </div>
@@ -365,33 +483,50 @@ function ProductModal({ product, onClose, onAddToCart }) {
 
 function StoryPage({ setCurrentPage }) {
   return (
-    <div className="pt-24 pb-20 bg-black min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-28 pb-24 bg-stone-950 min-h-screen">
+      <div className="max-w-4xl mx-auto px-6 lg:px-10">
         <div className="text-center mb-16">
-          <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2">Our Story</div>
-          <h2 className="text-4xl font-black text-white mb-3">About CaiShen</h2>
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="w-8 h-px bg-amber-700/60"></div>
+            <span className="text-amber-600/80 text-[11px] tracking-[0.25em] uppercase font-medium">Our Story</span>
+            <div className="w-8 h-px bg-amber-700/60"></div>
+          </div>
+          <h2 className="font-display text-4xl lg:text-5xl font-black text-white mb-3">關於 CaiShen</h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <div className="bg-gradient-to-br from-red-950/40 to-black border border-red-900/30 rounded-3xl p-8">
-            <div className="text-4xl mb-4">🏮</div>
+
+        {/* Heritage blocks */}
+        <div className="grid md:grid-cols-2 gap-6 mb-16">
+          <div className="bg-gradient-to-br from-red-950/40 to-stone-950 border border-red-900/40 rounded-3xl p-8">
+            <div className="text-4xl mb-5">🏮</div>
             <h3 className="text-xl font-black text-white mb-3">1,500 Years of Heritage</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">The CaiShen faith has over 1,500 years of history in China, and is one of the most cherished cultural symbols for Chinese communities worldwide. CaiShen is dedicated to reimagining this cultural treasure through AI technology.</p>
+            <p className="text-stone-400 text-sm leading-7">The CaiShen faith has over 1,500 years of history in China, and is one of the most cherished cultural symbols for Chinese communities worldwide. CaiShen is dedicated to reimagining this cultural treasure through AI technology.</p>
           </div>
-          <div className="bg-gradient-to-br from-yellow-950/40 to-black border border-yellow-900/30 rounded-3xl p-8">
-            <div className="text-4xl mb-4">⚡</div>
+          <div className="bg-gradient-to-br from-amber-950/40 to-stone-950 border border-amber-900/40 rounded-3xl p-8">
+            <div className="text-4xl mb-5">⚡</div>
             <h3 className="text-xl font-black text-white mb-3">Powered by AI</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">We trained a proprietary AI system on thousands of artifacts — Dunhuang murals, Song dynasty porcelain, Ming-Qing lacquerware — to generate unique CaiShen aesthetic totems for the digital age.</p>
+            <p className="text-stone-400 text-sm leading-7">We trained a proprietary AI system on thousands of artifacts — Dunhuang murals, Song dynasty porcelain, Ming-Qing lacquerware — to generate unique CaiShen aesthetic totems for the digital age.</p>
           </div>
         </div>
-        <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-3xl p-8 lg:p-12 mb-16 text-center">
-          <h3 className="text-2xl font-black text-white mb-4">The Brand Story</h3>
-          <p className="text-gray-400 text-sm leading-8 max-w-2xl mx-auto">CaiShen was born in a living room overseas. Our founder grew tired of Western stereotypes about Eastern culture and decided to use cutting-edge AI to reinterpret the sacred image of CaiShen. From the first sketch to the first finished product took 8 months.<br /><br />Today, CaiShen has reached tens of thousands of families across 36 countries. We believe: wealth is energy, faith is the medium, and technology is the bridge.<br /><br /><span className="text-yellow-400 font-bold">"Let every overseas Chinese feel the warmth of home at their fingertips."</span></p>
+
+        {/* Full story */}
+        <div className="bg-gradient-to-br from-stone-900 to-stone-950 border border-stone-800/60 rounded-3xl p-8 lg:p-12 mb-16 text-center">
+          <h3 className="font-display text-2xl font-black text-white mb-6">品牌故事 · The Brand Story</h3>
+          <div className="text-stone-400 text-sm leading-8 max-w-2xl mx-auto space-y-4">
+            <p>CaiShen was born in a living room overseas. Our founder grew tired of Western stereotypes about Eastern culture and decided to use cutting-edge AI to reinterpret the sacred image of CaiShen.</p>
+            <p>From the first sketch to the first finished product took 8 months. Today, CaiShen has reached tens of thousands of families across 36 countries.</p>
+            <p>We believe: <span className="text-amber-400 font-semibold">wealth is energy, faith is the medium, and technology is the bridge.</span></p>
+          </div>
+          <blockquote className="mt-8 border-l-4 border-amber-700/60 pl-6 text-left max-w-xl mx-auto">
+            <p className="text-stone-300 italic text-sm leading-7">"Let every overseas Chinese feel the warmth of home at their fingertips."</p>
+          </blockquote>
         </div>
-        <div className="grid grid-cols-3 gap-6 text-center">
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-5">
           {[['36+', 'Countries'], ['50K+', 'Global Users'], ['4.9★', 'Avg Rating']].map(([num, label]) => (
-            <div key={label} className="bg-white/5 border border-white/10 rounded-2xl p-6">
-              <div className="price text-2xl font-black text-yellow-400 mb-1">{num}</div>
-              <div className="text-xs text-gray-500">{label}</div>
+            <div key={label} className="bg-stone-900/80 border border-stone-800/60 rounded-2xl p-6 text-center">
+              <div className="text-2xl font-black text-amber-400 mb-1">{num}</div>
+              <div className="text-stone-600 text-[11px] tracking-wider uppercase">{label}</div>
             </div>
           ))}
         </div>
@@ -402,20 +537,24 @@ function StoryPage({ setCurrentPage }) {
 
 function ReviewsSection() {
   return (
-    <section className="py-20 bg-gradient-to-b from-black via-zinc-950 to-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2">Customer Reviews</div>
-          <h2 className="text-3xl font-black text-white">What Our Customers Say</h2>
+    <section className="py-24 bg-stone-950 border-t border-stone-800/50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-14">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="w-8 h-px bg-amber-700/60"></div>
+            <span className="text-amber-600/80 text-[11px] tracking-[0.25em] uppercase font-medium">Customer Voices</span>
+            <div className="w-8 h-px bg-amber-700/60"></div>
+          </div>
+          <h2 className="font-display text-4xl font-black text-white">真實用戶</h2>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {REVIEWS.map((r, i) => (
-            <div key={i} className="bg-gradient-to-b from-zinc-900/80 to-black border border-white/10 rounded-2xl p-5">
+            <div key={i} className="bg-gradient-to-b from-stone-900/80 to-stone-950 border border-stone-800/60 rounded-2xl p-5">
               <StarRating rating={r.rating} />
-              <p className="text-gray-300 text-sm mt-3 mb-3 leading-relaxed">"{r.text}"</p>
+              <p className="text-stone-300 text-sm mt-3 mb-4 leading-relaxed">"{r.text}"</p>
               <div className="flex items-center justify-between">
-                <div><div className="text-white font-bold text-sm">{r.name}</div><div className="text-xs text-gray-500">{r.location}</div></div>
-                <span className="text-xs text-yellow-600/70 bg-yellow-950/40 px-2 py-1 rounded-full">{r.product}</span>
+                <div><div className="text-white font-bold text-sm">{r.name}</div><div className="text-stone-600 text-[11px]">{r.location}</div></div>
+                <span className="text-[10px] text-amber-600/70 bg-amber-950/40 px-2 py-1 rounded-full">{r.product}</span>
               </div>
             </div>
           ))}
@@ -429,17 +568,21 @@ function Newsletter() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   return (
-    <section className="py-20 bg-gradient-to-r from-red-950/60 via-red-900/40 to-yellow-950/40 border-y border-yellow-900/30">
-      <div className="max-w-2xl mx-auto px-4 text-center">
-        <div className="text-4xl mb-4">📬</div>
-        <h2 className="text-3xl font-black text-white mb-2">Subscribe for Exclusive Offers</h2>
-        <p className="text-gray-400 text-sm mb-6">Be the first to know about new arrivals & special discounts</p>
+    <section className="py-20 bg-gradient-to-r from-red-950/40 via-stone-950 to-amber-950/20 border-y border-stone-800/50">
+      <div className="max-w-xl mx-auto px-6 text-center">
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <div className="w-8 h-px bg-amber-700/60"></div>
+          <BookOpen size={18} className="text-amber-500" />
+          <div className="w-8 h-px bg-amber-700/60"></div>
+        </div>
+        <h2 className="font-display text-2xl font-black text-white mb-2">Stay in Touch</h2>
+        <p className="text-stone-500 text-sm mb-8">新產品 · 限量創作 · 特別優惠，第一時間知曉</p>
         {submitted ? (
-          <div className="bg-green-900/40 border border-green-700/50 text-green-400 rounded-2xl py-4 px-6 text-sm font-bold">✓ Subscribed! We'll be in touch soon.</div>
+          <div className="bg-green-900/40 border border-green-800/50 text-green-400 rounded-2xl py-4 px-6 text-sm font-bold">✓ 訂閱成功！我們會第一時間與你聯繫。</div>
         ) : (
           <div className="flex gap-3 max-w-md mx-auto">
-            <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email address" className="flex-1 bg-black/60 border border-yellow-900/50 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600 transition-colors" />
-            <button onClick={() => { if(email) setSubmitted(true); }} className="bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 hover:to-amber-500 text-black font-bold px-6 py-3 rounded-xl transition-all whitespace-nowrap">Subscribe</button>
+            <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email address" className="flex-1 bg-stone-900/80 border border-stone-700/60 rounded-xl px-4 py-3 text-white text-sm placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors" />
+            <button onClick={() => { if(email) setSubmitted(true); }} className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold px-6 py-3 rounded-xl transition-all whitespace-nowrap text-sm">Subscribe</button>
           </div>
         )}
       </div>
@@ -452,44 +595,46 @@ function ContactPage() {
   const [sent, setSent] = useState(false);
   const handleSubmit = (e) => { e.preventDefault(); setSent(true); };
   return (
-    <div className="pt-24 pb-20 bg-black min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="text-yellow-600 text-xs font-bold tracking-[0.3em] uppercase mb-2">Contact Us</div>
-          <h2 className="text-4xl font-black text-white">Get in Touch</h2>
+    <div className="pt-28 pb-24 bg-stone-950 min-h-screen">
+      <div className="max-w-4xl mx-auto px-6 lg:px-10">
+        <div className="text-center mb-14">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="w-8 h-px bg-amber-700/60"></div>
+            <span className="text-amber-600/80 text-[11px] tracking-[0.25em] uppercase font-medium">Contact Us</span>
+            <div className="w-8 h-px bg-amber-700/60"></div>
+          </div>
+          <h2 className="font-display text-4xl lg:text-5xl font-black text-white">聯絡我們</h2>
         </div>
         <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-6">
-            <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-2xl p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-yellow-950/60 rounded-xl flex items-center justify-center text-yellow-400 shrink-0"><Mail size={18} /></div>
-                <div><div className="text-white font-bold text-sm mb-1">郵箱 Email</div><div className="text-gray-400 text-sm">support@blingjew.com</div></div>
+          <div className="space-y-5">
+            {[
+              { icon: <Mail size={18} />, title: '郵箱 Email', content: 'support@blingjew.com' },
+              { icon: <MapPin size={18} />, title: 'Company Address', content: '香港文運亨通有限公司\nHong Kong SAR' },
+              { icon: <Clock size={18} />, title: 'Business Hours', content: 'Mon–Fri 9:00–18:00 (HKT)\n24小時內回覆' },
+            ].map(({ icon, title, content }) => (
+              <div key={title} className="bg-stone-900/80 border border-stone-800/60 rounded-2xl p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-amber-950/60 rounded-xl flex items-center justify-center text-amber-400 shrink-0 border border-amber-900/40">{icon}</div>
+                  <div><div className="text-white font-bold text-sm mb-1">{title}</div><div className="text-stone-400 text-sm whitespace-pre-line">{content}</div></div>
+                </div>
               </div>
-            </div>
-            <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-2xl p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-yellow-950/60 rounded-xl flex items-center justify-center text-yellow-400 shrink-0"><MapPin size={18} /></div>
-                <div><div className="text-white font-bold text-sm mb-1">Company Address</div><div className="text-gray-400 text-sm">香港文運亨通有限公司<br />Hong Kong SAR</div></div>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-2xl p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-yellow-950/60 rounded-xl flex items-center justify-center text-yellow-400 shrink-0"><Clock size={18} /></div>
-                <div><div className="text-white font-bold text-sm mb-1">Business Hours</div><div className="text-gray-400 text-sm">Mon–Fri 9:00–18:00 (HKT)<br />We reply within 24 hours</div></div>
-              </div>
-            </div>
+            ))}
           </div>
-          <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-2xl p-6 lg:p-8">
-            <h3 className="text-lg font-black text-white mb-5">Send a Message</h3>
+          <div className="bg-stone-900/80 border border-stone-800/60 rounded-2xl p-6 lg:p-8">
+            <h3 className="text-lg font-black text-white mb-5">發送訊息</h3>
             {sent ? (
-              <div className="text-center py-8"><div className="text-4xl mb-3">✅</div><div className="text-white font-bold">Message Sent!</div><div className="text-gray-400 text-sm mt-1">We'll get back to you shortly</div></div>
+              <div className="text-center py-10">
+                <div className="text-4xl mb-3">✅</div>
+                <div className="text-white font-bold">訊息已發送！</div>
+                <div className="text-stone-400 text-sm mt-1">我們會盡快回覆</div>
+              </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder="Your Name" className="w-full bg-black/60 border border-yellow-900/40 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600" />
-                <input required type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="Email Address" className="w-full bg-black/60 border border-yellow-900/40 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600" />
-                <textarea required value={form.message} onChange={e => setForm({...form, message: e.target.value})} placeholder="Your Message" rows={4} className="w-full bg-black/60 border border-yellow-900/40 rounded-xl px-4 py-3 text-white text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600 resize-none" />
-                <button type="submit" className="w-full bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2">
-                  <Send size={16} /> Send Message
+                <input required value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder="Your Name" className="w-full bg-stone-950/80 border border-stone-700/60 rounded-xl px-4 py-3 text-white text-sm placeholder-stone-600 focus:outline-none focus:border-amber-600" />
+                <input required type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="Email Address" className="w-full bg-stone-950/80 border border-stone-700/60 rounded-xl px-4 py-3 text-white text-sm placeholder-stone-600 focus:outline-none focus:border-amber-600" />
+                <textarea required value={form.message} onChange={e => setForm({...form, message: e.target.value})} placeholder="Your Message" rows={4} className="w-full bg-stone-950/80 border border-stone-700/60 rounded-xl px-4 py-3 text-white text-sm placeholder-stone-600 focus:outline-none focus:border-amber-600 resize-none" />
+                <button type="submit" className="w-full bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
+                  <Send size={15} /> Send Message
                 </button>
               </form>
             )}
@@ -502,54 +647,50 @@ function ContactPage() {
 
 function Footer({ setCurrentPage }) {
   return (
-    <footer className="bg-black border-t border-yellow-900/30 pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+    <footer className="bg-stone-950 border-t border-stone-800/60 pt-16 pb-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-14">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-red-700 to-yellow-600 rounded-lg flex items-center justify-center text-sm">🧧</div>
-              <div><div className="font-display text-white font-black text-base">CaiShen</div><div className="text-yellow-600/60 text-[8px] tracking-widest uppercase">AI Fortune Art</div></div>
+              <div className="w-8 h-8 bg-gradient-to-br from-red-800 to-amber-700 rounded-lg flex items-center justify-center text-sm">🧧</div>
+              <div><div className="font-display text-white font-black text-base">CaiShen</div><div className="text-amber-600/60 text-[8px] tracking-widest uppercase">AI Fortune Art</div></div>
             </div>
-            <p className="text-gray-500 text-xs leading-relaxed">World's First AI-Powered Traditional Fortune Art Brand. Bringing wealth and culture into the digital age.</p>
+            <p className="text-stone-600 text-xs leading-relaxed">全球首創 AI 融合傳統美學的文創品牌。讓每一次收藏，都是一段文化的延續。</p>
           </div>
           <div>
-            <h4 className="text-white font-bold text-sm mb-4">Shop</h4>
-            <ul className="space-y-2 text-xs text-gray-500">
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">All Products</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Plush Keychains</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Resin Ornaments</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Gift Sets</li>
+            <h4 className="text-stone-300 font-bold text-sm mb-4">Shop</h4>
+            <ul className="space-y-2.5 text-xs text-stone-600">
+              {['All Products', 'Plush Keychains', 'Resin Ornaments', 'Gift Sets'].map(item => (
+                <li key={item} className="hover:text-amber-400 cursor-pointer transition-colors">{item}</li>
+              ))}
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-bold text-sm mb-4">Support</h4>
-            <ul className="space-y-2 text-xs text-gray-500">
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Shipping Info</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Return Policy</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">FAQ</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Contact Us</li>
+            <h4 className="text-stone-300 font-bold text-sm mb-4">Support</h4>
+            <ul className="space-y-2.5 text-xs text-stone-600">
+              {['Shipping Info', 'Return Policy', 'FAQ', 'Contact Us'].map(item => (
+                <li key={item} className="hover:text-amber-400 cursor-pointer transition-colors">{item}</li>
+              ))}
             </ul>
           </div>
           <div>
-            <h4 className="text-white font-bold text-sm mb-4">Company</h4>
-            <ul className="space-y-2 text-xs text-gray-500">
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">About Us</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Our Story</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Privacy Policy</li>
-              <li className="hover:text-yellow-400 cursor-pointer transition-colors">Terms of Use</li>
+            <h4 className="text-stone-300 font-bold text-sm mb-4">Company</h4>
+            <ul className="space-y-2.5 text-xs text-stone-600">
+              {['About Us', 'Our Story', 'Privacy Policy', 'Terms of Use'].map(item => (
+                <li key={item} className="hover:text-amber-400 cursor-pointer transition-colors">{item}</li>
+              ))}
             </ul>
           </div>
         </div>
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-xs text-gray-600">© 2024 CaiShen. 香港文運亨通有限公司. All rights reserved.</div>
-          {/* Hidden admin shortcut */}
+        <div className="border-t border-stone-800/60 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-xs text-stone-700">© 2024 CaiShen. 香港文運亨通有限公司. All rights reserved.</div>
           <button
             onClick={() => { window.location.hash = '#/admin'; setCurrentPage('admin'); }}
-            className="text-[9px] text-gray-700 hover:text-gray-500 cursor-pointer transition-colors tracking-widest uppercase"
+            className="text-[9px] text-stone-800 hover:text-stone-500 cursor-pointer transition-colors tracking-widest uppercase"
             title="Admin"
           >mgr</button>
           <div className="flex gap-3">
-            <div className="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center text-gray-500 hover:text-yellow-400 cursor-pointer transition-colors"><InstagramIcon size={16} /></div>
+            <div className="w-9 h-9 bg-stone-900/80 rounded-lg flex items-center justify-center text-stone-600 hover:text-amber-400 cursor-pointer transition-colors border border-stone-800/60"><InstagramIcon size={15} /></div>
           </div>
         </div>
       </div>
@@ -618,7 +759,7 @@ function useCart() {
         setCheckoutError(data.error || 'Checkout failed. Please try again.');
         setIsCheckingOut(false);
       }
-    } catch (err) {
+    } catch {
       setCheckoutError('Network error. Please check your connection.');
       setIsCheckingOut(false);
     }
@@ -633,57 +774,57 @@ function CartSidebar({ cart, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex justify-end" onClick={onClose}>
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-      <div className="relative w-full max-w-md bg-gradient-to-b from-zinc-900 to-black border-l border-yellow-900/30 flex flex-col" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between p-6 border-b border-white/10">
+      <div className="relative w-full max-w-md bg-gradient-to-b from-stone-900 to-stone-950 border-l border-stone-800/60 flex flex-col" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-6 border-b border-stone-800/60">
           <h2 className="text-lg font-black text-white flex items-center gap-2">
-            <ShoppingBag size={18} /> Your Cart <span className="text-yellow-400 text-sm">({totalItems})</span>
+            <ShoppingBag size={17} /> Your Cart <span className="text-amber-400 text-sm">({totalItems})</span>
           </h2>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:text-white"><X size={16} /></button>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-stone-800 flex items-center justify-center text-stone-400 hover:text-white"><X size={15} /></button>
         </div>
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {items.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="text-center py-14">
               <div className="text-4xl mb-3">🧧</div>
-              <div className="text-gray-500 text-sm">Your cart is empty</div>
-              <div className="text-gray-600 text-xs mt-1">Let's find something special!</div>
+              <div className="text-stone-500 text-sm">Your cart is empty</div>
+              <div className="text-stone-600 text-xs mt-1">探索我們的珍藏系列</div>
             </div>
           ) : items.map(item => (
-            <div key={item.id} className="flex gap-4 bg-white/5 rounded-xl p-3">
-              <div className="w-16 h-16 rounded-lg overflow-hidden bg-zinc-950 shrink-0">
+            <div key={item.id} className="flex gap-4 bg-stone-900/80 rounded-xl p-3 border border-stone-800/60">
+              <div className="w-16 h-16 rounded-lg overflow-hidden bg-stone-950 shrink-0 flex items-center justify-center">
                 <img src={item.image} alt={item.name} className="w-full h-full object-cover" onError={e => e.target.style.display='none'} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-white font-bold text-sm truncate">{item.name}</div>
-                <div className="price text-yellow-400 font-bold text-sm mt-1">${item.price}</div>
+                <div className="text-amber-400 font-bold text-sm mt-1">${item.price}</div>
                 <div className="flex items-center gap-2 mt-2">
-                  <button onClick={() => updateQty(item.id, item.qty - 1)} className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white hover:bg-white/20"><Minus size={12} /></button>
+                  <button onClick={() => updateQty(item.id, item.qty - 1)} className="w-6 h-6 rounded bg-stone-800 flex items-center justify-center text-white hover:bg-stone-700"><Minus size={11} /></button>
                   <span className="text-white text-sm font-bold w-6 text-center">{item.qty}</span>
-                  <button onClick={() => updateQty(item.id, item.qty + 1)} className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white hover:bg-white/20"><Plus size={12} /></button>
-                  <button onClick={() => removeItem(item.id)} className="ml-auto text-red-400 hover:text-red-300 text-xs">Remove</button>
+                  <button onClick={() => updateQty(item.id, item.qty + 1)} className="w-6 h-6 rounded bg-stone-800 flex items-center justify-center text-white hover:bg-stone-700"><Plus size={11} /></button>
+                  <button onClick={() => removeItem(item.id)} className="ml-auto text-red-400 hover:text-red-300 text-xs transition-colors">移除</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
         {items.length > 0 && (
-          <div className="p-6 border-t border-white/10 space-y-4">
+          <div className="p-6 border-t border-stone-800/60 space-y-4">
             {checkoutError && (
               <div className="bg-red-950/50 border border-red-800/50 text-red-400 text-xs rounded-xl p-3 flex items-center justify-between">
                 <span>{checkoutError}</span>
-                <button onClick={() => setCheckoutError('')} className="text-red-300 hover:text-red-200"><X size={14} /></button>
+                <button onClick={() => setCheckoutError('')} className="text-red-300 hover:text-red-200"><X size={13} /></button>
               </div>
             )}
             <div className="flex items-center justify-between">
-              <span className="text-gray-400 text-sm">合计 Total</span>
-              <span className="price text-2xl font-black text-yellow-400">${totalPrice}</span>
+              <span className="text-stone-400 text-sm">合計 Total</span>
+              <span className="text-2xl font-black text-amber-400">${totalPrice}</span>
             </div>
             <button
               onClick={checkout}
               disabled={isCheckingOut}
-              className="w-full py-3.5 bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 hover:to-amber-500 disabled:from-yellow-800 disabled:to-amber-800 text-black font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
-              {isCheckingOut ? <><Loader size={16} className="animate-spin" /> Processing...</> : <><CreditCard size={16} /> Secure Checkout</>}
+              className="w-full py-3.5 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 disabled:from-amber-800 disabled:to-orange-800 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
+              {isCheckingOut ? <><Loader size={15} className="animate-spin" /> Processing...</> : <><CreditCard size={15} /> Secure Checkout</>}
             </button>
-            <div className="flex items-center justify-center gap-4 text-[10px] text-gray-600">
+            <div className="flex items-center justify-center gap-5 text-[10px] text-stone-700">
               <span className="flex items-center gap-1"><ShieldCheck size={10} /> SSL Encrypted</span>
               <span className="flex items-center gap-1"><CreditCard size={10} /> Stripe Secure</span>
             </div>
@@ -699,7 +840,6 @@ function CartSidebar({ cart, onClose }) {
 // ============================================================
 export default function App() {
   const [currentPage, setCurrentPage] = useState(() => {
-    // 读取 URL 参数 ?page=admin
     const params = new URLSearchParams(window.location.search);
     return params.get('page') || 'home';
   });
@@ -711,7 +851,6 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);
 
-  // Hash router: support #/admin (Vercel SPA-friendly)
   useEffect(() => {
     const checkHash = () => {
       if (window.location.hash === '#/admin') {
@@ -736,6 +875,7 @@ export default function App() {
       default: return (
         <>
           <Hero setCurrentPage={setCurrentPage} />
+          <HeritageSection setCurrentPage={setCurrentPage} />
           <ProductShowcase setCurrentPage={setCurrentPage} />
           <Features />
           <ReviewsSection />
@@ -746,16 +886,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans">
+    <div className="min-h-screen bg-stone-950 text-white font-sans">
       {currentPage === 'admin' ? (
         <AdminPanel />
       ) : (
         <>
-      <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} cartCount={cart.totalItems} setShowCart={setShowCart} />
-      {renderPage()}
-      <Footer setCurrentPage={setCurrentPage} />
-      {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} onAddToCart={handleAddToCart} />}
-      {showCart && <CartSidebar cart={{ ...cart }} onClose={() => setShowCart(false)} />}
+          <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} cartCount={cart.totalItems} setShowCart={setShowCart} />
+          {renderPage()}
+          <Footer setCurrentPage={setCurrentPage} />
+          {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} onAddToCart={handleAddToCart} />}
+          {showCart && <CartSidebar cart={{ ...cart }} onClose={() => setShowCart(false)} />}
         </>
       )}
     </div>
