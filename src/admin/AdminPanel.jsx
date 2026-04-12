@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   Package, Plus, Trash2, Edit2, Eye, EyeOff, Save,
   X, CheckCircle, AlertCircle, Loader, LogOut, ShoppingBag, Star,
-  Settings, Zap, ExternalLink, Globe
+  Settings, Zap, ExternalLink, Globe, ArrowLeft
 } from 'lucide-react';
 
 // GitHub icon as inline SVG (lucide-react doesn't export "Github")
@@ -12,12 +12,10 @@ const GitHubIcon = ({ size = 18 }) => (
   </svg>
 );
 
-import productsData from '../data/products.json';
-
 const ADMIN_PASSWORD = 'caishen2026';
 const GITHUB_OWNER = '07cl40-prog';
 const GITHUB_REPO = 'divination-app';
-const PRODUCTS_PATH = 'src/data/products.json';
+const PRODUCTS_PATH = 'public/data/products.json';
 
 const TAG_COLORS = [
   { value: 'bg-red-700', label: 'Red 紅' },
@@ -369,9 +367,10 @@ function LoginScreen({ onLogin }) {
 // ============================================================
 //  MAIN ADMIN PANEL
 // ============================================================
-export default function AdminPanel() {
+export default function AdminPanel({ onBack, onProductsUpdated }) {
   const [authed, setAuthed] = useState(() => sessionStorage.getItem('admin_auth') === '1');
-  const [products, setProducts] = useState(() => productsData);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [editingProduct, setEditingProduct] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
   const [toast, setToast] = useState(null);
@@ -379,6 +378,14 @@ export default function AdminPanel() {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [token, setToken] = useState(() => localStorage.getItem('gh_token') || '');
   const [deployStatus, setDeployStatus] = useState(null);
+
+  // Load products dynamically
+  useEffect(() => {
+    fetch('/data/products.json?t=' + Date.now())
+      .then(res => res.json())
+      .then(data => { setProducts(data); setLoading(false); })
+      .catch(() => { setProducts([]); setLoading(false); });
+  }, []);
 
   const showToast = (msg, type = 'success') => {
     setToast({ msg, type });
@@ -422,6 +429,7 @@ export default function AdminPanel() {
     setEditingProduct(null);
     setIsCreating(false);
     await syncToGitHub(updatedProducts, savedProduct.id ? `Update product: ${savedProduct.name}` : `Add product: ${savedProduct.name}`);
+    onProductsUpdated?.();
   };
 
   const handleDelete = async (id) => {
@@ -430,12 +438,21 @@ export default function AdminPanel() {
     setProducts(updatedProducts);
     setDeleteConfirm(null);
     await syncToGitHub(updatedProducts, `Delete product: ${product?.name}`);
+    onProductsUpdated?.();
   };
 
   const activeProducts = products.filter(p => p.active !== false);
   const totalRevenue = activeProducts.reduce((s, p) => s + (p.price || 0) * (p.reviews || 0), 0);
 
   if (!authed) return <LoginScreen onLogin={handleLogin} />;
+  if (loading) return (
+    <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="text-center">
+        <Loader size={32} className="animate-spin text-yellow-500 mx-auto mb-4" />
+        <div className="text-gray-400 text-sm">Loading products...</div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -451,6 +468,10 @@ export default function AdminPanel() {
       <div className="sticky top-0 z-50 bg-zinc-900/95 backdrop-blur border-b border-yellow-900/40">
         <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
+            <button onClick={onBack} className="flex items-center gap-2 text-gray-400 hover:text-white text-xs font-bold transition-colors">
+              <ArrowLeft size={14} /> Back to Store
+            </button>
+            <div className="w-px h-5 bg-gray-800"></div>
             <div className="w-9 h-9 bg-gradient-to-br from-red-700 to-yellow-600 rounded-xl flex items-center justify-center text-lg">🧧</div>
             <div>
               <div className="text-white font-black text-sm">CaiShen Admin</div>

@@ -14,8 +14,25 @@ const InstagramIcon = ({ size = 16 }) => (
 //  东方奢雅 × AI未来感
 // ============================================================
 
-import productsData from './data/products.json';
-const PRODUCTS = productsData;
+// Products loaded dynamically from public/data/products.json
+const useProducts = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/data/products.json?t=' + Date.now());
+      const data = await res.json();
+      setProducts(data);
+    } catch { setProducts([]); }
+    setLoading(false);
+  }, []);
+  
+  useEffect(() => { refresh(); }, [refresh]);
+  
+  return { products, loading, refresh };
+};
 
 const REVIEWS = [
   { name: 'Linda W.', location: 'Los Angeles, USA', text: 'Absolutely stunning! The AI-generated patterns are unlike anything I have seen. My office colleagues all asked where I got it.', rating: 5, product: '毛絨掛件款' },
@@ -214,8 +231,8 @@ function HeritageSection({ setCurrentPage }) {
   );
 }
 
-function ProductShowcase({ setCurrentPage }) {
-  const featured = PRODUCTS.slice(0, 4);
+function ProductShowcase({ setCurrentPage, products }) {
+  const featured = (products || []).slice(0, 4);
   return (
     <section className="py-8 bg-[#080808]">
       <div className="max-w-7xl mx-auto px-8 lg:px-16">
@@ -227,7 +244,7 @@ function ProductShowcase({ setCurrentPage }) {
           <div className="flex items-end justify-between">
             <h2 className="font-display text-4xl lg:text-5xl font-black text-white">The Collection</h2>
             <button onClick={() => setCurrentPage('shop')} className="hidden sm:flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm font-medium transition-colors group">
-              All {PRODUCTS.length} pieces <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              All {products?.length || 0} pieces <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
@@ -324,10 +341,10 @@ function ReviewsSection() {
 //  Shop / Modal / Story / Newsletter / Contact / Footer
 // ============================================================
 
-function ShopPage({ setCurrentPage, onViewProduct, onQuickAdd }) {
+function ShopPage({ setCurrentPage, onViewProduct, onQuickAdd, products }) {
   const [filter, setFilter] = useState('all');
   const filters = ['all', '掛件', '擺件', '禮盒'];
-  const filtered = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.name.includes(filter));
+  const filtered = filter === 'all' ? (products || []) : (products || []).filter(p => p.name.includes(filter));
   return (
     <div className="pt-28 pb-24 bg-[#080808] min-h-screen">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -338,7 +355,7 @@ function ShopPage({ setCurrentPage, onViewProduct, onQuickAdd }) {
             <div className="w-8 h-px bg-amber-700/60"></div>
           </div>
           <h2 className="font-display text-4xl lg:text-5xl font-black text-white mb-3">全部商品</h2>
-          <p className="text-stone-500 text-sm">AI 獨家系列 · {PRODUCTS.length} Products</p>
+          <p className="text-stone-500 text-sm">AI 獨家系列 · {products?.length || 0} Products</p>
         </div>
         <div className="flex justify-center gap-2 mb-12 flex-wrap">
           {filters.map(f => (
@@ -715,6 +732,7 @@ export default function App() {
   const [showCart, setShowCart] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { items, addItem, removeItem, updateQty, clearCart, total } = useCart();
+  const { products, loading, refresh } = useProducts();
   const cartCount = items.reduce((s, i) => s + i.qty, 0);
   const handleCheckout = async () => {
     if (!items.length) return;
@@ -734,12 +752,12 @@ export default function App() {
   const handleCloseModal = () => setSelectedProduct(null);
   const handleAddToCart = (product, qty = 1) => { addItem(product, qty); setShowCart(true); handleCloseModal(); };
   useEffect(() => { window.scrollTo(0, 0); }, [currentPage]);
-  if (currentPage === 'admin') return <AdminPanel onBack={() => setCurrentPage('home')} />;
+  if (currentPage === 'admin') return <AdminPanel onBack={() => setCurrentPage('home')} onProductsUpdated={refresh} />;
   return (
     <div className="min-h-screen bg-[#080808] text-white font-sans">
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} cartCount={cartCount} setShowCart={setShowCart} />
-      {currentPage === 'home' && <><Hero setCurrentPage={setCurrentPage} /><HeritageSection /><ProductShowcase setCurrentPage={setCurrentPage} /><Features /><ReviewsSection /><Newsletter /></>}
-      {currentPage === 'shop' && <ShopPage setCurrentPage={setCurrentPage} onViewProduct={handleViewProduct} onQuickAdd={addItem} />}
+      {currentPage === 'home' && <><Hero setCurrentPage={setCurrentPage} /><HeritageSection /><ProductShowcase setCurrentPage={setCurrentPage} products={products} /><Features /><ReviewsSection /><Newsletter /></>}
+      {currentPage === 'shop' && <ShopPage setCurrentPage={setCurrentPage} onViewProduct={handleViewProduct} onQuickAdd={addItem} products={products} />}
       {currentPage === 'story' && <StoryPage setCurrentPage={setCurrentPage} />}
       {currentPage === 'contact' && <ContactPage />}
       {selectedProduct && <ProductModal product={selectedProduct} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
