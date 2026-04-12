@@ -698,7 +698,11 @@ function CartSidebar({ cart, onClose }) {
 //  MAIN APP
 // ============================================================
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState(() => {
+    // 读取 URL 参数 ?page=admin
+    const params = new URLSearchParams(window.location.search);
+    return params.get('page') || 'home';
+  });
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showCart, setShowCart] = useState(false);
   const cart = useCart();
