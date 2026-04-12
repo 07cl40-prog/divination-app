@@ -648,7 +648,7 @@ function useCart() {
   const updateQty = useCallback((productId, qty) => {
     if (qty < 1) return removeItem(productId);
     setItems(prev => {
-      const updated = prev.map(i => i.id === productId ? { ...i, qty });
+      const updated = prev.map(i => i.id === productId ? { ...i, qty: qty } : i);
       localStorage.setItem('caishen_cart', JSON.stringify(updated));
       return updated;
     });
