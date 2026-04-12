@@ -186,8 +186,8 @@ function Hero({ setCurrentPage }) {
               <div className="w-96 h-96 rounded-full bg-gradient-to-br from-red-900/60 to-yellow-900/40 flex items-center justify-center animate-pulse">
                 <img src="/images/caishen-cutout.png" alt="CaiShen AI" className="w-80 h-80 object-contain" onError={e => { e.target.parentElement.innerHTML='<div class=\'text-8xl\'>🧧</div>'; }} />
               </div>
-              <div className="absolute -top-4 -right-4 bg-gradient-to-br from-yellow-500 to-amber-600 text-black font-black text-sm px-4 py-2 rounded-2xl rotate-12 shadow-lg shadow-yellow-900/40">AI 创作</div>
-              <div className="absolute -bottom-4 -left-4 bg-black/80 backdrop-blur border border-yellow-800/50 text-yellow-400 font-bold text-xs px-4 py-2 rounded-xl -rotate-6">限量发售</div>
+              <div className="absolute -top-4 -right-4 bg-gradient-to-br from-yellow-500 to-amber-600 text-black font-black text-sm px-4 py-2 rounded-2xl rotate-12 shadow-lg shadow-yellow-900/40">AI 創作</div>
+              <div className="absolute -bottom-4 -left-4 bg-black/80 backdrop-blur border border-yellow-800/50 text-yellow-400 font-bold text-xs px-4 py-2 rounded-xl -rotate-6">限量發售</div>
             </div>
           </div>
         </div>
@@ -243,7 +243,7 @@ function ProductShowcase({ setCurrentPage }) {
 
 function Features() {
   const features = [
-    { icon: <Truck size={24} />, title: 'Free Shipping', titleEn: '全球包邮', desc: 'On orders over $39 · Delivered worldwide in 7-14 days' },
+    { icon: <Truck size={24} />, title: 'Free Shipping', titleEn: '全球免運', desc: 'On orders over $39 · Delivered worldwide in 7-14 days' },
     { icon: <ShieldCheck size={24} />, title: 'Authenticity Guaranteed', titleEn: '正品保障', desc: 'Every piece comes with a certificate & anti-counterfeit code' },
     { icon: <RefreshCw size={24} />, title: '30-Day Returns', titleEn: '30天退换', desc: 'Not satisfied? Free returns within 30 days, we cover shipping' },
     { icon: <Globe size={24} />, title: 'Multi-Language', titleEn: '多语言支持', desc: 'Supports English, Traditional Chinese, French & Spanish' },
@@ -463,7 +463,7 @@ function ContactPage() {
             <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-2xl p-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 bg-yellow-950/60 rounded-xl flex items-center justify-center text-yellow-400 shrink-0"><Mail size={18} /></div>
-                <div><div className="text-white font-bold text-sm mb-1">邮箱 Email</div><div className="text-gray-400 text-sm">support@blingjew.com</div></div>
+                <div><div className="text-white font-bold text-sm mb-1">郵箱 Email</div><div className="text-gray-400 text-sm">support@blingjew.com</div></div>
               </div>
             </div>
             <div className="bg-gradient-to-br from-zinc-900 to-black border border-yellow-900/20 rounded-2xl p-6">
