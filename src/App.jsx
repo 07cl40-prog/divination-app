@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ShoppingBag, Menu, X, ChevronRight, Star, Heart, Truck, ShieldCheck, RefreshCw, Globe, ArrowRight, CheckCircle, Mail, MapPin, Clock, Sparkles, Send, Minus, Plus, CreditCard, Loader } from 'lucide-react';
+import AdminPanel from './admin/AdminPanel';
 
 const InstagramIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -12,72 +13,8 @@ const InstagramIcon = ({ size = 16 }) => (
 //  东方奢雅 × AI未来感
 // ============================================================
 
-const PRODUCTS = [
-  {
-    id: 1,
-    name: 'AI財神 · 毛絨掛件款',
-    nameEn: 'CaiShen AI Plush Keychain',
-    price: 59,
-    originalPrice: 89,
-    tag: '爆款',
-    tagColor: 'bg-red-700',
-    image: '/products/product1.jpg',
-    images: ['/products/product1.jpg', '/products/product2.jpg', '/products/product3.jpg'],
-    description: '掌心大小的精緻毛絨掛件，AI生成東方美學紋樣，搭配流蘇，可懸掛於手機、鑰匙、背包。新年送禮首選。',
-    features: ['AI生成東方紋樣', '優質毛絨面料', '附赠流蘇掛繩', '精美禮盒包裝'],
-    rating: 4.9,
-    reviews: 284,
-    badge: 'BESTSELLER'
-  },
-  {
-    id: 2,
-    name: 'AI財神 · 樹脂擺件款',
-    nameEn: 'CaiShen AI Resin Ornament',
-    price: 79,
-    originalPrice: 119,
-    tag: '新品',
-    tagColor: 'bg-yellow-600',
-    image: '/products/product2.jpg',
-    images: ['/products/product2.jpg', '/products/product3.jpg', '/products/product1.jpg'],
-    description: '高品質樹脂財神擺件，AI融合傳統金漆工藝與現代極簡美學，居家/辦公室招財鎮店之寶。',
-    features: ['手工樹脂鑄造', '金漆AI紋樣', '防潮耐用', '附底座支架'],
-    rating: 4.8,
-    reviews: 156,
-    badge: 'NEW'
-  },
-  {
-    id: 3,
-    name: 'AI財神 · 文曲星禮盒',
-    nameEn: 'CaiShen AI Scholar Set',
-    price: 99,
-    originalPrice: 149,
-    tag: '限定',
-    tagColor: 'bg-purple-800',
-    image: '/products/product3.jpg',
-    images: ['/products/product3.jpg', '/products/product4.jpg', '/products/product5.jpg'],
-    description: '文曲星與財神雙神合一，AI智能設計學業財富雙加持。內含擺件×1 + 毛絨掛件×1，超值禮盒裝。',
-    features: ['雙神合一設計', 'AI智能寓意', '禮盒套裝含2件', '限量編號證書'],
-    rating: 5.0,
-    reviews: 87,
-    badge: 'LIMITED'
-  },
-  {
-    id: 4,
-    name: 'AI财神 · 金运手办公盒',
-    nameEn: 'CaiShen AI Fortune Box',
-    price: 129,
-    originalPrice: 189,
-    tag: '典藏',
-    tagColor: 'bg-amber-700',
-    image: '/products/product4.jpg',
-    images: ['/products/product4.jpg', '/products/product5.jpg', '/products/product1.jpg'],
-    description: '收藏級精品禮盒，內含全套4款AI財神系列。適合高端送禮，附真皮包裝箱與鑑定證書。',
-    features: ['全套4件套', '真皮包裝箱', '收藏編號證書', '高端禮盒送禮'],
-    rating: 5.0,
-    reviews: 42,
-    badge: 'EXCLUSIVE'
-  }
-];
+import productsData from './data/products.json';
+const PRODUCTS = productsData;
 
 const REVIEWS = [
   { name: 'Linda W.', location: 'Los Angeles, USA', text: 'Absolutely stunning! The AI-generated patterns are unlike anything I\'ve seen. My office colleagues all asked where I got it.', rating: 5, product: '毛絨掛件款' },
@@ -788,11 +725,17 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
+      {currentPage === 'admin' ? (
+        <AdminPanel />
+      ) : (
+        <>
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} cartCount={cart.totalItems} setShowCart={setShowCart} />
       {renderPage()}
       <Footer />
       {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} onAddToCart={handleAddToCart} />}
       {showCart && <CartSidebar cart={{ ...cart }} onClose={() => setShowCart(false)} />}
+        </>
+      )}
     </div>
   );
 }
