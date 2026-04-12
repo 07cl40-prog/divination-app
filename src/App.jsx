@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Menu, X, ChevronRight, Star, Heart, Truck, ShieldCheck, RefreshCw, Globe, ArrowRight, CheckCircle, Mail, MapPin, Clock, Sparkles, Send } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ShoppingBag, Menu, X, ChevronRight, Star, Heart, Truck, ShieldCheck, RefreshCw, Globe, ArrowRight, CheckCircle, Mail, MapPin, Clock, Sparkles, Send, Minus, Plus, CreditCard, Loader } from 'lucide-react';
 
 const InstagramIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -96,7 +96,7 @@ function StarRating({ rating }) {
   );
 }
 
-function ProductCard({ product, onView }) {
+function ProductCard({ product, onView, onQuickAdd }) {
   const [liked, setLiked] = useState(false);
   return (
     <div className="group bg-gradient-to-b from-zinc-900 to-black border border-yellow-900/30 rounded-2xl overflow-hidden hover:border-yellow-600/50 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-900/20 hover:-translate-y-1">
@@ -131,6 +131,11 @@ function ProductCard({ product, onView }) {
         <button onClick={() => onView(product)} className="w-full py-2.5 bg-gradient-to-r from-red-800 to-red-700 hover:from-red-700 hover:to-red-600 text-white text-sm font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
           <ShoppingBag size={15} /> 查看详情
         </button>
+        {onQuickAdd && (
+          <button onClick={() => onQuickAdd(product)} className="w-full py-2 mt-2 bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 hover:to-amber-500 text-black text-sm font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
+            <Plus size={14} /> 快速加入
+          </button>
+        )}
       </div>
     </div>
   );
@@ -324,7 +329,7 @@ function Features() {
   );
 }
 
-function ShopPage({ setCurrentPage, onViewProduct }) {
+function ShopPage({ setCurrentPage, onViewProduct, onQuickAdd }) {
   const [filter, setFilter] = useState('all');
   const filters = ['all', '挂件', '摆件', '礼盒'];
   const filtered = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.name.includes(filter));
@@ -344,14 +349,14 @@ function ShopPage({ setCurrentPage, onViewProduct }) {
           ))}
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filtered.map(p => <ProductCard key={p.id} product={p} onView={onViewProduct} />)}
+          {filtered.map(p => <ProductCard key={p.id} product={p} onView={onViewProduct} onQuickAdd={onQuickAdd} />)}
         </div>
       </div>
     </div>
   );
 }
 
-function ProductModal({ product, onClose }) {
+function ProductModal({ product, onClose, onAddToCart }) {
   const [activeImg, setActiveImg] = useState(0);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
@@ -359,6 +364,7 @@ function ProductModal({ product, onClose }) {
   if (!product) return null;
 
   const handleAdd = () => {
+    onAddToCart(product, qty);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
@@ -609,21 +615,163 @@ function Footer() {
 }
 
 // ============================================================
+//  CART CONTEXT & STRIPE CHECKOUT
+// ============================================================
+function useCart() {
+  const [items, setItems] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('caishen_cart') || '[]'); } catch { return []; }
+  });
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState('');
+
+  const save = (newItems) => { setItems(newItems); localStorage.setItem('caishen_cart', JSON.stringify(newItems)); };
+
+  const addItem = useCallback((product, qty = 1) => {
+    setItems(prev => {
+      const exists = prev.find(i => i.id === product.id);
+      const updated = exists
+        ? prev.map(i => i.id === product.id ? { ...i, qty: i.qty + qty } : i)
+        : [...prev, { id: product.id, name: product.name, price: product.price, image: product.image, qty }];
+      localStorage.setItem('caishen_cart', JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
+  const removeItem = useCallback((productId) => {
+    setItems(prev => {
+      const updated = prev.filter(i => i.id !== productId);
+      localStorage.setItem('caishen_cart', JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
+  const updateQty = useCallback((productId, qty) => {
+    if (qty < 1) return removeItem(productId);
+    setItems(prev => {
+      const updated = prev.map(i => i.id === productId ? { ...i, qty });
+      localStorage.setItem('caishen_cart', JSON.stringify(updated));
+      return updated;
+    });
+  }, [removeItem]);
+
+  const clearCart = useCallback(() => { setItems([]); localStorage.removeItem('caishen_cart'); }, []);
+
+  const totalItems = items.reduce((s, i) => s + i.qty, 0);
+  const totalPrice = items.reduce((s, i) => s + i.price * i.qty, 0);
+
+  const checkout = useCallback(async () => {
+    setIsCheckingOut(true);
+    setCheckoutError('');
+    try {
+      const res = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items.map(i => ({ id: i.id, qty: i.qty })) }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setCheckoutError(data.error || 'Checkout failed. Please try again.');
+        setIsCheckingOut(false);
+      }
+    } catch (err) {
+      setCheckoutError('Network error. Please check your connection.');
+      setIsCheckingOut(false);
+    }
+  }, [items]);
+
+  return { items, addItem, removeItem, updateQty, clearCart, totalItems, totalPrice, isCheckingOut, checkoutError, checkout, setCheckoutError };
+}
+
+function CartSidebar({ cart, onClose }) {
+  if (!cart) return null;
+  const { items, removeItem, updateQty, totalItems, totalPrice, isCheckingOut, checkoutError, checkout, setCheckoutError } = cart;
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+      <div className="relative w-full max-w-md bg-gradient-to-b from-zinc-900 to-black border-l border-yellow-900/30 flex flex-col" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-6 border-b border-white/10">
+          <h2 className="text-lg font-black text-white flex items-center gap-2">
+            <ShoppingBag size={18} /> 购物车 <span className="text-yellow-400 text-sm">({totalItems})</span>
+          </h2>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-gray-400 hover:text-white"><X size={16} /></button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          {items.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="text-4xl mb-3">🧧</div>
+              <div className="text-gray-500 text-sm">购物车是空的</div>
+              <div className="text-gray-600 text-xs mt-1">Your cart is empty</div>
+            </div>
+          ) : items.map(item => (
+            <div key={item.id} className="flex gap-4 bg-white/5 rounded-xl p-3">
+              <div className="w-16 h-16 rounded-lg overflow-hidden bg-zinc-950 shrink-0">
+                <img src={item.image} alt={item.name} className="w-full h-full object-cover" onError={e => e.target.style.display='none'} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-white font-bold text-sm truncate">{item.name}</div>
+                <div className="text-yellow-400 font-bold text-sm mt-1">${item.price}</div>
+                <div className="flex items-center gap-2 mt-2">
+                  <button onClick={() => updateQty(item.id, item.qty - 1)} className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white hover:bg-white/20"><Minus size={12} /></button>
+                  <span className="text-white text-sm font-bold w-6 text-center">{item.qty}</span>
+                  <button onClick={() => updateQty(item.id, item.qty + 1)} className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white hover:bg-white/20"><Plus size={12} /></button>
+                  <button onClick={() => removeItem(item.id)} className="ml-auto text-red-400 hover:text-red-300 text-xs">删除</button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {items.length > 0 && (
+          <div className="p-6 border-t border-white/10 space-y-4">
+            {checkoutError && (
+              <div className="bg-red-950/50 border border-red-800/50 text-red-400 text-xs rounded-xl p-3 flex items-center justify-between">
+                <span>{checkoutError}</span>
+                <button onClick={() => setCheckoutError('')} className="text-red-300 hover:text-red-200"><X size={14} /></button>
+              </div>
+            )}
+            <div className="flex items-center justify-between">
+              <span className="text-gray-400 text-sm">合计 Total</span>
+              <span className="text-2xl font-black text-yellow-400">${totalPrice}</span>
+            </div>
+            <button
+              onClick={checkout}
+              disabled={isCheckingOut}
+              className="w-full py-3.5 bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 hover:to-amber-500 disabled:from-yellow-800 disabled:to-amber-800 text-black font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
+              {isCheckingOut ? <><Loader size={16} className="animate-spin" /> Processing...</> : <><CreditCard size={16} /> Secure Checkout</>}
+            </button>
+            <div className="flex items-center justify-center gap-4 text-[10px] text-gray-600">
+              <span className="flex items-center gap-1"><ShieldCheck size={10} /> SSL Encrypted</span>
+              <span className="flex items-center gap-1"><CreditCard size={10} /> Stripe Secure</span>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
 //  MAIN APP
 // ============================================================
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showCart, setShowCart] = useState(false);
-  const [cartCount] = useState(0);
+  const cart = useCart();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);
 
+  const handleAddToCart = (product, qty = 1) => {
+    cart.addItem(product, qty);
+    setShowCart(true);
+  };
+
   const renderPage = () => {
     switch (currentPage) {
-      case 'shop': return <ShopPage setCurrentPage={setCurrentPage} onViewProduct={setSelectedProduct} />;
+      case 'shop': return <ShopPage setCurrentPage={setCurrentPage} onViewProduct={setSelectedProduct} onQuickAdd={handleAddToCart} />;
       case 'story': return <StoryPage setCurrentPage={setCurrentPage} />;
       case 'contact': return <ContactPage />;
       default: return (
@@ -640,10 +788,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-black text-white font-sans">
-      <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} cartCount={cartCount} setShowCart={setShowCart} />
+      <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} cartCount={cart.totalItems} setShowCart={setShowCart} />
       {renderPage()}
       <Footer />
-      {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
+      {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} onAddToCart={handleAddToCart} />}
+      {showCart && <CartSidebar cart={{ ...cart }} onClose={() => setShowCart(false)} />}
     </div>
   );
 }
