@@ -57,7 +57,7 @@ function ProductCard({ product, onView, onQuickAdd }) {
     <div className="group bg-gradient-to-b from-[#F5F1ED] to-[#FAF7F4] border border-[#E5E0DB] rounded-2xl overflow-hidden hover:border-[#8B1A1A]/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#D4B978]/10 hover:-translate-y-0.5">
       <div className="relative overflow-hidden bg-[#F5F1ED] aspect-square">
         <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
-        <div className="hidden w-full h-full items-center justify-center bg-gradient-to-br from-amber-50 to-[#FFF5EB]">
+        <div className="hidden w-full h-full items-center justify-center bg-gradient-to-br from-[#FAF7F4] to-[#F5F1ED]">
           <div className="text-center">
             <div className="text-5xl mb-2">🧧</div>
             <div className="text-[#B8860B] font-bold">{product.name}</div>
@@ -65,15 +65,15 @@ function ProductCard({ product, onView, onQuickAdd }) {
         </div>
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {product.tag && <span className={`${product.tagColor} text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide`}>{product.tag}</span>}
-          {product.badge && <span className="bg-gradient-to-r from-amber-500 to-orange-600 text-white text-[10px] font-black px-2 py-1 rounded-full">{product.badge}</span>}
+          {product.badge && <span className="bg-[#8B1A1A] text-white text-[10px] font-bold px-2 py-1 rounded-full">{product.badge}</span>}
         </div>
         <button onClick={() => setLiked(!liked)} className="absolute top-3 right-3 w-9 h-9 rounded-full bg-[#F5F1ED] backdrop-blur flex items-center justify-center hover:bg-[#F5F1ED] transition-colors">
-          <Heart size={16} className={liked ? 'fill-[#FF4444] text-[#B8860B]' : 'text-white/60'} />
+          <Heart size={16} className={liked ? 'fill-[#FF4444] text-[#B8860B]' : 'text-[#999999]'} />
         </button>
       </div>
       <div className="p-5">
         <div className="text-[11px] text-[#B8860B]/80 font-medium tracking-[0.15em] uppercase mb-1">{product.nameEn}</div>
-        <h3 className="text-white font-bold text-sm mb-2 leading-snug">{product.name}</h3>
+        <h3 className="text-[#333333] font-bold text-sm mb-2 leading-snug">{product.name}</h3>
         <div className="flex items-center gap-2 mb-3">
           <StarRating rating={product.rating} />
           <span className="text-[11px] text-[#666666]">({product.reviews})</span>
@@ -83,11 +83,11 @@ function ProductCard({ product, onView, onQuickAdd }) {
           <span className="text-sm text-[#666666] line-through">${product.originalPrice}</span>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => onView(product)} className="flex-1 py-2.5 bg-[#FAF7F4] hover:bg-stone-700 text-white text-xs font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
+          <button onClick={() => onView(product)} className="flex-1 py-2.5 bg-[#F5F1ED] hover:bg-[#FAF7F4] text-[#333333] text-xs font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
             <ShoppingBag size={13} /> View Details
           </button>
           {onQuickAdd && (
-            <button onClick={() => onQuickAdd(product)} className="w-10 h-10 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white rounded-xl transition-all flex items-center justify-center">
+            <button onClick={() => onQuickAdd(product)} className="w-10 h-10 bg-[#B8860B] hover:bg-[#D4B978] text-white rounded-xl transition-all flex items-center justify-center">
               <Plus size={14} />
             </button>
           )}
@@ -119,23 +119,23 @@ function Navbar({ currentPage, setCurrentPage, cartCount, setShowCart }) {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="flex items-center justify-between h-16 lg:h-[70px]">
           <button onClick={() => setCurrentPage('home')} className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 bg-gradient-to-br from-red-800 to-amber-700 rounded-xl flex items-center justify-center text-lg group-hover:scale-105 transition-transform shadow-lg shadow-[#D4B978]/20">🧧</div>
+            <div className="w-9 h-9 bg-gradient-to-br from-[#8B1A1A] to-[#B8860B] rounded-xl flex items-center justify-center text-lg group-hover:scale-105 transition-transform shadow-lg shadow-[#D4B978]/20">🧧</div>
             <div>
-              <div className="font-display text-white font-black text-lg tracking-tight leading-none">CaiShen</div>
+              <div className="font-display text-[#333333] font-black text-lg tracking-tight leading-none">CaiShen</div>
               <div className="text-[#B8860B]/70 text-[9px] tracking-[0.25em] uppercase">AI Fortune Art</div>
             </div>
           </button>
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map(item => (
               <button key={item.key} onClick={() => setCurrentPage(item.key)}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${currentPage === item.key ? 'text-[#B8860B] bg-[#FAF7F4]' : 'text-[#666666] hover:text-white hover:bg-[#FAF7F4]'}`}>
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${currentPage === item.key ? 'text-[#B8860B] bg-[#FAF7F4]' : 'text-[#666666] hover:text-[#B8860B] hover:bg-[#FAF7F4]'}`}>
                 <span className="block text-[10px] opacity-50 tracking-wider uppercase">{item.labelEn}</span>
                 {item.label}
               </button>
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <button onClick={() => setShowCart(true)} className="relative w-10 h-10 rounded-xl bg-[#F5F1ED] hover:bg-[#FAF7F4] border border-[#D4B978] flex items-center justify-center text-[#333333] hover:text-white transition-all">
+            <button onClick={() => setShowCart(true)} className="relative w-10 h-10 rounded-xl bg-[#F5F1ED] hover:bg-[#FAF7F4] border border-[#D4B978] flex items-center justify-center text-[#333333] hover:text-[#B8860B] transition-all">
               <ShoppingBag size={17} />
               {cartCount > 0 && <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-700 text-white text-[10px] font-black rounded-full flex items-center justify-center">{cartCount}</span>}
             </button>
@@ -167,14 +167,14 @@ function Hero({ setCurrentPage }) {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-[#F5F1ED]"></div>
-      <div className="absolute inset-0" style={{background: 'radial-gradient(ellipse 70% 60% at 65% 50%, rgba(100,40,10,0.12) 0%, transparent 70%)'}}></div>
+      <div className="absolute inset-0" style={{background: 'radial-gradient(ellipse 70% 60% at 65% 50%, rgba(184,134,11,0.05) 0%, transparent 70%)'}}></div>
 
       <div className="relative max-w-7xl mx-auto px-8 lg:px-16 w-full">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen py-24">
           {/* Left: Brand statement */}
           <div className="max-w-lg">
             <div className="text-[#B8860B]/60 text-[11px] tracking-[0.3em] uppercase font-medium mb-8">Eastern Fortune 路 AI Original</div>
-            <h1 className="font-display text-6xl lg:text-7xl font-black text-white leading-[0.95] mb-2 tracking-tight">
+            <h1 className="font-display text-6xl lg:text-7xl font-light text-[#B8860B] leading-[0.95] mb-2 tracking-tight">
               <span className="block text-[#B8860B]">CaiShen</span>
               <span className="block text-[#666666] font-light text-4xl lg:text-5xl mt-1">財神文創</span>
             </h1>
@@ -238,12 +238,12 @@ function ProductShowcase({ setCurrentPage, products }) {
       <div className="max-w-7xl mx-auto px-8 lg:px-16">
         <div className="mb-14">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-px bg-amber-700/60"></div>
+            <div className="w-10 h-px bg-[#D4B978]/60"></div>
             <span className="text-[#B8860B]/80 text-[11px] tracking-[0.3em] uppercase font-medium">Featured</span>
           </div>
           <div className="flex items-end justify-between">
-            <h2 className="font-display text-4xl lg:text-5xl font-black text-white">The Collection</h2>
-            <button onClick={() => setCurrentPage('shop')} className="hidden sm:flex items-center gap-2 text-[#B8860B] hover:text-amber-300 text-sm font-medium transition-colors group">
+            <h2 className="font-display text-4xl lg:text-5xl font-black text-[#333333]">The Collection</h2>
+            <button onClick={() => setCurrentPage('shop')} className="hidden sm:flex items-center gap-2 text-[#B8860B] hover:text-[#D4B978] text-sm font-medium transition-colors group">
               All {products?.length || 0} pieces <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
@@ -260,7 +260,7 @@ function ProductShowcase({ setCurrentPage, products }) {
                 </div>
                 <div className={isEven ? '' : 'lg:order-1'}>
                   <div className="text-[#B8860B]/60 text-[10px] tracking-[0.25em] uppercase font-medium mb-3">AI Original 路 Limited</div>
-                  <h3 className="text-3xl font-black text-white mb-1">{p.name}</h3>
+                  <h3 className="text-3xl font-black text-[#333333] mb-1">{p.name}</h3>
                   <div className="text-[#666666] text-sm mb-4">{p.nameEn}</div>
                   <p className="text-[#666666] text-sm leading-7 mb-6">{p.description}</p>
                   <div className="flex flex-wrap gap-2 mb-8">
@@ -316,10 +316,10 @@ function ReviewsSection() {
     <section className="py-20 bg-[#F5F1ED] border-t border-[#E5E0DB]">
       <div className="max-w-7xl mx-auto px-8 lg:px-16 mb-10">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-px bg-amber-700/60"></div>
+          <div className="w-10 h-px bg-[#D4B978]/60"></div>
           <span className="text-[#B8860B]/80 text-[11px] tracking-[0.3em] uppercase font-medium">Voices</span>
         </div>
-        <h2 className="font-display text-4xl font-black text-white">What They Say</h2>
+        <h2 className="font-display text-4xl font-black text-[#333333]">What They Say</h2>
       </div>
       <div className="flex gap-5 overflow-x-auto pb-4 px-8 lg:px-16" style={{scrollbarWidth: 'none'}}>
         {REVIEWS.map((r, i) => (
@@ -327,7 +327,7 @@ function ReviewsSection() {
             <div className="text-[#B8860B] text-sm mb-3">{starsMap[i]}</div>
             <p className="text-[#666666] text-sm leading-6 mb-5">"{r.text}"</p>
             <div className="border-t border-[#E5E0DB] pt-4">
-              <div className="text-white text-sm font-semibold">{r.name}</div>
+              <div className="text-[#333333] text-sm font-semibold">{r.name}</div>
               <div className="text-[#666666] text-xs mt-0.5">{r.location}</div>
             </div>
           </div>
@@ -350,16 +350,16 @@ function ShopPage({ setCurrentPage, onViewProduct, onQuickAdd, products }) {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="text-center mb-14">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="w-8 h-px bg-amber-700/60"></div>
+            <div className="w-8 h-px bg-[#D4B978]/60"></div>
             <span className="text-[#B8860B]/80 text-[11px] tracking-[0.25em] uppercase font-medium">Full Collection</span>
-            <div className="w-8 h-px bg-amber-700/60"></div>
+            <div className="w-8 h-px bg-[#D4B978]/60"></div>
           </div>
-          <h2 className="font-display text-4xl lg:text-5xl font-black text-white mb-3">全部商品</h2>
+          <h2 className="font-display text-4xl lg:text-5xl font-black text-[#333333] mb-3">全部商品</h2>
           <p className="text-[#666666] text-sm">AI 獨家系列 · {products?.length || 0} Products</p>
         </div>
         <div className="flex justify-center gap-2 mb-12 flex-wrap">
           {filters.map(f => (
-            <button key={f} onClick={() => setFilter(f)} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${filter === f ? 'bg-[#8B1A1A] text-white' : 'bg-[#FAF7F4] text-[#666666] hover:bg-stone-700'}`}>
+            <button key={f} onClick={() => setFilter(f)} className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${filter === f ? 'bg-[#8B1A1A] text-white' : 'bg-[#FAF7F4] text-[#666666] hover:bg-[#F5F1ED]'}`}>
               {f === 'all' ? '全部 All' : f}
             </button>
           ))}
@@ -388,16 +388,16 @@ function ProductModal({ product, onClose, onAddToCart }) {
             </div>
             <div className="flex gap-2">
               {product.images.map((img, i) => (
-                <button key={i} onClick={() => setActiveImg(i)} className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${activeImg === i ? 'border-amber-500' : 'border-transparent opacity-50 hover:opacity-100'}`}>
+                <button key={i} onClick={() => setActiveImg(i)} className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${activeImg === i ? 'border-[#B8860B]' : 'border-transparent opacity-50 hover:opacity-100'}`}>
                   <img src={img} alt="" className="w-full h-full object-cover" onError={e => e.target.style.display='none'} />
                 </button>
               ))}
             </div>
           </div>
           <div className="p-6 lg:p-8">
-            <button onClick={onClose} className="w-8 h-8 rounded-full bg-[#FAF7F4] flex items-center justify-center text-[#666666] hover:text-white float-right"><X size={15} /></button>
+            <button onClick={onClose} className="w-8 h-8 rounded-full bg-[#FAF7F4] flex items-center justify-center text-[#666666] hover:text-[#8B1A1A] float-right"><X size={15} /></button>
             <div className="text-xs text-[#B8860B]/80 font-medium tracking-widest uppercase mb-2">{product.nameEn}</div>
-            <h2 className="font-cn text-2xl font-black text-white mb-1">{product.name}</h2>
+            <h2 className="font-cn text-2xl font-black text-[#333333] mb-1">{product.name}</h2>
             <div className="flex items-center gap-2 mb-4">
               <StarRating rating={product.rating} />
               <span className="text-xs text-[#666666]">{product.reviews} reviews</span>
@@ -405,7 +405,7 @@ function ProductModal({ product, onClose, onAddToCart }) {
             <div className="flex items-end gap-4 mb-6">
               <span className="text-4xl font-black text-[#B8860B]">${product.price}</span>
               <span className="text-lg text-[#666666] line-through">${product.originalPrice}</span>
-              <span className="bg-red-950/60 text-[#666666] text-sm font-bold px-3 py-1 rounded-full">-{Math.round((1-product.price/product.originalPrice)*100)}%</span>
+              <span className="bg-[#F5F1ED] text-[#8B1A1A] text-sm font-bold px-3 py-1 rounded-full">-{Math.round((1-product.price/product.originalPrice)*100)}%</span>
             </div>
             <p className="text-[#666666] text-sm leading-relaxed mb-6">{product.description}</p>
             <ul className="space-y-2 mb-6">
@@ -415,11 +415,11 @@ function ProductModal({ product, onClose, onAddToCart }) {
             </ul>
             <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center gap-2 bg-[#FAF7F4] border border-[#D4B978] rounded-xl">
-                <button onClick={() => setQty(Math.max(1, qty-1))} className="w-10 h-10 flex items-center justify-center text-white font-bold text-lg hover:bg-stone-700 rounded-l-xl transition-colors">-</button>
-                <span className="w-10 text-center text-white font-bold">{qty}</span>
-                <button onClick={() => setQty(qty+1)} className="w-10 h-10 flex items-center justify-center text-white font-bold text-lg hover:bg-stone-700 rounded-r-xl transition-colors">+</button>
+                <button onClick={() => setQty(Math.max(1, qty-1))} className="w-10 h-10 flex items-center justify-center text-[#333333] font-bold text-lg hover:bg-[#F5F1ED] rounded-l-xl transition-colors">-</button>
+                <span className="w-10 text-center text-[#333333] font-bold">{qty}</span>
+                <button onClick={() => setQty(qty+1)} className="w-10 h-10 flex items-center justify-center text-[#333333] font-bold text-lg hover:bg-[#F5F1ED] rounded-r-xl transition-colors">+</button>
               </div>
-              <button onClick={handleAdd} className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all ${added ? 'bg-green-700 text-white' : 'bg-gradient-to-r from-[#8B1A1A] to-[#8C6D1F] hover:from-red-600 hover:to-red-500 text-white'}`}>
+              <button onClick={handleAdd} className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition-all ${added ? 'bg-[#8C6D1F] text-white' : 'bg-[#8B1A1A] hover:bg-[#A84444] text-white'}`}>
                 {added ? <><CheckCircle size={15} className="inline mr-2" />Added to Cart</> : <><ShoppingBag size={15} className="inline mr-2" />Add to Cart</>}
               </button>
             </div>
@@ -441,26 +441,26 @@ function StoryPage({ setCurrentPage }) {
       <div className="max-w-4xl mx-auto px-6 lg:px-10">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="w-8 h-px bg-amber-700/60"></div>
+            <div className="w-8 h-px bg-[#D4B978]/60"></div>
             <span className="text-[#B8860B]/80 text-[11px] tracking-[0.25em] uppercase font-medium">Our Story</span>
-            <div className="w-8 h-px bg-amber-700/60"></div>
+            <div className="w-8 h-px bg-[#D4B978]/60"></div>
           </div>
-          <h2 className="font-display text-4xl lg:text-5xl font-black text-white mb-3">品牌故事</h2>
+          <h2 className="font-display text-4xl lg:text-5xl font-black text-[#333333] mb-3">品牌故事</h2>
         </div>
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           <div className="bg-gradient-to-br from-[#FAF7F4] to-[#F5F1ED] border border-[#E5E0DB] rounded-3xl p-8">
             <div className="text-4xl mb-5">🏮</div>
-            <h3 className="text-xl font-black text-white mb-3">1,500 Years of Heritage</h3>
+            <h3 className="text-xl font-black text-[#333333] mb-3">1,500 Years of Heritage</h3>
             <p className="text-[#666666] text-sm leading-7">The CaiShen faith has over 1,500 years of history in China, and is one of the most cherished cultural symbols for Chinese communities worldwide. CaiShen is dedicated to reimagining this cultural treasure through AI technology.</p>
           </div>
-          <div className="bg-gradient-to-br from-[#FAF7F4] to-[#F5F1ED] border border-amber-200 rounded-3xl p-8">
+          <div className="bg-gradient-to-br from-[#FAF7F4] to-[#F5F1ED] border border-[#D4B978] rounded-3xl p-8">
             <div className="text-4xl mb-5">⚡</div>
-            <h3 className="text-xl font-black text-white mb-3">Powered by AI</h3>
+            <h3 className="text-xl font-black text-[#333333] mb-3">Powered by AI</h3>
             <p className="text-[#666666] text-sm leading-7">We trained a proprietary AI system on thousands of artifacts — Dunhuang murals, Song dynasty porcelain, Ming-Qing lacquerware — to generate unique CaiShen aesthetic totems for the digital age.</p>
           </div>
         </div>
         <div className="bg-gradient-to-br from-[#F5F1ED] to-[#FAF7F4] border border-[#E5E0DB] rounded-3xl p-8 lg:p-12 mb-16 text-center">
-          <h3 className="font-display text-2xl font-black text-white mb-6">品牌故事 · The Brand Story</h3>
+          <h3 className="font-display text-2xl font-black text-[#333333] mb-6">品牌故事 · The Brand Story</h3>
           <div className="text-[#666666] text-sm leading-8 max-w-2xl mx-auto space-y-4">
             <p>CaiShen was born in a living room overseas. Our founder grew tired of Western stereotypes about Eastern culture and decided to use cutting-edge AI to reinterpret the sacred image of CaiShen.</p>
             <p>From the first sketch to the first finished product took 8 months. Today, CaiShen has reached tens of thousands of families across 36 countries.</p>
@@ -491,17 +491,17 @@ function Newsletter() {
     <section className="py-20 bg-[#F5F1ED] border-t border-[#E5E0DB]/50">
       <div className="max-w-2xl mx-auto px-8 text-center">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-8 h-px bg-amber-700/60"></div>
+          <div className="w-8 h-px bg-[#D4B978]/60"></div>
           <span className="text-[#B8860B]/80 text-[11px] tracking-[0.25em] uppercase font-medium">Stay Connected</span>
-          <div className="w-8 h-px bg-amber-700/60"></div>
+          <div className="w-8 h-px bg-[#D4B978]/60"></div>
         </div>
-        <h2 className="font-display text-3xl font-black text-white mb-3">Join the Circle</h2>
+        <h2 className="font-display text-3xl font-black text-[#333333] mb-3">Join the Circle</h2>
         <p className="text-[#666666] text-sm mb-8">Be the first to know about new collections, exclusive offers, and fortune tips.</p>
         {submitted ? (
-          <div className="bg-green-900/30 border border-green-800/50 text-green-400 rounded-2xl px-6 py-5 text-sm">Thank you! You'll hear from us soon.</div>
+          <div className="bg-[#FAF7F4] border border-[#D4B978] text-[#8C6D1F] rounded-2xl px-6 py-5 text-sm">Thank you! You'll hear from us soon.</div>
         ) : (
           <form onSubmit={handleSubmit} className="flex gap-3 max-w-md mx-auto">
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" required className="flex-1 bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-stone-600 px-4 py-3.5 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A]" />
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" required className="flex-1 bg-[#FAF7F4] border border-[#D4B978] text-[#333333] placeholder-[#999999] px-4 py-3.5 rounded-xl text-sm focus:outline-none focus:border-[#B8860B]" />
             <button type="submit" className="bg-[#8B1A1A] hover:bg-[#A84444] text-white font-semibold px-6 py-3.5 rounded-xl transition-colors text-sm flex items-center gap-2 shrink-0">
               <Send size={14} /> Subscribe
             </button>
@@ -521,11 +521,11 @@ function ContactPage() {
       <div className="max-w-4xl mx-auto px-6 lg:px-10">
         <div className="text-center mb-14">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="w-8 h-px bg-amber-700/60"></div>
+            <div className="w-8 h-px bg-[#D4B978]/60"></div>
             <span className="text-[#B8860B]/80 text-[11px] tracking-[0.25em] uppercase font-medium">Contact</span>
-            <div className="w-8 h-px bg-amber-700/60"></div>
+            <div className="w-8 h-px bg-[#D4B978]/60"></div>
           </div>
-          <h2 className="font-display text-4xl lg:text-5xl font-black text-white mb-3">聯絡我們</h2>
+          <h2 className="font-display text-4xl lg:text-5xl font-black text-[#333333] mb-3">聯絡我們</h2>
         </div>
         <div className="grid lg:grid-cols-3 gap-8 mb-12">
           {[
@@ -535,7 +535,7 @@ function ContactPage() {
           ].map(({ icon, title, content }) => (
             <div key={title} className="bg-[#FAF7F4] border border-[#D4B978] rounded-2xl p-6 text-center">
               <div className="w-12 h-12 bg-[#FAF7F4] rounded-xl flex items-center justify-center mx-auto mb-4 text-[#B8860B]">{icon}</div>
-              <div className="text-white font-semibold text-sm mb-1">{title}</div>
+              <div className="text-[#333333] font-semibold text-sm mb-1">{title}</div>
               <div className="text-[#666666] text-xs">{content}</div>
             </div>
           ))}
@@ -544,17 +544,17 @@ function ContactPage() {
           {sent ? (
             <div className="text-center py-10">
               <div className="text-[#B8860B] text-4xl mb-4">🧧</div>
-              <div className="text-white font-black text-xl mb-2">Message Sent!</div>
+              <div className="text-[#333333] font-black text-xl mb-2">Message Sent!</div>
               <div className="text-[#666666] text-sm">We will get back to you within 24 hours.</div>
             </div>
           ) : (
             <div className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
-                <input required placeholder="Your Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-stone-600 px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A]" />
-                <input required type="email" placeholder="Email Address" value={form.email} onChange={e => setForm({...form, email: e.target.value})} className="bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-stone-600 px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A]" />
+                <input required placeholder="Your Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A]" />
+                <input required type="email" placeholder="Email Address" value={form.email} onChange={e => setForm({...form, email: e.target.value})} className="bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A]" />
               </div>
-              <input required placeholder="Subject" value={form.subject} onChange={e => setForm({...form, subject: e.target.value})} className="w-full bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-stone-600 px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A]" />
-              <textarea required rows={5} placeholder="Your Message" value={form.message} onChange={e => setForm({...form, message: e.target.value})} className="w-full bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-stone-600 px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A] resize-none" />
+              <input required placeholder="Subject" value={form.subject} onChange={e => setForm({...form, subject: e.target.value})} className="w-full bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A]" />
+              <textarea required rows={5} placeholder="Your Message" value={form.message} onChange={e => setForm({...form, message: e.target.value})} className="w-full bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A] resize-none" />
               <button type="submit" className="w-full bg-[#8B1A1A] hover:bg-[#A84444] text-white font-semibold py-4 rounded-xl transition-all text-sm">Send Message</button>
             </div>
           )}
@@ -572,9 +572,9 @@ function Footer({ setCurrentPage }) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
           <div>
             <div className="flex items-center gap-2.5 mb-5">
-              <div className="w-9 h-9 bg-gradient-to-br from-red-800 to-amber-700 rounded-xl flex items-center justify-center text-lg">🧧</div>
+              <div className="w-9 h-9 bg-gradient-to-br from-[#8B1A1A] to-[#B8860B] rounded-xl flex items-center justify-center text-lg">🧧</div>
               <div>
-                <div className="font-display text-white font-black text-lg tracking-tight">CaiShen</div>
+                <div className="font-display text-[#333333] font-black text-lg tracking-tight">CaiShen</div>
                 <div className="text-[#B8860B]/70 text-[9px] tracking-[0.2em] uppercase">AI Fortune Art</div>
               </div>
             </div>
@@ -586,7 +586,7 @@ function Footer({ setCurrentPage }) {
             </div>
           </div>
           <div>
-            <div className="text-white font-semibold text-sm mb-5">Shop</div>
+            <div className="text-[#333333] font-semibold text-sm mb-5">Shop</div>
             <div className="space-y-3">
               {[
                 { label: '全部商品', key: 'shop' },
@@ -598,7 +598,7 @@ function Footer({ setCurrentPage }) {
             </div>
           </div>
           <div>
-            <div className="text-white font-semibold text-sm mb-5">Support</div>
+            <div className="text-[#333333] font-semibold text-sm mb-5">Support</div>
             <div className="space-y-3">
               {['Shipping Info', 'Returns & Exchanges', 'FAQ', 'Privacy Policy'].map(l => (
                 <a key={l} href="#" className="block text-[#666666] hover:text-[#B8860B] text-xs transition-colors">{l}</a>
@@ -606,7 +606,7 @@ function Footer({ setCurrentPage }) {
             </div>
           </div>
           <div>
-            <div className="text-white font-semibold text-sm mb-5">Contact</div>
+            <div className="text-[#333333] font-semibold text-sm mb-5">Contact</div>
             <div className="space-y-3 text-[#666666] text-xs">
               <div>hello@blingjew.com</div>
               <div>Hong Kong</div>
@@ -668,7 +668,7 @@ function CartSidebar({ items, onClose, onRemove, onUpdateQty, onCheckout, total 
     <div className="fixed inset-0 z-50 bg-[#F5F1ED] backdrop-blur-sm flex justify-end" onClick={onClose}>
       <div className="w-full max-w-md bg-[#F5F1ED] border-l border-[#E5E0DB] h-full flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between p-6 border-b border-[#E5E0DB]">
-          <h2 className="font-display text-xl font-black text-white">購物車</h2>
+          <h2 className="font-display text-xl font-black text-[#333333]">購物車</h2>
           <button onClick={onClose} className="w-9 h-9 rounded-xl bg-[#FAF7F4] flex items-center justify-center text-[#666666]"><X size={16} /></button>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center p-10">
@@ -682,7 +682,7 @@ function CartSidebar({ items, onClose, onRemove, onUpdateQty, onCheckout, total 
     <div className="fixed inset-0 z-50 bg-[#F5F1ED] backdrop-blur-sm flex justify-end" onClick={onClose}>
       <div className="w-full max-w-md bg-[#F5F1ED] border-l border-[#E5E0DB] h-full flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between p-6 border-b border-[#E5E0DB]">
-          <h2 className="font-display text-xl font-black text-white">購物車 ({items.reduce((s,i) => s+i.qty, 0)})</h2>
+          <h2 className="font-display text-xl font-black text-[#333333]">購物車 ({items.reduce((s,i) => s+i.qty, 0)})</h2>
           <button onClick={onClose} className="w-9 h-9 rounded-xl bg-[#FAF7F4] flex items-center justify-center text-[#666666]"><X size={16} /></button>
         </div>
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
@@ -690,13 +690,13 @@ function CartSidebar({ items, onClose, onRemove, onUpdateQty, onCheckout, total 
             <div key={item.id} className="flex gap-4 bg-[#FAF7F4] border border-[#D4B978] rounded-2xl p-4">
               <img src={item.images ? item.images[0] : item.image} alt={item.name} className="w-20 h-20 rounded-xl object-cover bg-[#FAF7F4] shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="text-white text-sm font-semibold truncate">{item.name}</div>
+                <div className="text-[#333333] text-sm font-semibold truncate">{item.name}</div>
                 <div className="text-[#B8860B] text-sm font-bold mt-0.5">${item.price}</div>
                 <div className="flex items-center justify-between mt-2">
                   <div className="flex items-center gap-2 bg-[#FAF7F4] rounded-lg">
-                    <button onClick={() => onUpdateQty(item.id, item.qty - 1)} className="w-7 h-7 flex items-center justify-center text-white text-xs hover:bg-stone-700 rounded-lg transition-colors"><Minus size={11} /></button>
-                    <span className="text-white text-xs font-bold w-6 text-center">{item.qty}</span>
-                    <button onClick={() => onUpdateQty(item.id, item.qty + 1)} className="w-7 h-7 flex items-center justify-center text-white text-xs hover:bg-stone-700 rounded-lg transition-colors"><Plus size={11} /></button>
+                    <button onClick={() => onUpdateQty(item.id, item.qty - 1)} className="w-7 h-7 flex items-center justify-center text-[#333333] text-xs hover:bg-[#F5F1ED] rounded-lg transition-colors"><Minus size={11} /></button>
+                    <span className="text-[#333333] text-xs font-bold w-6 text-center">{item.qty}</span>
+                    <button onClick={() => onUpdateQty(item.id, item.qty + 1)} className="w-7 h-7 flex items-center justify-center text-[#333333] text-xs hover:bg-[#F5F1ED] rounded-lg transition-colors"><Plus size={11} /></button>
                   </div>
                   <button onClick={() => onRemove(item.id)} className="text-[#666666] hover:text-[#666666] text-xs transition-colors">移除</button>
                 </div>
@@ -706,14 +706,14 @@ function CartSidebar({ items, onClose, onRemove, onUpdateQty, onCheckout, total 
         </div>
         <div className="p-6 border-t border-[#E5E0DB] space-y-4">
           <div className="flex gap-2">
-            <input value={promo} onChange={e => setPromo(e.target.value)} placeholder="優惠碼" className="flex-1 bg-[#F5F1ED] border border-[#E5E0DB] text-white placeholder-stone-600 px-3 py-2.5 rounded-xl text-xs focus:outline-none focus:border-[#8B1A1A]" />
-            <button onClick={handlePromo} className="bg-[#FAF7F4] hover:bg-stone-700 text-[#333333] px-4 py-2.5 rounded-xl text-xs font-medium transition-colors">套用</button>
+            <input value={promo} onChange={e => setPromo(e.target.value)} placeholder="優惠碼" className="flex-1 bg-[#F5F1ED] border border-[#E5E0DB] text-white placeholder-[#999999] px-3 py-2.5 rounded-xl text-xs focus:outline-none focus:border-[#8B1A1A]" />
+            <button onClick={handlePromo} className="bg-[#F5F1ED] hover:bg-[#FAF7F4] text-[#333333] px-4 py-2.5 rounded-xl text-xs font-medium transition-colors">套用</button>
           </div>
-          {discount > 0 && <div className="text-green-400 text-xs text-center">優惠已套用：-{Math.round(discount*100)}%</div>}
+          {discount > 0 && <div className="text-[#8C6D1F] text-xs text-center">優惠已套用：-{Math.round(discount*100)}%</div>}
           <div className="space-y-2">
             <div className="flex justify-between text-xs text-[#666666]"><span>小計</span><span>${total.toFixed(2)}</span></div>
-            {discount > 0 && <div className="flex justify-between text-xs text-green-400"><span>節省</span><span>-${(total*discount).toFixed(2)}</span></div>}
-            <div className="flex justify-between text-lg font-black text-white pt-2 border-t border-[#E5E0DB]"><span>合計</span><span className="text-[#B8860B]">${final.toFixed(2)}</span></div>
+            {discount > 0 && <div className="flex justify-between text-xs text-[#8C6D1F]"><span>節省</span><span>-${(total*discount).toFixed(2)}</span></div>}
+            <div className="flex justify-between text-lg font-black text-[#333333] pt-2 border-t border-[#E5E0DB]"><span>合計</span><span className="text-[#B8860B]">${final.toFixed(2)}</span></div>
           </div>
           <button onClick={onCheckout} disabled={items.length === 0} className="w-full py-4 bg-[#8B1A1A] hover:bg-[#A84444] disabled:opacity-50 text-white font-bold rounded-xl transition-all text-sm flex items-center justify-center gap-2">
             <CreditCard size={15} /> Secure Checkout
@@ -754,7 +754,7 @@ export default function App() {
   useEffect(() => { window.scrollTo(0, 0); }, [currentPage]);
   if (currentPage === 'admin') return <AdminPanel onBack={() => setCurrentPage('home')} onProductsUpdated={refresh} />;
   return (
-    <div className="min-h-screen bg-[#F5F1ED] text-white font-sans">
+    <div className="min-h-screen bg-[#F5F1ED] text-[#333333] font-sans">
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} cartCount={cartCount} setShowCart={setShowCart} />
       {currentPage === 'home' && <><Hero setCurrentPage={setCurrentPage} /><HeritageSection /><ProductShowcase setCurrentPage={setCurrentPage} products={products} /><Features /><ReviewsSection /><Newsletter /></>}
       {currentPage === 'shop' && <ShopPage setCurrentPage={setCurrentPage} onViewProduct={handleViewProduct} onQuickAdd={addItem} products={products} />}

@@ -3,20 +3,40 @@
 @tailwind utilities;
 
 /* ============================================================
-   CaiShen Font System — 香港 & 欧美双市场优化
-   ============================================================
-   英文标题: Playfair Display (衬线·奢雅品牌感)
-   英文正文: Inter (无衬线·高可读性)
-   中文正文: Noto Sans SC (简体) + Noto Sans HK (繁体) CDN加载
-   中文系统: PingFang SC/HK, Microsoft YaHei 本地fallback
+   CaiShen — 輕奢高級國風配色系統
+   哑光東方雅致 × 歐美極簡 × 羊毛氈溫潤質感
    ============================================================ */
 
 @layer base {
-  /* CSS 变量：方便全局统一管理字体 */
   :root {
-    --font-display: 'Playfair Display', 'Noto Serif SC', 'Georgia', serif;
-    --font-body: 'Inter', 'Noto Sans SC', 'Noto Sans HK', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'PingFang HK', 'Microsoft YaHei', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-    --font-cn: 'Noto Sans SC', 'Noto Sans HK', 'PingFang SC', 'PingFang HK', 'Microsoft YaHei', 'STHeiti', sans-serif;
+    /* 配色 */
+    --gold-primary: #B8860B;
+    --gold-light: #D4B978;
+    --gold-dark: #8C6D1F;
+    --red-primary: #8B1A1A;
+    --red-hover: #A84444;
+    --bg-main: #F5F1ED;
+    --bg-card: #FAF7F4;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --line-border: #E5E0DB;
+    --white-pure: #FFFFFF;
+
+    /* 字体 */
+    --font-title: "Playfair Display", "Noto Serif SC", serif;
+    --font-body: Inter, "Noto Sans SC", sans-serif;
+    --font-cn: "Noto Sans SC", "Noto Sans HK", "PingFang SC", "PingFang HK", "Microsoft YaHei", sans-serif;
+    --font-cn-serif: "Noto Serif SC", "PingFang SC", serif;
+
+    /* 阴影 */
+    --shadow-sm: 0 2px 8px rgba(140, 109, 31, 0.08);
+    --shadow-card: 0 4px 16px rgba(51, 51, 51, 0.06);
+    --shadow-hover: 0 8px 24px rgba(140, 109, 31, 0.15);
+
+    /* 圆角 */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
   }
 }
 
@@ -32,60 +52,25 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: #F5F1ED;
-  color: #333333;
+  background: var(--bg-main);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* CJK 文字优化：控制行间距避免拥挤 */
   line-height: 1.6;
 }
 
-/* 品牌标题字体 */
-.font-display {
-  font-family: var(--font-display);
-}
-
-/* 中文专用 */
-.font-cn {
-  font-family: var(--font-cn);
-}
-
-/* Hide scrollbar but allow scrolling */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #F5F1ED;
-}
-::-webkit-scrollbar-thumb {
-  background: #D4B978;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #B8860B;
-}
-
-/* Animations */
-@keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 20px rgba(184, 134, 11, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(184, 134, 11, 0.6); }
-}
-
-.animate-pulse-gold {
-  animation: pulse-gold 2s ease-in-out infinite;
-}
-
 /* ============================================================
-   字体渲染微调
+   字体层级
    ============================================================ */
 
-/* 英文大标题：Playfair Display 增强视觉冲击 */
+/* 英文大标题 H1: Playfair Display */
 h1, .hero-title {
-  font-family: var(--font-display);
+  font-family: var(--font-title);
+  font-weight: 300;
 }
 
-/* 产品名称等中文标题 */
-h2, h3 {
+/* 中文标题 H2-H3: 思源宋体 CN */
+h2, h3, .font-cn {
   font-family: var(--font-cn);
 }
 
@@ -96,25 +81,118 @@ button, nav, .nav-link {
 
 /* 价格数字用 Inter 确保等宽对齐 */
 .price, .font-price {
-  font-family: 'Inter', 'Roboto Mono', monospace;
+  font-family: Inter, 'Roboto Mono', monospace;
   font-variant-numeric: tabular-nums;
 }
 
-/* 繁体中文优化：lang="zh-HK" 自动使用 Noto Sans HK */
-:lang(zh-HK) {
+/* 繁体中文优化 */
+:lang(zh-HK), :lang(zh-TW) {
   font-family: 'Noto Sans HK', 'PingFang HK', var(--font-body);
 }
 
-:lang(zh-TW) {
-  font-family: 'Noto Sans HK', 'PingFang HK', var(--font-body);
+/* 品牌标题字体 */
+.font-display {
+  font-family: var(--font-title);
+}
+
+/* ============================================================
+   按钮系统（主按鈕 / 次按鈕 / 漸變 / Hover）
+   ============================================================ */
+
+/* 主按钮 — 绛红渐变 */
+.btn-primary {
+  background: linear-gradient(135deg, #8B1A1A 0%, #7A1717 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #A84444 0%, #993D3D 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+.btn-primary:active {
+  background: linear-gradient(135deg, #701515 0%, #601212 100%);
+  transform: translateY(0);
+}
+
+/* 次按钮 — 鎏金渐变镂空 */
+.btn-secondary {
+  background: transparent;
+  color: #B8860B;
+  border: 1px solid #B8860B;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #D4B978 0%, #C8AA6A 100%);
+  color: #FFFFFF;
+  border-color: transparent;
+}
+.btn-secondary:active {
+  background: linear-gradient(135deg, #8C6D1F 0%, #7D601C 100%);
+}
+
+/* ============================================================
+   阴影系统（柔霧啞光・暖灰）
+   ============================================================ */
+
+.shadow-sm-custom {
+  box-shadow: var(--shadow-sm);
+}
+.shadow-card-custom {
+  box-shadow: var(--shadow-card);
+}
+.shadow-hover-custom {
+  box-shadow: var(--shadow-hover);
+}
+
+/* ============================================================
+   滚动条
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-light);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-primary);
+}
+
+/* ============================================================
+   动画
+   ============================================================ */
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 20px rgba(184, 134, 11, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(184, 134, 11, 0.25); }
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 3s ease-in-out infinite;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
 }
 
 /* 文字选中颜色 */
 ::selection {
-  background: rgba(184, 134, 11, 0.3);
-  color: #333333;
+  background: rgba(184, 134, 11, 0.2);
+  color: var(--text-primary);
 }
 
-
-/* 360° horizontal rotation */
+/* 360° rotation */
 @keyframes spinY{0%{transform:rotateY(0deg) scaleX(1)}25%{transform:rotateY(90deg) scaleX(0.15)}50%{transform:rotateY(180deg) scaleX(1)}75%{transform:rotateY(270deg) scaleX(0.15)}100%{transform:rotateY(360deg) scaleX(1)}}
