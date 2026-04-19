@@ -1,1 +1,2 @@
-https://www.blingjew.com/* https://blingjew.com/:splat 301
+# SPA fallback for Vercel (handled by vercel.json rewrites)
+/*    /index.html   200
