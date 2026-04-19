@@ -32,8 +32,8 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: #000;
-  color: #fff;
+  background: #F5F1ED;
+  color: #333333;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* CJK 文字优化：控制行间距避免拥挤 */
@@ -55,20 +55,20 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #F5F1ED;
 }
 ::-webkit-scrollbar-thumb {
-  background: #92400e;
+  background: #D4B978;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #d97706;
+  background: #B8860B;
 }
 
 /* Animations */
 @keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 20px rgba(234, 179, 8, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(234, 179, 8, 0.6); }
+  0%, 100% { box-shadow: 0 0 20px rgba(184, 134, 11, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(184, 134, 11, 0.6); }
 }
 
 .animate-pulse-gold {
@@ -111,8 +111,8 @@ button, nav, .nav-link {
 
 /* 文字选中颜色 */
 ::selection {
-  background: rgba(234, 179, 8, 0.3);
-  color: #fff;
+  background: rgba(184, 134, 11, 0.3);
+  color: #333333;
 }
 
 
