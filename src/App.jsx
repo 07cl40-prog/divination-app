@@ -550,11 +550,10 @@ function ContactPage() {
           ) : (
             <div className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
-                <input required placeholder="Your Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A]" />
-                <input required type="email" placeholder="Email Address" value={form.email} onChange={e => setForm({...form, email: e.target.value})} className="bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A]" />
+                <input required placeholder="Your Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="bg-[#FAF7F4] border border-[#D4B978] text-[#333333] placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#B8860B]" />
+                <input required type="email" placeholder="Email Address" value={form.email} onChange={e => setForm({...form, email: e.target.value})} className="bg-[#FAF7F4] border border-[#D4B978] text-[#333333] placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#B8860B]" />
               </div>
-              <input required placeholder="Subject" value={form.subject} onChange={e => setForm({...form, subject: e.target.value})} className="w-full bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A]" />
-              <textarea required rows={5} placeholder="Your Message" value={form.message} onChange={e => setForm({...form, message: e.target.value})} className="w-full bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A] resize-none" />
+              <input required placeholder="Subject" value={form.subject} onChange={e => setForm({...form, subject: e.target.value})} className="w-full bg-[#FAF7F4] border border-[#D4B978] text-[#333333] placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#B8860B] resize-none" value={form.message} onChange={e => setForm({...form, message: e.target.value})} className="w-full bg-[#FAF7F4] border border-[#D4B978] text-white placeholder-[#999999] px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8B1A1A] resize-none" />
               <button type="submit" className="w-full bg-[#8B1A1A] hover:bg-[#A84444] text-white font-semibold py-4 rounded-xl transition-all text-sm">Send Message</button>
             </div>
           )}
