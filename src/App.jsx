@@ -756,7 +756,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#F5F1ED] text-[#333333] font-sans">
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} cartCount={cartCount} setShowCart={setShowCart} />
-      {currentPage === 'home' && <><Hero setCurrentPage={setCurrentPage} /><HeritageSection /><ProductShowcase setCurrentPage={setCurrentPage} products={products} /><Features /><ReviewsSection /><Newsletter /></>}
+      {currentPage === 'home' && <><Hero setCurrentPage={setCurrentPage} /><HeritageSection /><Features /><ReviewsSection /><Newsletter /></>}
       {currentPage === 'shop' && <ShopPage setCurrentPage={setCurrentPage} onViewProduct={handleViewProduct} onQuickAdd={addItem} products={products} />}
       {currentPage === 'story' && <StoryPage setCurrentPage={setCurrentPage} />}
       {currentPage === 'contact' && <ContactPage />}
