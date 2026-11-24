@@ -96,7 +96,7 @@ function ProductCard({ product, onView, onQuickAdd }) {
           <Heart size={16} className={liked ? 'fill-[#8C2C2C] text-[#8C2C2C]' : 'text-[#6B5D52]'} />
         </button>
       </div>
-      <div className="p-5">
+      <div className="p-4 md:p-5">
         <div className="text-[11px] text-[#A98B4F] font-medium tracking-[0.15em] uppercase mb-1">{product.nameEn}</div>
         <h3 className="text-[#2B2020] font-bold text-sm mb-2 leading-snug">{product.name}</h3>
         <div className="flex items-center gap-2 mb-3">
@@ -108,11 +108,11 @@ function ProductCard({ product, onView, onQuickAdd }) {
           <span className="text-sm text-[#6B5D52] line-through">${product.originalPrice}</span>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => onView(product)} className="flex-1 py-2.5 bg-[#FDFBF7] hover:bg-[#F5EFE3] border border-[#EAE3D8] text-[#2B2020] text-xs font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
+          <button onClick={() => onView(product)} className="flex-1 py-3.5 md:py-2.5 bg-[#FDFBF7] hover:bg-[#F5EFE3] border border-[#EAE3D8] text-[#2B2020] text-xs font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
             <ShoppingBag size={13} /> View Details
           </button>
           {onQuickAdd && (
-            <button onClick={() => onQuickAdd(product)} className="w-10 h-10 text-[#FDFBF7] rounded-xl transition-all flex items-center justify-center hover:shadow-[0_4px_14px_rgba(140,44,44,0.35)] hover:border-[#C9A961]" style={{background: 'linear-gradient(135deg, #8C2C2C 0%, #7A2525 100%)', border: '1px solid transparent'}}>
+            <button onClick={() => onQuickAdd(product)} className="w-11 h-11 md:w-10 md:h-10 shrink-0 text-[#FDFBF7] rounded-xl transition-all flex items-center justify-center hover:shadow-[0_4px_14px_rgba(140,44,44,0.35)] hover:border-[#C9A961]" style={{background: 'linear-gradient(135deg, #8C2C2C 0%, #7A2525 100%)', border: '1px solid transparent'}}>
               <Plus size={14} />
             </button>
           )}
@@ -171,13 +171,25 @@ function Navbar({ currentPage, setCurrentPage, cartCount, setShowCart }) {
         </div>
       </div>
       {mobileOpen && (
-        <div className="lg:hidden bg-[#FDFBF7] border-t border-[#EAE3D8] px-6 py-4 space-y-1">
-          {navItems.map(item => (
-            <button key={item.key} onClick={() => { setCurrentPage(item.key); setMobileOpen(false); }}
-              className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all ${currentPage === item.key ? 'text-[#8C2C2C] bg-[#F5EFE3]' : 'text-[#6B5D52]'}`}>
-              <span className="block text-[10px] opacity-50 uppercase tracking-wider">{item.labelEn}</span>{item.label}
-            </button>
-          ))}
+        <div className="lg:hidden bg-[#FDFBF7]/95 backdrop-blur-md border-t border-[#EAE3D8] shadow-[0_18px_36px_rgba(43,32,32,0.10)] animate-fade-in-down">
+          <div className="divider-huiwen" aria-hidden="true"></div>
+          <div className="px-5 py-4 space-y-1.5">
+            {navItems.map(item => (
+              <button key={item.key} onClick={() => { setCurrentPage(item.key); setMobileOpen(false); }}
+                className={`w-full text-left px-4 py-3.5 rounded-xl flex items-center justify-between transition-all ${currentPage === item.key ? 'text-[#8C2C2C] bg-[#F5EFE3] border border-[#C9A961]/40' : 'text-[#6B5D52] border border-transparent'}`}>
+                <span>
+                  <span className="block text-[10px] opacity-50 uppercase tracking-wider">{item.labelEn}</span>
+                  <span className="font-serif-cn font-semibold text-sm">{item.label}</span>
+                </span>
+                <ChevronRight size={16} className="text-[#C9A961] shrink-0" />
+              </button>
+            ))}
+          </div>
+          <div className="mx-5 mb-5 pt-4 border-t border-[#C9A961]/30 flex items-center justify-center gap-2">
+            <span className="w-6 h-px bg-[#C9A961]/60"></span>
+            <span className="text-[#A98B4F] text-[10px] tracking-[0.25em] uppercase">AI × 香港非遺文創</span>
+            <span className="w-6 h-px bg-[#C9A961]/60"></span>
+          </div>
         </div>
       )}
     </nav>
@@ -196,31 +208,52 @@ function Hero({ setCurrentPage }) {
       <div className="absolute inset-0" style={{background: 'radial-gradient(ellipse 80% 70% at 70% 30%, rgba(201,169,97,0.12) 0%, transparent 60%)'}}></div>
       <div className="absolute inset-0" style={{background: 'radial-gradient(ellipse 50% 50% at 15% 85%, rgba(140,44,44,0.07) 0%, transparent 55%)'}}></div>
 
-      <div className="relative max-w-7xl mx-auto px-8 lg:px-16 w-full">
-        <div className="grid lg:grid-cols-2 gap-16 items-center min-h-screen py-32">
+      <div className="relative max-w-7xl mx-auto px-5 md:px-8 lg:px-16 w-full">
+        <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center min-h-screen py-24 md:py-32">
           {/* Left: Brand statement */}
           <div className="max-w-xl">
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3 mb-6 md:mb-8">
               <div className="w-12 h-px bg-[#C9A961]"></div>
               <span className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase font-medium">香港非遺 · 靈感源頭 · Since 2024</span>
             </div>
 
-            <h1 className="font-serif-cn text-6xl lg:text-7xl font-bold text-[#2B2020] leading-[1.05] mb-4 tracking-tight">
+            <h1 className="font-serif-cn text-4xl sm:text-6xl lg:text-7xl font-bold text-[#2B2020] leading-[1.05] mb-4 tracking-tight">
               <span className="block">把福氣<span className="text-[#8C2C2C]">兜</span>在身邊</span>
-              <span className="block font-display font-light text-2xl lg:text-3xl mt-5 tracking-[0.12em] text-[#A98B4F]">Carry Your Fortune With You</span>
+              <span className="block font-display font-light text-lg sm:text-2xl lg:text-3xl mt-4 md:mt-5 tracking-[0.12em] text-[#A98B4F]">Carry Your Fortune With You</span>
             </h1>
 
-            <p className="text-[#6B5D52] text-lg leading-8 mt-8 mb-6 max-w-md">
+            <p className="text-[#6B5D52] text-base md:text-lg leading-7 md:leading-8 mt-6 md:mt-8 mb-6 max-w-md">
               香港非遺祈福信俗 × AI × 情緒陪伴 —— 一只根植于香港非遗、会说话求签的 AI 财神毛绒公仔。
             </p>
 
-            <div className="flex flex-wrap gap-4">
-              <button onClick={() => setCurrentPage('shop')} className="btn-primary font-semibold px-8 py-4 text-sm flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4">
+              <button onClick={() => setCurrentPage('shop')} className="btn-primary font-semibold px-8 py-4 text-sm w-full sm:w-auto flex items-center justify-center gap-2">
                 Explore Collection <ArrowRight size={16} />
               </button>
-              <button onClick={() => setCurrentPage('story')} className="btn-secondary font-medium px-8 py-4 text-sm">
+              <button onClick={() => setCurrentPage('story')} className="btn-secondary font-medium px-8 py-4 text-sm w-full sm:w-auto flex items-center justify-center">
                 Our Story
               </button>
+            </div>
+
+            {/* Mobile: 礼盒大图 — 全宽圆角 + 金线描边 */}
+            <div className="lg:hidden mt-10">
+              <div className="relative rounded-[2rem] border border-[#C9A961]/45 p-2 bg-white/70 shadow-[0_12px_32px_rgba(140,44,44,0.12)]">
+                <div className="relative rounded-[1.6rem] overflow-hidden aspect-[4/3] bg-white">
+                  <img
+                    src="/images/hero-caishen.png"
+                    alt="財兜兜 CaiDouDou — AI 財神毛絨公仔禮盒"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center"><div class="seal-logo rounded-2xl flex items-center justify-center" style="width:88px;height:88px"><span class="font-serif-cn font-bold" style="font-size:44px">財</span></div></div>';
+                    }}
+                  />
+                </div>
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white border border-[#EAE3D8] rounded-full px-4 py-1.5 flex items-center gap-2 shadow-[0_6px_18px_rgba(201,169,97,0.25)] whitespace-nowrap">
+                  <Sparkles size={12} className="text-[#C9A961] shrink-0" />
+                  <span className="text-[#6B5D52] text-[11px] tracking-wider">EN71 認證 · 香港出品</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -268,7 +301,7 @@ function Hero({ setCurrentPage }) {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60">
+      <div className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-60">
         <span className="text-[#6B5D52] text-[10px] tracking-[0.3em] uppercase">Scroll</span>
         <div className="w-px h-8 bg-gradient-to-b from-[#C9A961] to-transparent"></div>
       </div>
@@ -306,38 +339,38 @@ function HeritageSection({ setCurrentPage }) {
     },
   ];
   return (
-    <section className="py-28 bg-white border-t border-[#EAE3D8]">
-      <div className="divider-huiwen mb-24" aria-hidden="true"></div>
-      <div className="max-w-7xl mx-auto px-8 lg:px-16">
-        <div className="text-center mb-16">
+    <section className="py-16 md:py-28 bg-white border-t border-[#EAE3D8]">
+      <div className="divider-huiwen mb-12 md:mb-24" aria-hidden="true"></div>
+      <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-16">
+        <div className="text-center mb-10 md:mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-16 h-px bg-[#C9A961]/60"></div>
             <span className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase font-medium">Hong Kong ICH · 香港非遺</span>
             <div className="w-16 h-px bg-[#C9A961]/60"></div>
           </div>
-          <h2 className="font-serif-cn text-4xl lg:text-5xl font-bold text-[#2B2020] mb-6">根植於仍在活著的香港信俗</h2>
-          <p className="text-[#6B5D52] text-lg max-w-3xl mx-auto leading-8">
+          <h2 className="font-serif-cn text-3xl md:text-4xl lg:text-5xl font-bold text-[#2B2020] mb-6">根植於仍在活著的香港信俗</h2>
+          <p className="text-[#6B5D52] text-base md:text-lg max-w-3xl mx-auto leading-7 md:leading-8">
             财兜兜承载的不只是「财神」符号，而是仍在香港庙宇中活着、已被政府列入清单的信俗。
           </p>
           <p className="text-[#A98B4F] text-xs mt-4 tracking-wide">資料來源：康樂及文化事務署非物質文化遺產辦事處</p>
         </div>
 
         {/* 非遗清单数据 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#EAE3D8] rounded-2xl overflow-hidden mb-16">
+        <div className="grid grid-cols-3 gap-px bg-[#EAE3D8] rounded-2xl overflow-hidden mb-10 md:mb-16">
           {stats.map(s => (
-            <div key={s.label} className="bg-[#FDFBF7] px-8 py-12 text-center group hover:bg-[#F5EFE3] transition-colors">
-              <div className="text-5xl lg:text-6xl font-black text-[#8C2C2C] mb-3 group-hover:scale-105 transition-transform font-display">{s.num}</div>
-              <div className="text-[#A98B4F] text-[11px] tracking-[0.2em] uppercase mb-2">{s.label}</div>
-              <div className="text-[#6B5D52] text-sm">{s.zh}</div>
+            <div key={s.label} className="bg-[#FDFBF7] px-3 py-6 md:px-8 md:py-12 text-center group hover:bg-[#F5EFE3] transition-colors">
+              <div className="text-3xl md:text-5xl lg:text-6xl font-black text-[#8C2C2C] mb-1.5 md:mb-3 group-hover:scale-105 transition-transform font-display">{s.num}</div>
+              <div className="text-[#A98B4F] text-[11px] tracking-[0.2em] uppercase mb-1 md:mb-2">{s.label}</div>
+              <div className="text-[#6B5D52] text-xs md:text-sm">{s.zh}</div>
             </div>
           ))}
         </div>
 
         {/* 三个代表性项目 */}
-        <div className="grid md:grid-cols-3 gap-6 mb-14">
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6 mb-10 md:mb-14">
           {heritageItems.map(item => (
-            <div key={item.zh} className="bg-[#FDFBF7] border border-[#EAE3D8] rounded-2xl p-8 hover:border-[#C9A961]/60 hover:shadow-[0_8px_24px_rgba(201,169,97,0.15)] transition-all">
-              <div className="w-12 h-12 rounded-xl bg-[#8C2C2C] text-[#FDFBF7] flex items-center justify-center mb-5 shadow-[0_4px_12px_rgba(140,44,44,0.2)]">{item.icon}</div>
+            <div key={item.zh} className="bg-[#FDFBF7] border border-[#EAE3D8] rounded-2xl p-5 md:p-8 hover:border-[#C9A961]/60 hover:shadow-[0_8px_24px_rgba(201,169,97,0.15)] transition-all">
+              <div className="w-12 h-12 rounded-xl bg-[#8C2C2C] text-[#FDFBF7] flex items-center justify-center mb-4 md:mb-5 shadow-[0_4px_12px_rgba(140,44,44,0.2)]">{item.icon}</div>
               <div className="flex items-baseline gap-3 mb-1.5">
                 <h3 className="font-serif-cn text-xl font-bold text-[#2B2020]">{item.zh}</h3>
               </div>
@@ -349,7 +382,7 @@ function HeritageSection({ setCurrentPage }) {
         </div>
 
         {/* 背书行 */}
-        <div className="border-t border-[#EAE3D8] pt-10 text-center">
+        <div className="border-t border-[#EAE3D8] pt-8 md:pt-10 text-center">
           <p className="text-[#6B5D52] text-sm leading-7 max-w-3xl mx-auto">
             <span className="text-[#8C2C2C] font-semibold">獲香港文武廟、蓬瀛仙館、黃大仙等宗教場所認可</span>
             <span className="mx-2 text-[#C9A961]">·</span>
@@ -371,25 +404,25 @@ function TrustSection() {
     'UK Toys (Safety) Regs 2011',
   ];
   return (
-    <section className="py-28 bg-[#FDFBF7] border-t border-[#EAE3D8]">
-      <div className="max-w-7xl mx-auto px-8 lg:px-16">
-        <div className="text-center mb-16">
+    <section className="py-16 md:py-28 bg-[#FDFBF7] border-t border-[#EAE3D8]">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-16">
+        <div className="text-center mb-10 md:mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-16 h-px bg-[#C9A961]/60"></div>
             <span className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase font-medium">Trust &amp; Authenticity · 正版與安全</span>
             <div className="w-16 h-px bg-[#C9A961]/60"></div>
           </div>
-          <h2 className="font-serif-cn text-4xl lg:text-5xl font-bold text-[#2B2020] mb-6">正版認證 · 安全守護</h2>
-          <p className="text-[#6B5D52] text-lg max-w-2xl mx-auto leading-8">
+          <h2 className="font-serif-cn text-3xl md:text-4xl lg:text-5xl font-bold text-[#2B2020] mb-6">正版認證 · 安全守護</h2>
+          <p className="text-[#6B5D52] text-base md:text-lg max-w-2xl mx-auto leading-7 md:leading-8">
             從商標註冊到玩具安全檢測，每一件財兜兜都有據可查。
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6">
           {/* 商标 */}
-          <div className="bg-white border border-[#EAE3D8] rounded-3xl p-10 hover:border-[#C9A961]/50 transition-all">
+          <div className="bg-white border border-[#EAE3D8] rounded-3xl p-6 md:p-10 hover:border-[#C9A961]/50 transition-all">
             <div className="w-12 h-12 rounded-xl bg-[#8C2C2C] text-[#FDFBF7] flex items-center justify-center mb-6 shadow-[0_4px_12px_rgba(140,44,44,0.2)]"><ShieldCheck size={22} /></div>
-            <h3 className="font-serif-cn text-2xl font-bold text-[#2B2020] mb-4">香港註冊商標</h3>
+            <h3 className="font-serif-cn text-xl md:text-2xl font-bold text-[#2B2020] mb-4">香港註冊商標</h3>
             <p className="text-[#6B5D52] leading-7 mb-5 text-sm">
               品牌「財兜兜」為香港註冊商標（第28類 玩具類），註冊編號 <span className="text-[#8C2C2C] font-semibold">307339168</span>，香港知識產權署商標註冊處。
             </p>
@@ -397,9 +430,9 @@ function TrustSection() {
           </div>
 
           {/* 出品方 */}
-          <div className="bg-white border border-[#EAE3D8] rounded-3xl p-10 hover:border-[#C9A961]/50 transition-all">
+          <div className="bg-white border border-[#EAE3D8] rounded-3xl p-6 md:p-10 hover:border-[#C9A961]/50 transition-all">
             <div className="w-12 h-12 rounded-xl bg-[#8C2C2C] text-[#FDFBF7] flex items-center justify-center mb-6 shadow-[0_4px_12px_rgba(140,44,44,0.2)]"><Globe size={22} /></div>
-            <h3 className="font-serif-cn text-2xl font-bold text-[#2B2020] mb-4">香港本土出品</h3>
+            <h3 className="font-serif-cn text-xl md:text-2xl font-bold text-[#2B2020] mb-4">香港本土出品</h3>
             <p className="text-[#6B5D52] leading-7 mb-5 text-sm">
               出品方 <span className="text-[#8C2C2C] font-semibold">HK WENWIN MOMENTUM LIMITED</span>（香港文運亨通有限公司）—— 一家扎根香港的文創公司。
             </p>
@@ -407,9 +440,9 @@ function TrustSection() {
           </div>
 
           {/* 安全认证 */}
-          <div className="bg-white border border-[#EAE3D8] rounded-3xl p-10 hover:border-[#C9A961]/50 transition-all">
+          <div className="bg-white border border-[#EAE3D8] rounded-3xl p-6 md:p-10 hover:border-[#C9A961]/50 transition-all">
             <div className="w-12 h-12 rounded-xl bg-[#8C2C2C] text-[#FDFBF7] flex items-center justify-center mb-6 shadow-[0_4px_12px_rgba(140,44,44,0.2)]"><Award size={22} /></div>
-            <h3 className="font-serif-cn text-2xl font-bold text-[#2B2020] mb-4">權威安全檢測</h3>
+            <h3 className="font-serif-cn text-xl md:text-2xl font-bold text-[#2B2020] mb-4">權威安全檢測</h3>
             <p className="text-[#6B5D52] leading-7 mb-5 text-sm">
               檢測機構 <span className="text-[#8C2C2C] font-semibold">Bureau Veritas 必維</span>，全部項目 <span className="text-[#8C2C2C] font-semibold">PASS</span>。
             </p>
@@ -418,9 +451,9 @@ function TrustSection() {
         </div>
 
         {/* 认证明细 chips */}
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 md:mt-10 flex flex-wrap justify-center gap-2 md:gap-3">
           {certifications.map(c => (
-            <span key={c} className="inline-flex items-center gap-2 bg-white border border-[#C9A961]/40 text-[#2B2020] text-xs font-medium rounded-full px-4 py-2">
+            <span key={c} className="inline-flex items-center gap-1.5 md:gap-2 bg-white border border-[#C9A961]/40 text-[#2B2020] text-[11px] md:text-xs font-medium rounded-full px-3 py-1.5 md:px-4 md:py-2">
               <CheckCircle size={13} className="text-[#8C2C2C] shrink-0" />{c}
             </span>
           ))}
@@ -430,7 +463,7 @@ function TrustSection() {
         </p>
 
         {/* AI 伦理护栏 */}
-        <div className="mt-10 border border-[#EAE3D8] bg-white rounded-2xl px-8 py-6 max-w-3xl mx-auto">
+        <div className="mt-8 md:mt-10 border border-[#EAE3D8] bg-white rounded-2xl px-5 py-5 md:px-8 md:py-6 max-w-3xl mx-auto">
           <p className="text-[#6B5D52] text-xs leading-6 text-center">
             <span className="text-[#8C2C2C] font-semibold">AI 倫理護欄：</span>
             籤文與建議由 AI 結合道家思想語料生成並設人工複核機制；產品定位為情緒陪伴與傳統文化的當代轉譯，不預測、不承諾、不作為決策依據。
@@ -444,17 +477,17 @@ function TrustSection() {
 function ProductShowcase({ setCurrentPage, products }) {
   const featured = (products || []).slice(0, 4);
   return (
-    <section className="py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-8 lg:px-16">
-        <div className="mb-16">
+    <section className="py-16 md:py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-16">
+        <div className="mb-10 md:mb-16">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-16 h-px bg-[#C9A961]/60"></div>
             <span className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase font-medium">Featured Collection</span>
           </div>
           <div className="flex items-end justify-between">
             <div>
-              <h2 className="font-serif-cn text-4xl lg:text-6xl font-bold text-[#2B2020] mb-4">財兜兜系列</h2>
-              <p className="text-[#6B5D52] text-lg max-w-xl">由 AI 與香港非遺紋樣共同孕育的東方美學，把福氣做成可以隨身攜帶的溫度。</p>
+              <h2 className="font-serif-cn text-3xl md:text-4xl lg:text-6xl font-bold text-[#2B2020] mb-4">財兜兜系列</h2>
+              <p className="text-[#6B5D52] text-base md:text-lg max-w-xl leading-7 md:leading-8">由 AI 與香港非遺紋樣共同孕育的東方美學，把福氣做成可以隨身攜帶的溫度。</p>
             </div>
             <button onClick={() => setCurrentPage('shop')} className="hidden lg:flex items-center gap-2 text-[#8C2C2C] hover:text-[#7A2525] text-sm font-medium transition-colors group">
               View All {products?.length || 0} Pieces <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -462,10 +495,10 @@ function ProductShowcase({ setCurrentPage, products }) {
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           {featured.map((p) => (
             <div key={p.id} className="group cursor-pointer" onClick={() => setCurrentPage('shop')}>
-              <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-[#FDFBF7] border border-[#EAE3D8] mb-6 group-hover:border-[#C9A961]/60 transition-all">
+              <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-[#FDFBF7] border border-[#EAE3D8] mb-3 md:mb-6 group-hover:border-[#C9A961]/60 transition-all">
                 <img
                   src={p.images[0]}
                   alt={p.name}
@@ -477,16 +510,16 @@ function ProductShowcase({ setCurrentPage, products }) {
                 />
               </div>
               <div className="text-[#A98B4F] text-[10px] tracking-[0.2em] uppercase mb-2">{p.nameEn}</div>
-              <h3 className="text-xl font-serif-cn font-bold text-[#2B2020] mb-2">{p.name}</h3>
-              <div className="flex items-center gap-3">
-                <span className="text-2xl font-black text-[#8C2C2C]">${p.price}</span>
+              <h3 className="text-base md:text-xl font-serif-cn font-bold text-[#2B2020] mb-2">{p.name}</h3>
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-lg md:text-2xl font-black text-[#8C2C2C]">${p.price}</span>
                 <span className="text-sm text-[#6B5D52] line-through">${p.originalPrice}</span>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-16 text-center lg:hidden">
+        <div className="mt-10 md:mt-16 text-center lg:hidden">
           <button onClick={() => setCurrentPage('shop')} className="inline-flex items-center gap-2 text-[#8C2C2C] hover:text-[#7A2525] text-sm font-medium transition-colors">
             View All {products?.length || 0} Pieces <ArrowRight size={14} />
           </button>
@@ -504,9 +537,9 @@ function Features() {
     { icon: <Award size={20} />, label: '香港註冊商標', sub: 'Reg. 307339168' },
   ];
   return (
-    <section className="py-20 bg-[#FDFBF7] border-t border-[#EAE3D8]">
-      <div className="max-w-7xl mx-auto px-8 lg:px-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+    <section className="py-12 md:py-20 bg-[#FDFBF7] border-t border-[#EAE3D8]">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8 lg:gap-12">
           {features.map((f, i) => (
             <div key={i} className="flex items-start gap-4 group">
               <div className="text-[#A98B4F] mt-1 shrink-0 group-hover:text-[#8C2C2C] transition-colors">{f.icon}</div>
@@ -524,25 +557,25 @@ function Features() {
 
 function ReviewsSection() {
   return (
-    <section className="py-28 bg-white border-t border-[#EAE3D8]">
-      <div className="max-w-7xl mx-auto px-8 lg:px-16">
-        <div className="mb-14">
+    <section className="py-16 md:py-28 bg-white border-t border-[#EAE3D8]">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-16">
+        <div className="mb-10 md:mb-14">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-16 h-px bg-[#C9A961]/60"></div>
             <span className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase font-medium">Testimonials</span>
           </div>
-          <h2 className="font-serif-cn text-4xl lg:text-5xl font-bold text-[#2B2020]">把福氣帶到世界各地</h2>
+          <h2 className="font-serif-cn text-3xl md:text-4xl lg:text-5xl font-bold text-[#2B2020]">把福氣帶到世界各地</h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-8">
           {REVIEWS.slice(0, 4).map((r, i) => (
-            <div key={i} className="bg-[#FDFBF7] border border-[#EAE3D8] rounded-3xl p-8 lg:p-10 hover:border-[#C9A961]/50 transition-all">
-              <div className="flex gap-1 mb-6">
+            <div key={i} className="bg-[#FDFBF7] border border-[#EAE3D8] rounded-3xl p-5 md:p-8 lg:p-10 hover:border-[#C9A961]/50 transition-all">
+              <div className="flex gap-1 mb-4 md:mb-6">
                 {[...Array(5)].map((_, j) => (
                   <Star key={j} size={14} className="fill-[#C9A961] text-[#C9A961]" />
                 ))}
               </div>
-              <p className="text-[#2B2020] text-lg leading-8 mb-8">"{r.text}"</p>
+              <p className="text-[#2B2020] text-base md:text-lg leading-7 md:leading-8 mb-6 md:mb-8">"{r.text}"</p>
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-[#2B2020] font-semibold">{r.name}</div>
@@ -563,16 +596,16 @@ function Newsletter() {
   const [submitted, setSubmitted] = useState(false);
   const handleSubmit = (e) => { e.preventDefault(); if(email) setSubmitted(true); };
   return (
-    <section className="relative py-28 bg-[#FDFBF7] border-t border-[#EAE3D8] overflow-hidden">
+    <section className="relative py-16 md:py-28 bg-[#FDFBF7] border-t border-[#EAE3D8] overflow-hidden">
       <div className="absolute inset-0 pattern-xiangyun" aria-hidden="true"></div>
-      <div className="relative max-w-3xl mx-auto px-8 text-center">
+      <div className="relative max-w-3xl mx-auto px-6 md:px-8 text-center">
         <div className="flex items-center justify-center gap-3 mb-6">
           <div className="w-16 h-px bg-[#C9A961]/60"></div>
           <span className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase font-medium">Stay Connected</span>
           <div className="w-16 h-px bg-[#C9A961]/60"></div>
         </div>
-        <h2 className="font-serif-cn text-4xl lg:text-5xl font-bold text-[#2B2020] mb-6">加入福氣圈</h2>
-        <p className="text-[#6B5D52] text-lg mb-12 max-w-xl mx-auto">Be the first to know about new collections, exclusive offers, and fortune tips.</p>
+        <h2 className="font-serif-cn text-3xl md:text-4xl lg:text-5xl font-bold text-[#2B2020] mb-6">加入福氣圈</h2>
+        <p className="text-[#6B5D52] text-base md:text-lg mb-8 md:mb-12 max-w-xl mx-auto">Be the first to know about new collections, exclusive offers, and fortune tips.</p>
         {submitted ? (
           <div className="bg-white border border-[#C9A961]/50 text-[#8C2C2C] rounded-2xl px-8 py-6 text-lg shadow-[0_4px_16px_rgba(201,169,97,0.15)]">Thank you! You'll hear from us soon.</div>
         ) : (
@@ -597,27 +630,27 @@ function ShopPage({ setCurrentPage, onViewProduct, onQuickAdd, products }) {
   const filters = ['all', '掛件', '擺件', '禮盒'];
   const filtered = filter === 'all' ? (products || []) : (products || []).filter(p => p.name.includes(filter));
   return (
-    <div className="pt-32 pb-32 bg-[#FDFBF7] min-h-screen">
+    <div className="pt-24 pb-16 md:pt-32 md:pb-32 bg-[#FDFBF7] min-h-screen">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-12 h-px bg-[#C9A961]/60"></div>
             <span className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase font-medium">Complete Collection</span>
             <div className="w-12 h-px bg-[#C9A961]/60"></div>
           </div>
-          <h2 className="font-serif-cn text-5xl lg:text-6xl font-bold text-[#2B2020] mb-4">全部商品</h2>
-          <p className="text-[#6B5D52] text-lg">香港非遺 × AI 獨家系列 · {products?.length || 0} Products</p>
+          <h2 className="font-serif-cn text-3xl md:text-5xl lg:text-6xl font-bold text-[#2B2020] mb-4">全部商品</h2>
+          <p className="text-[#6B5D52] text-base md:text-lg">香港非遺 × AI 獨家系列 · {products?.length || 0} Products</p>
         </div>
 
-        <div className="flex justify-center gap-3 mb-16 flex-wrap">
+        <div className="flex justify-center gap-2.5 md:gap-3 mb-8 md:mb-16 flex-wrap">
           {filters.map(f => (
-            <button key={f} onClick={() => setFilter(f)} className={`px-6 py-3 rounded-full text-sm font-medium transition-all ${filter === f ? 'text-[#FDFBF7]' : 'bg-white text-[#6B5D52] border border-[#EAE3D8] hover:border-[#C9A961] hover:text-[#8C2C2C]'}`} style={filter === f ? {background: 'linear-gradient(135deg, #8C2C2C 0%, #7A2525 100%)'} : {}}>
+            <button key={f} onClick={() => setFilter(f)} className={`px-5 md:px-6 py-3 rounded-full text-sm font-medium transition-all ${filter === f ? 'text-[#FDFBF7]' : 'bg-white text-[#6B5D52] border border-[#EAE3D8] hover:border-[#C9A961] hover:text-[#8C2C2C]'}`} style={filter === f ? {background: 'linear-gradient(135deg, #8C2C2C 0%, #7A2525 100%)'} : {}}>
               {f === 'all' ? '全部 All' : f}
             </button>
           ))}
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           {filtered.map(p => <ProductCard key={p.id} product={p} onView={onViewProduct} onQuickAdd={onQuickAdd} />)}
         </div>
       </div>
@@ -632,42 +665,46 @@ function ProductModal({ product, onClose, onAddToCart }) {
   if (!product) return null;
   const handleAdd = () => { onAddToCart(product, qty); setAdded(true); setTimeout(() => setAdded(false), 2000); };
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2B2020]/60 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-white border border-[#EAE3D8] rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-[0_24px_64px_rgba(43,32,32,0.25)]" onClick={e => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-[#2B2020]/60 backdrop-blur-sm" onClick={onClose}>
+      <div className="bg-white border border-[#EAE3D8] rounded-t-3xl sm:rounded-3xl max-w-4xl w-full max-h-[92vh] sm:max-h-[90vh] overflow-y-auto shadow-[0_24px_64px_rgba(43,32,32,0.25)]" onClick={e => e.stopPropagation()}>
+        {/* Mobile: 底部抽屉拖拽指示条 */}
+        <div className="sm:hidden sticky top-0 z-10 bg-white pt-3 pb-1 rounded-t-3xl">
+          <div className="w-10 h-1 rounded-full bg-[#C9A961]/60 mx-auto"></div>
+        </div>
         <div className="grid md:grid-cols-2 gap-0">
-          <div className="bg-[#FDFBF7] p-8">
-            <div className="aspect-square bg-white rounded-2xl overflow-hidden mb-6 flex items-center justify-center border border-[#EAE3D8]">
+          <div className="bg-[#FDFBF7] p-5 md:p-8">
+            <div className="aspect-square bg-white rounded-2xl overflow-hidden mb-4 md:mb-6 flex items-center justify-center border border-[#EAE3D8]">
               <img src={product.images[activeImg]} alt={product.name} className="w-full h-full object-cover" onError={e => { e.target.style.display='none'; }} />
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-2 md:gap-3">
               {product.images.map((img, i) => (
-                <button key={i} onClick={() => setActiveImg(i)} className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${activeImg === i ? 'border-[#C9A961]' : 'border-[#EAE3D8] opacity-60 hover:opacity-100'}`}>
+                <button key={i} onClick={() => setActiveImg(i)} className={`w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden border-2 transition-all ${activeImg === i ? 'border-[#C9A961]' : 'border-[#EAE3D8] opacity-60 hover:opacity-100'}`}>
                   <img src={img} alt="" className="w-full h-full object-cover" onError={e => e.target.style.display='none'} />
                 </button>
               ))}
             </div>
           </div>
-          <div className="p-8 lg:p-10">
-            <button onClick={onClose} className="w-10 h-10 rounded-full bg-[#FDFBF7] border border-[#EAE3D8] flex items-center justify-center text-[#6B5D52] hover:text-[#8C2C2C] float-right transition-colors"><X size={18} /></button>
+          <div className="p-5 md:p-8 lg:p-10">
+            <button onClick={onClose} className="w-11 h-11 md:w-10 md:h-10 rounded-full bg-[#FDFBF7] border border-[#EAE3D8] flex items-center justify-center text-[#6B5D52] hover:text-[#8C2C2C] float-right transition-colors"><X size={18} /></button>
             <div className="text-xs text-[#A98B4F] font-medium tracking-[0.2em] uppercase mb-3">{product.nameEn}</div>
-            <h2 className="text-3xl font-serif-cn font-bold text-[#2B2020] mb-2">{product.name}</h2>
+            <h2 className="text-2xl md:text-3xl font-serif-cn font-bold text-[#2B2020] mb-2">{product.name}</h2>
             <div className="flex items-center gap-3 mb-6">
               <StarRating rating={product.rating} />
               <span className="text-xs text-[#6B5D52]">{product.reviews} reviews</span>
             </div>
-            <div className="flex items-end gap-4 mb-8">
-              <span className="text-4xl font-black text-[#8C2C2C]">${product.price}</span>
+            <div className="flex items-end gap-3 md:gap-4 mb-6 md:mb-8">
+              <span className="text-3xl md:text-4xl font-black text-[#8C2C2C]">${product.price}</span>
               <span className="text-lg text-[#6B5D52] line-through">${product.originalPrice}</span>
               <span className="bg-[#F5EFE3] text-[#8C2C2C] border border-[#C9A961]/40 text-sm font-bold px-3 py-1 rounded-full">-{Math.round((1-product.price/product.originalPrice)*100)}%</span>
             </div>
-            <p className="text-[#6B5D52] leading-relaxed mb-8">{product.description}</p>
-            <ul className="space-y-3 mb-8">
+            <p className="text-[#6B5D52] leading-relaxed mb-6 md:mb-8">{product.description}</p>
+            <ul className="space-y-3 mb-6 md:mb-8">
               {product.features.map((f, i) => (
                 <li key={i} className="flex items-center gap-3 text-sm text-[#2B2020]"><CheckCircle size={14} className="text-[#8C2C2C] shrink-0" />{f}</li>
               ))}
             </ul>
-            <div className="flex items-center gap-4 mb-8">
-              <div className="flex items-center gap-2 bg-[#FDFBF7] border border-[#EAE3D8] rounded-xl">
+            <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
+              <div className="flex items-center gap-2 bg-[#FDFBF7] border border-[#EAE3D8] rounded-xl shrink-0">
                 <button onClick={() => setQty(Math.max(1, qty-1))} className="w-12 h-12 flex items-center justify-center text-[#2B2020] font-bold text-lg hover:bg-[#F5EFE3] rounded-l-xl transition-colors">-</button>
                 <span className="w-12 text-center text-[#2B2020] font-bold">{qty}</span>
                 <button onClick={() => setQty(qty+1)} className="w-12 h-12 flex items-center justify-center text-[#2B2020] font-bold text-lg hover:bg-[#F5EFE3] rounded-r-xl transition-colors">+</button>
@@ -690,24 +727,24 @@ function ProductModal({ product, onClose, onAddToCart }) {
 
 function StoryPage({ setCurrentPage }) {
   return (
-    <div className="pt-32 pb-32 bg-[#FDFBF7] min-h-screen">
+    <div className="pt-24 pb-16 md:pt-32 md:pb-32 bg-[#FDFBF7] min-h-screen">
       <div className="max-w-4xl mx-auto px-6 lg:px-10">
-        <div className="text-center mb-24">
+        <div className="text-center mb-12 md:mb-24">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-12 h-px bg-[#C9A961]/60"></div>
             <span className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase font-medium">Our Story</span>
             <div className="w-12 h-px bg-[#C9A961]/60"></div>
           </div>
-          <h2 className="font-serif-cn text-5xl lg:text-6xl font-bold text-[#2B2020] mb-6">品牌故事</h2>
-          <p className="text-[#6B5D52] text-lg max-w-2xl mx-auto">Where temple warmth meets artificial intelligence · 香港非遺 × AI</p>
+          <h2 className="font-serif-cn text-3xl md:text-5xl lg:text-6xl font-bold text-[#2B2020] mb-6">品牌故事</h2>
+          <p className="text-[#6B5D52] text-base md:text-lg max-w-2xl mx-auto">Where temple warmth meets artificial intelligence · 香港非遺 × AI</p>
         </div>
 
-        <div className="space-y-24">
+        <div className="space-y-14 md:space-y-24">
           {/* 名字由来 */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="order-2 md:order-1">
               <div className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase mb-4">The Name · 名字由來</div>
-              <h3 className="font-serif-cn text-3xl font-bold text-[#2B2020] mb-6">把福氣兜在身上</h3>
+              <h3 className="font-serif-cn text-2xl md:text-3xl font-bold text-[#2B2020] mb-6">把福氣兜在身上</h3>
               <p className="text-[#6B5D52] leading-8 mb-6">
                 「財」是財神的財；「兜兜」是廣東話裡圓潤可愛的意思——把福氣兜在身上，隨身帶著走。
               </p>
@@ -724,7 +761,7 @@ function StoryPage({ setCurrentPage }) {
           </div>
 
           {/* 色彩与母题 */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-white border border-[#EAE3D8] shadow-[0_8px_24px_rgba(43,32,32,0.08)]">
                 <img src="/images/showcase.jpg" alt="財兜兜產品陳列" className="w-full h-full object-cover" onError={e => { e.target.style.display='none'; }} />
@@ -733,7 +770,7 @@ function StoryPage({ setCurrentPage }) {
             </div>
             <div>
               <div className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase mb-4">Colour & Motif · 色彩與母題</div>
-              <h3 className="font-serif-cn text-3xl font-bold text-[#2B2020] mb-6">廟宇裡的暖色</h3>
+              <h3 className="font-serif-cn text-2xl md:text-3xl font-bold text-[#2B2020] mb-6">廟宇裡的暖色</h3>
               <p className="text-[#6B5D52] leading-8 mb-6">
                 朱紅、鎏金、米白——取自香港廟宇的門簾、供案與香燭。這三種顏色不出自任何設計趨勢，而是信俗空間裡日復一日的光。
               </p>
@@ -750,18 +787,18 @@ function StoryPage({ setCurrentPage }) {
 
           {/* 三层转译 */}
           <div>
-            <div className="text-center mb-12">
+            <div className="text-center mb-8 md:mb-12">
               <div className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase mb-4">Three Translations · 三層轉譯</div>
-              <h3 className="font-serif-cn text-3xl font-bold text-[#2B2020] mb-4">非遺不是被收藏的，是被繼續使用的</h3>
+              <h3 className="font-serif-cn text-2xl md:text-3xl font-bold text-[#2B2020] mb-4">非遺不是被收藏的，是被繼續使用的</h3>
               <p className="text-[#6B5D52] text-base max-w-2xl mx-auto">從廟宇到掌心，我們把信俗拆成三層，逐一轉譯成當代物件。</p>
             </div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-4 md:gap-6">
               {[
                 { layer: '器物層', from: '神龕金身', to: '掌心掛件', desc: '把廟裡供案上的財神形象，縮小成可以隨身攜帶的毛絨掛件。' },
                 { layer: '內容層', from: '廟祝口傳', to: 'AI語音籤語', desc: '求籤問事的口述傳統，轉譯為 AI 語音互動與籤語陪伴。' },
                 { layer: '關係層', from: '偶發的廟宇叩問', to: '每天的一次對話', desc: '從一年幾次的進香，變成日常裡觸手可及的一句問候。' },
               ].map(t => (
-                <div key={t.layer} className="bg-white border border-[#EAE3D8] rounded-2xl p-8 hover:border-[#C9A961]/60 transition-all">
+                <div key={t.layer} className="bg-white border border-[#EAE3D8] rounded-2xl p-5 md:p-8 hover:border-[#C9A961]/60 transition-all">
                   <div className="text-[#8C2C2C] font-serif-cn font-bold text-lg mb-3">{t.layer}</div>
                   <div className="flex items-center gap-2 text-sm text-[#6B5D52] mb-4">
                     <span>{t.from}</span>
@@ -775,10 +812,10 @@ function StoryPage({ setCurrentPage }) {
           </div>
 
           {/* 田野考察 */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="order-2 md:order-1">
               <div className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase mb-4">Fieldwork · 田野考察</div>
-              <h3 className="font-serif-cn text-3xl font-bold text-[#2B2020] mb-6">從廟宇現場開始</h3>
+              <h3 className="font-serif-cn text-2xl md:text-3xl font-bold text-[#2B2020] mb-6">從廟宇現場開始</h3>
               <p className="text-[#6B5D52] leading-8 mb-6">
                 團隊在香港文武廟、蓬瀛仙館、慈山寺等宗教場所長期田野考察，記錄供桌陳設、香燭儀式與參拜者的提問方式。
               </p>
@@ -795,10 +832,10 @@ function StoryPage({ setCurrentPage }) {
           </div>
 
           {/* 点题引言 */}
-          <div className="bg-white border border-[#EAE3D8] rounded-3xl p-10 lg:p-16 text-center shadow-[0_8px_24px_rgba(201,169,97,0.12)]">
+          <div className="bg-white border border-[#EAE3D8] rounded-3xl p-6 md:p-10 lg:p-16 text-center shadow-[0_8px_24px_rgba(201,169,97,0.12)]">
             <div className="flex justify-center mb-6"><SealLogo size={56} radius="rounded-2xl" /></div>
             <blockquote className="max-w-xl mx-auto">
-              <p className="font-serif-cn text-[#2B2020] text-2xl leading-9">「非遺不是被收藏的，<br />是被繼續使用的。」</p>
+              <p className="font-serif-cn text-[#2B2020] text-xl md:text-2xl leading-8 md:leading-9">「非遺不是被收藏的，<br />是被繼續使用的。」</p>
               <p className="text-[#A98B4F] text-sm mt-6">— 財兜兜 CaiDouDou</p>
             </blockquote>
           </div>
@@ -813,25 +850,25 @@ function ContactPage() {
   const [sent, setSent] = useState(false);
   const handleSubmit = (e) => { e.preventDefault(); setSent(true); };
   return (
-    <div className="pt-32 pb-32 bg-[#FDFBF7] min-h-screen">
+    <div className="pt-24 pb-16 md:pt-32 md:pb-32 bg-[#FDFBF7] min-h-screen">
       <div className="max-w-4xl mx-auto px-6 lg:px-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-12 h-px bg-[#C9A961]/60"></div>
             <span className="text-[#A98B4F] text-[11px] tracking-[0.3em] uppercase font-medium">Contact</span>
             <div className="w-12 h-px bg-[#C9A961]/60"></div>
           </div>
-          <h2 className="font-serif-cn text-5xl lg:text-6xl font-bold text-[#2B2020] mb-6">聯絡我們</h2>
-          <p className="text-[#6B5D52] text-lg">We'd love to hear from you</p>
+          <h2 className="font-serif-cn text-3xl md:text-5xl lg:text-6xl font-bold text-[#2B2020] mb-6">聯絡我們</h2>
+          <p className="text-[#6B5D52] text-base md:text-lg">We'd love to hear from you</p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6 mb-16">
+        <div className="grid lg:grid-cols-3 gap-4 md:gap-6 mb-10 md:mb-16">
           {[
             { icon: <Mail size={24} />, title: 'Email', content: 'hello@blingjew.com' },
             { icon: <MapPin size={24} />, title: 'Company', content: 'HK WENWIN MOMENTUM LIMITED · 香港' },
             { icon: <Clock size={24} />, title: 'Hours', content: 'Mon-Fri 9am-6pm HKT' },
           ].map(({ icon, title, content }) => (
-            <div key={title} className="bg-white border border-[#EAE3D8] rounded-2xl p-8 text-center hover:border-[#C9A961]/50 transition-all">
+            <div key={title} className="bg-white border border-[#EAE3D8] rounded-2xl p-5 md:p-8 text-center hover:border-[#C9A961]/50 transition-all">
               <div className="w-14 h-14 bg-[#F5EFE3] rounded-xl flex items-center justify-center mx-auto mb-6 text-[#8C2C2C]">{icon}</div>
               <div className="text-[#2B2020] font-semibold text-sm mb-2">{title}</div>
               <div className="text-[#6B5D52] text-sm">{content}</div>
@@ -839,7 +876,7 @@ function ContactPage() {
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white border border-[#EAE3D8] rounded-3xl p-8 lg:p-12 shadow-[0_8px_24px_rgba(43,32,32,0.05)]">
+        <form onSubmit={handleSubmit} className="bg-white border border-[#EAE3D8] rounded-3xl p-5 md:p-8 lg:p-12 shadow-[0_8px_24px_rgba(43,32,32,0.05)]">
           {sent ? (
             <div className="text-center py-16">
               <div className="flex justify-center mb-6"><SealLogo size={64} radius="rounded-2xl" /></div>
@@ -866,9 +903,9 @@ function ContactPage() {
 function Footer({ setCurrentPage }) {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-[#5E1B1B] pt-20 pb-12 border-t-2 border-[#C9A961]/50">
-      <div className="max-w-7xl mx-auto px-8 lg:px-16">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer className="bg-[#5E1B1B] pt-14 pb-10 md:pt-20 md:pb-12 border-t-2 border-[#C9A961]/50">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-10 md:mb-16">
           <div>
             <div className="flex items-center gap-2.5 mb-6">
               <div className="bg-[#8C2C2C] rounded-lg flex items-center justify-center border border-[#C9A961]/60" style={{width: 40, height: 40}}>
@@ -915,7 +952,7 @@ function Footer({ setCurrentPage }) {
             </div>
           </div>
         </div>
-        <div className="border-t border-[#C9A961]/25 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-[#C9A961]/25 pt-6 md:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-[#FDFBF7]/50 text-xs leading-6 text-center sm:text-left">
             <div className="mb-1 text-[#C9A961]/80">財兜兜™ 香港註冊商標 307339168 · EN71 / IEC 62115 / REACH 測試通過（Bureau Veritas）</div>
             <div>© {year} HK WENWIN MOMENTUM LIMITED · blingjew.com · All rights reserved.</div>
@@ -970,7 +1007,7 @@ function CartSidebar({ items, onClose, onRemove, onUpdateQty, onCheckout, total 
   const final = total * (1 - discount);
   if (!items.length) return (
     <div className="fixed inset-0 z-50 bg-[#2B2020]/60 backdrop-blur-sm flex justify-end" onClick={onClose}>
-      <div className="w-full max-w-md bg-[#FDFBF7] border-l border-[#EAE3D8] h-full flex flex-col" onClick={e => e.stopPropagation()}>
+      <div className="w-full max-w-[420px] sm:max-w-md bg-[#FDFBF7] border-l border-[#EAE3D8] h-full flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between p-6 border-b border-[#EAE3D8]">
           <h2 className="font-serif-cn text-xl font-bold text-[#2B2020]">購物車</h2>
           <button onClick={onClose} className="w-10 h-10 rounded-xl bg-white border border-[#EAE3D8] flex items-center justify-center text-[#6B5D52] hover:text-[#8C2C2C] transition-colors"><X size={18} /></button>
@@ -984,7 +1021,7 @@ function CartSidebar({ items, onClose, onRemove, onUpdateQty, onCheckout, total 
   );
   return (
     <div className="fixed inset-0 z-50 bg-[#2B2020]/60 backdrop-blur-sm flex justify-end" onClick={onClose}>
-      <div className="w-full max-w-md bg-[#FDFBF7] border-l border-[#EAE3D8] h-full flex flex-col" onClick={e => e.stopPropagation()}>
+      <div className="w-full max-w-[420px] sm:max-w-md bg-[#FDFBF7] border-l border-[#EAE3D8] h-full flex flex-col" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between p-6 border-b border-[#EAE3D8]">
           <h2 className="font-serif-cn text-xl font-bold text-[#2B2020]">購物車 ({items.reduce((s,i) => s+i.qty, 0)})</h2>
           <button onClick={onClose} className="w-10 h-10 rounded-xl bg-white border border-[#EAE3D8] flex items-center justify-center text-[#6B5D52] hover:text-[#8C2C2C] transition-colors"><X size={18} /></button>
@@ -998,9 +1035,9 @@ function CartSidebar({ items, onClose, onRemove, onUpdateQty, onCheckout, total 
                 <div className="text-[#8C2C2C] text-sm font-bold mt-1">${item.price}</div>
                 <div className="flex items-center justify-between mt-3">
                   <div className="flex items-center gap-2 bg-[#FDFBF7] rounded-lg border border-[#EAE3D8]">
-                    <button onClick={() => onUpdateQty(item.id, item.qty - 1)} className="w-8 h-8 flex items-center justify-center text-[#2B2020] text-xs hover:bg-[#F5EFE3] rounded-l-lg transition-colors"><Minus size={12} /></button>
+                    <button onClick={() => onUpdateQty(item.id, item.qty - 1)} className="w-9 h-9 md:w-8 md:h-8 flex items-center justify-center text-[#2B2020] text-xs hover:bg-[#F5EFE3] rounded-l-lg transition-colors"><Minus size={12} /></button>
                     <span className="text-[#2B2020] text-xs font-bold w-6 text-center">{item.qty}</span>
-                    <button onClick={() => onUpdateQty(item.id, item.qty + 1)} className="w-8 h-8 flex items-center justify-center text-[#2B2020] text-xs hover:bg-[#F5EFE3] rounded-r-lg transition-colors"><Plus size={12} /></button>
+                    <button onClick={() => onUpdateQty(item.id, item.qty + 1)} className="w-9 h-9 md:w-8 md:h-8 flex items-center justify-center text-[#2B2020] text-xs hover:bg-[#F5EFE3] rounded-r-lg transition-colors"><Plus size={12} /></button>
                   </div>
                   <button onClick={() => onRemove(item.id)} className="text-[#6B5D52] hover:text-[#8C2C2C] text-xs transition-colors">移除</button>
                 </div>
@@ -1008,7 +1045,7 @@ function CartSidebar({ items, onClose, onRemove, onUpdateQty, onCheckout, total 
             </div>
           ))}
         </div>
-        <div className="p-6 border-t border-[#EAE3D8] space-y-4">
+        <div className="p-6 pb-[max(24px,env(safe-area-inset-bottom))] border-t border-[#EAE3D8] space-y-4">
           <div className="flex gap-3">
             <input value={promo} onChange={e => setPromo(e.target.value)} placeholder="優惠碼" className="flex-1 bg-white border border-[#EAE3D8] text-[#2B2020] placeholder-[#A98B4F]/60 px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#8C2C2C] transition-colors" />
             <button onClick={handlePromo} className="bg-white hover:bg-[#F5EFE3] border border-[#EAE3D8] text-[#2B2020] px-5 py-3 rounded-xl text-sm font-medium transition-colors">套用</button>
@@ -1058,7 +1095,7 @@ export default function App() {
   useEffect(() => { window.scrollTo(0, 0); }, [currentPage]);
   if (currentPage === 'admin') return <AdminPanel onBack={() => setCurrentPage('home')} onProductsUpdated={refresh} />;
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#2B2020] font-sans">
+    <div className="min-h-screen bg-[#FDFBF7] text-[#2B2020] font-sans overflow-x-clip">
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} cartCount={cartCount} setShowCart={setShowCart} />
       {currentPage === 'home' && <><Hero setCurrentPage={setCurrentPage} /><HeritageSection /><ProductShowcase setCurrentPage={setCurrentPage} products={products} /><Features /><TrustSection /><ReviewsSection /><Newsletter /></>}
       {currentPage === 'shop' && <ShopPage setCurrentPage={setCurrentPage} onViewProduct={handleViewProduct} onQuickAdd={addItem} products={products} />}
