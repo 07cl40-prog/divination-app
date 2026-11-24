@@ -3,35 +3,36 @@
 @tailwind utilities;
 
 /* ============================================================
-   CaiShen — 輕奢高級國風配色系統
-   哑光東方雅致 × 歐美極簡 × 羊毛氈溫潤質感
+   CaiDouDou 財兜兜 — 香港非遺廟宇暖色配色系統
+   朱紅 × 鎏金 × 米白 — 廟宇暖意 · 東方雅致
    ============================================================ */
 
 @layer base {
   :root {
-    /* 配色 */
-    --gold-primary: #B8860B;
-    --gold-light: #D4B978;
-    --gold-dark: #8C6D1F;
-    --red-primary: #8B1A1A;
-    --red-hover: #A84444;
-    --bg-main: #F5F1ED;
-    --bg-card: #FAF7F4;
-    --text-primary: #333333;
-    --text-secondary: #666666;
-    --line-border: #E5E0DB;
+    /* 配色 — 香港非遗庙宇暖色 */
+    --gold-primary: #C9A961;
+    --gold-light: #D9BC7E;
+    --gold-dark: #A98B4F;
+    --red-primary: #8C2C2C;
+    --red-hover: #7A2525;
+    --red-deep: #5E1B1B;
+    --bg-main: #FDFBF7;
+    --bg-card: #FFFFFF;
+    --text-primary: #2B2020;
+    --text-secondary: #6B5D52;
+    --line-border: #EAE3D8;
     --white-pure: #FFFFFF;
 
     /* 字体 */
-    --font-title: "Playfair Display", "Noto Serif SC", serif;
-    --font-body: Inter, "Noto Sans SC", sans-serif;
-    --font-cn: "Noto Sans SC", "Noto Sans HK", "PingFang SC", "PingFang HK", "Microsoft YaHei", sans-serif;
-    --font-cn-serif: "Noto Serif SC", "PingFang SC", serif;
+    --font-title: "Playfair Display", "Noto Serif HK", "Noto Serif SC", serif;
+    --font-body: Inter, "Noto Sans SC", "Noto Sans HK", sans-serif;
+    --font-cn: "Noto Sans HK", "Noto Sans SC", "PingFang HK", "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
+    --font-cn-serif: "Noto Serif HK", "Noto Serif SC", "PMingLiU", "PingFang SC", serif;
 
     /* 阴影 */
-    --shadow-sm: 0 2px 8px rgba(140, 109, 31, 0.08);
-    --shadow-card: 0 4px 16px rgba(51, 51, 51, 0.06);
-    --shadow-hover: 0 8px 24px rgba(140, 109, 31, 0.15);
+    --shadow-sm: 0 2px 8px rgba(140, 44, 44, 0.06);
+    --shadow-card: 0 4px 16px rgba(43, 32, 32, 0.06);
+    --shadow-hover: 0 8px 24px rgba(140, 44, 44, 0.14);
 
     /* 圆角 */
     --radius-sm: 8px;
@@ -69,8 +70,19 @@ h1, .hero-title {
   font-weight: 300;
 }
 
-/* 中文标题 H2-H3: 思源宋体 CN */
-h2, h3, .font-cn {
+/* 中文标题 H2-H3: 衬线中文（Noto Serif HK/SC） */
+h2, h3 {
+  font-family: var(--font-cn-serif);
+  font-weight: 600;
+}
+
+/* 衬线中文工具类 */
+.font-serif-cn {
+  font-family: var(--font-cn-serif);
+}
+
+/* 正文中文保持黑体 */
+.font-cn {
   font-family: var(--font-cn);
 }
 
@@ -96,42 +108,45 @@ button, nav, .nav-link {
 }
 
 /* ============================================================
-   按钮系统（主按鈕 / 次按鈕 / 漸變 / Hover）
+   按钮系统（主按鈕 / 次按鈕 / Hover）
    ============================================================ */
 
-/* 主按钮 — 绛红渐变 */
+/* 主按钮 — 朱红渐变 + hover 金色描边 */
 .btn-primary {
-  background: linear-gradient(135deg, #8B1A1A 0%, #7A1717 100%);
-  color: #FFFFFF;
-  border: none;
+  background: linear-gradient(135deg, #8C2C2C 0%, #7A2525 100%);
+  color: #FDFBF7;
+  border: 1px solid transparent;
   border-radius: 12px;
   transition: all 0.3s ease;
 }
 .btn-primary:hover {
-  background: linear-gradient(135deg, #A84444 0%, #993D3D 100%);
+  background: linear-gradient(135deg, #8C2C2C 0%, #7A2525 100%);
+  border-color: #C9A961;
+  box-shadow: 0 6px 20px rgba(140, 44, 44, 0.22);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
 }
 .btn-primary:active {
-  background: linear-gradient(135deg, #701515 0%, #601212 100%);
+  background: linear-gradient(135deg, #7A2525 0%, #6B2020 100%);
   transform: translateY(0);
 }
 
-/* 次按钮 — 鎏金渐变镂空 */
+/* 次按钮 — 鎏金描边镂空，hover 金底 */
 .btn-secondary {
   background: transparent;
-  color: #B8860B;
-  border: 1px solid #B8860B;
+  color: var(--gold-dark);
+  border: 1px solid var(--gold-primary);
   border-radius: 12px;
   transition: all 0.3s ease;
 }
 .btn-secondary:hover {
-  background: linear-gradient(135deg, #D4B978 0%, #C8AA6A 100%);
-  color: #FFFFFF;
-  border-color: transparent;
+  background: linear-gradient(135deg, #C9A961 0%, #B99952 100%);
+  color: #FDFBF7;
+  border-color: #C9A961;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 .btn-secondary:active {
-  background: linear-gradient(135deg, #8C6D1F 0%, #7D601C 100%);
+  background: linear-gradient(135deg, #A98B4F 0%, #987B42 100%);
 }
 
 /* ============================================================
@@ -146,6 +161,33 @@ button, nav, .nav-link {
 }
 .shadow-hover-custom {
   box-shadow: var(--shadow-hover);
+}
+
+/* ============================================================
+   香港非遺裝飾母題（内联 SVG，可平铺）
+   ============================================================ */
+
+/* 祥云云纹 — 淡金色透明平铺底纹 */
+.pattern-xiangyun {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%23C9A961' stroke-width='2' stroke-opacity='0.14'%3E%3Cpath d='M18 52 q10 -20 30 -15 q6 -15 24 -13 q17 2 19 17 q17 1 15 15'/%3E%3Cpath d='M92 16 q8 -13 24 -11 q13 2 13 13'/%3E%3Ccircle cx='28' cy='106' r='7'/%3E%3Cpath d='M62 112 q7 -11 20 -9'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* 回纹/雷纹横向装饰条 — section 分隔 */
+.divider-huiwen {
+  height: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='14' viewBox='0 0 20 14'%3E%3Cpath d='M0 12.5 H20 M3.5 12 V3.5 H15.5 V8.5 H8.5' fill='none' stroke='%23C9A961' stroke-width='1.6' stroke-opacity='0.5'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: auto 12px;
+  background-position: center;
+}
+
+/* 印章式 logo 方块 — 红底白字「財」 */
+.seal-logo {
+  background: linear-gradient(135deg, #8C2C2C 0%, #7A2525 100%);
+  color: #FDFBF7;
+  border: 1px solid rgba(201, 169, 97, 0.55);
+  box-shadow: 0 2px 8px rgba(140, 44, 44, 0.25);
 }
 
 /* ============================================================
@@ -171,8 +213,8 @@ button, nav, .nav-link {
    ============================================================ */
 
 @keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 20px rgba(184, 134, 11, 0.15); }
-  50% { box-shadow: 0 0 40px rgba(184, 134, 11, 0.25); }
+  0%, 100% { box-shadow: 0 0 20px rgba(201, 169, 97, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(201, 169, 97, 0.25); }
 }
 
 .animate-pulse-gold {
@@ -190,7 +232,7 @@ button, nav, .nav-link {
 
 /* 文字选中颜色 */
 ::selection {
-  background: rgba(184, 134, 11, 0.2);
+  background: rgba(201, 169, 97, 0.25);
   color: var(--text-primary);
 }
 
